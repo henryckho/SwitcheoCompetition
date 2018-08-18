@@ -10,12 +10,21 @@ export class UtilityService {
 
     constructor() { }
 
-    public loginToWallet(privateKey: string) {
-        this.loggedInWallet = new wallet.Account(privateKey);
+    public loginToWallet(privateKey: string) : boolean {
+        this.loggedInWallet = null;
+
+        if(privateKey) {
+            try {
+                this.loggedInWallet = new wallet.Account(privateKey);
+            }
+            catch{}
+        }
+        
+        return this.loggedInWallet != null;
     }
 
     public getScriptHashFromAddress(address) {
-        console.log(wallet.getScriptHashFromAddress('AcJeeogDTDqGpCwjM8XTKLNDNJ9hwRXmhf'));
+        return wallet.getScriptHashFromAddress(address);
     }
 
     signMessage(message, privateKey) {

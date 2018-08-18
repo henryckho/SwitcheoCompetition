@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { UtilityService } from '../utility.service'
 
 @Component({
@@ -7,6 +7,7 @@ import { UtilityService } from '../utility.service'
 })
 
 export class SCLoginComponent implements OnInit {
+    @Output() loadWallet = new EventEmitter();
     privateKey: string = "";
 
     constructor(
@@ -17,6 +18,9 @@ export class SCLoginComponent implements OnInit {
     }
 
     public loginToWallet() {
-        this.utilityService.loginToWallet(this.privateKey);
+        let loggedInToWallet = this.utilityService.loginToWallet(this.privateKey);
+        if(loggedInToWallet) {
+            this.loadWallet.emit();
+        }
     }
 }

@@ -1,0 +1,10 @@
+<div>
+    <h1>Contract Wallet</h1>
+    <div *ngIf="isWalletLoaded">
+        <ul>
+            <li *ngFor="let key of objectKeys(walletBalance)">
+                {{key}} : {{walletBalance[key].toFixed(tokenList[key].decimals)}}
+            </li>
+        </ul>
+    </div>
+</div>

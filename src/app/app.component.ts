@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { SCWalletComponent } from './sc-wallet/sc-wallet.component';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  @ViewChild(SCWalletComponent) scWallet: SCWalletComponent;
+
   title = 'Switcheo Competition';
+
+  public loadWallet() {
+    this.scWallet.loadWallet();
+  }
 }
