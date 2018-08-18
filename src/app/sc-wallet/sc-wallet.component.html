@@ -3,11 +3,15 @@
     <div *ngIf="isWalletLoaded">
         <ul>
             <li *ngFor="let key of assetList">
+                {{key}} : 
                 <span *ngIf="contractWalletBalance[key] != null && contractWalletBalance[key] > 0">
-                    {{key}} : {{contractWalletBalance[key].toFixed(tokenList[key].decimals)}}
+                    {{(contractWalletBalance[key] / pow(10, tokenList[key].decimals)).toFixed(tokenList[key].decimals)}}
                 </span>
+                <button (click)="withdraw(key, contractWalletBalance[key])">
+                    Withdraw
+                </button>
                 <b *ngIf="lockedWalletBalance[key] != null && lockedWalletBalance[key] > 0">
-                    Withdraw {{lockedWalletBalance[key].toFixed(tokenList[key].decimals)}}
+                    {{(lockedWalletBalance[key] / pow(10, tokenList[key].decimals)).toFixed(tokenList[key].decimals)}}
                 </b>
             </li>
         </ul>

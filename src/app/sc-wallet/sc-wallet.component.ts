@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { UtilityService } from '../utility.service';
-import { SwticheoService } from '../switcheo.service';
+import { SwitcheoService } from '../switcheo.service';
 
 @Component({
     selector: 'sc-wallet',
@@ -18,7 +18,7 @@ export class SCWalletComponent implements OnInit {
 
     constructor(
         private utilityService: UtilityService,
-        private switcheoService: SwticheoService
+        private switcheoService: SwitcheoService
     ) { }
 
     ngOnInit() {
@@ -27,6 +27,7 @@ export class SCWalletComponent implements OnInit {
     }
     
     public objectKeys = Object.keys;
+    public pow = Math.pow;
 
     public loadWallet() {
         this.isLoading = true;
@@ -38,20 +39,26 @@ export class SCWalletComponent implements OnInit {
         });
     }
 
+    public withdraw(token, amount) {
+        this.switcheoService.withdrawTokens('neo', token, amount)
+        .subscribe(response => {
+            console.log(response);
+        });
+    }
+
     private buildBalances(walletBalance) {
         for(let key of Object.keys(this.tokenList)) {
-            let tokenDecimal: number = Math.pow(10, this.tokenList[key].decimals);
             let newAsset: boolean = false;
             let confirmedToken = walletBalance.confirmed[key];
             let lockedToken = walletBalance.locked[key];
 
             if(confirmedToken && confirmedToken > 0) {
-                this.contractWalletBalance[key] = confirmedToken / tokenDecimal;
+                this.contractWalletBalance[key] = confirmedToken.substring(0, confirmedToken.indexOf('.'));
                 newAsset = true;
             }
 
             if(lockedToken && lockedToken > 0) {
-                this.lockedWalletBalance[key] = lockedToken / tokenDecimal;
+                this.lockedWalletBalance[key] = lockedToken.substring(0, lockedToken.indexOf('.'));
                 newAsset = true;
             }
 

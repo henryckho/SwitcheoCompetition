@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-
-import { stringify } from 'json-stable-stringify';
-import { u, wallet } from '@cityofzion/neon-js';
+import { u, wallet, tx } from '@cityofzion/neon-js';
 
 @Injectable({ providedIn: 'root' })
 export class UtilityService {
+    private stringify = require('json-stable-stringify');
 
     loggedInWallet: wallet.Account = null;
 
@@ -23,23 +22,30 @@ export class UtilityService {
         return this.loggedInWallet != null;
     }
 
-    public getScriptHashFromAddress(address) {
-        return wallet.getScriptHashFromAddress(address);
+    public signParams(reqParams): string {
+        let paramsString = this.stringify(reqParams);
+        let paramsHexString = u.str2hexstring(paramsString);
+        
+        let lengthHex = (paramsHexString.length / 2).toString(16).padStart(2, '0');
+        let serialisedTransaction = `010001f0${lengthHex}${paramsHexString}0000`;
+        return this.signMessage(serialisedTransaction);
     }
 
-    signMessage(message, privateKey) {
+    public signTransaction(transaction: tx.Transaction, privateKey: string) {
+        let serialisedTxn = tx.serializeTransaction(transaction, false)
+        return wallet.generateSignature(serialisedTxn, privateKey)
+    }
+    
+    public getTimestamp() {
+        return new Date().getTime();
+    }
+
+    public stringifyParams(params) {
+        return this.stringify(params);
+    }
+    
+    private signMessage(message: string): string {
+        let privateKey = this.loggedInWallet.privateKey;
         return wallet.generateSignature(message, privateKey);
-    }
-
-    encodeMessage(message) {
-        let paramHexString = u.str2hexstring(message)
-    }
-
-    private paramsToString(params) {
-        return stringify(params);
-    }
-
-    private seraliseParamStringToHex(message) {
-        return u.str2hexstring(message)
     }
 }
