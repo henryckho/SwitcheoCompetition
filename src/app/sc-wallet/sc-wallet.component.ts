@@ -25,7 +25,6 @@ export class SCWalletComponent implements OnInit {
     }
     
     public objectKeys = Object.keys;
-    public power = Math.pow;
 
     public loadWallet() {
         this.isLoading = true;
