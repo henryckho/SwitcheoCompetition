@@ -1,1 +1,1 @@
-# SwticheoCompetition
+# SwitcheoCompetition
