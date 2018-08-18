@@ -2,8 +2,13 @@
     <h1>Contract Wallet</h1>
     <div *ngIf="isWalletLoaded">
         <ul>
-            <li *ngFor="let key of objectKeys(walletBalance)">
-                {{key}} : {{walletBalance[key].toFixed(tokenList[key].decimals)}}
+            <li *ngFor="let key of assetList">
+                <span *ngIf="contractWalletBalance[key] != null && contractWalletBalance[key] > 0">
+                    {{key}} : {{contractWalletBalance[key].toFixed(tokenList[key].decimals)}}
+                </span>
+                <b *ngIf="lockedWalletBalance[key] != null && lockedWalletBalance[key] > 0">
+                    Withdraw {{lockedWalletBalance[key].toFixed(tokenList[key].decimals)}}
+                </b>
             </li>
         </ul>
     </div>

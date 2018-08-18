@@ -20,7 +20,7 @@ export class SwticheoService {
     }
 
     public getContractWalletBalance(): Observable<Response> {
-        let scriptHashAddress = this.utilityService.loggedInWallet.scriptHash
+        let scriptHashAddress = this.utilityService.loggedInWallet.scriptHash;
         return this.http.get<any>(`${this.switcheoEndpoint}/balances?addresses[]=${scriptHashAddress}&contract_hashes[]=${this.contractHashV2}`);
     }
 }
