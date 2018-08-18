@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { u, wallet, tx } from '@cityofzion/neon-js';
 
+import stringify from 'json-stable-stringify';
+
 @Injectable({ providedIn: 'root' })
 export class UtilityService {
-    private stringify = require('json-stable-stringify');
 
     loggedInWallet: wallet.Account = null;
 
@@ -23,7 +24,7 @@ export class UtilityService {
     }
 
     public signParams(reqParams): string {
-        let paramsString = this.stringify(reqParams);
+        let paramsString = stringify(reqParams);
         let paramsHexString = u.str2hexstring(paramsString);
         
         let lengthHex = (paramsHexString.length / 2).toString(16).padStart(2, '0');
@@ -41,7 +42,7 @@ export class UtilityService {
     }
 
     public stringifyParams(params) {
-        return this.stringify(params);
+        return stringify(params);
     }
     
     private signMessage(message: string): string {
