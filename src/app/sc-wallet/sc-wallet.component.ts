@@ -40,9 +40,10 @@ export class SCWalletComponent implements OnInit {
     }
 
     public withdraw(token, amount) {
-        this.switcheoService.withdrawTokens('neo', token, amount)
+        this.switcheoService.createWithdrawTokens('neo', token, amount)
         .subscribe(response => {
-            console.log(response);
+            var id = (<any>response).id;
+            this.switcheoService.executeWithdrawToken(id);
         });
     }
 

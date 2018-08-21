@@ -28,13 +28,19 @@ export class SwitcheoService {
         return this.http.get<any>(`${this.switcheoEndpoint}/balances?addresses[]=${scriptHashAddress}&contract_hashes[]=${this.contractHashV2}`);
     }
 
-    public withdrawTokens(blockchain:string, token: string, amount: string): Observable<Object> {
+    public createWithdrawTokens(blockchain:string, token: string, amount: string): Observable<Object> {
         let address = this.utilityService.loggedInWallet.scriptHash;
         let params = { blockchain, asset_id: token, amount, contract_hash: this.contractHashV2, timestamp: this.utilityService.getTimestamp() };
         let signature = this.utilityService.signParams(params);
-        let apiParams = this.utilityService.stringifyParams({ ...params, address, signature });
+        let apiParams = { ...params, address, signature };
 
-        console.log(apiParams);
         return this.http.post(`${this.switcheoEndpoint}/withdrawals`, apiParams, this.httpOptions);
+    }
+
+    public executeWithdrawToken(id: string) {
+        let params = {id, timestamp: this.utilityService.getTimestamp() };
+        let signature = this.utilityService.signParams(params);
+        let apiParams = { ...params, signature };
+        this.http.post(`${this.switcheoEndpoint}/withdrawals/${id}/broadcast`, apiParams, this.httpOptions).subscribe();
     }
 }
