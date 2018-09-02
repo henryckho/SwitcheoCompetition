@@ -40,9 +40,13 @@ export class UtilityService {
     public getTimestamp() {
         return new Date().getTime();
     }
+    
+    public removeLastDecimalFromBalance(balance) {
+        return balance.substring(0, balance.lastIndexOf('.'));
+    }
 
-    public stringifyParams(params) {
-        return stringify(params);
+    public convertBalanceToDisplay(balance, decimal) : string{
+        return (balance / Math.pow(10, decimal)).toFixed(decimal);
     }
     
     private signMessage(message: string): string {

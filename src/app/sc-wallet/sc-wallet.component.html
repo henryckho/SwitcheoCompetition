@@ -4,16 +4,16 @@
         <ul>
             <li *ngFor="let key of assetList">
                 {{key}} : 
-                <div *ngIf="contractWalletBalance[key] != null && contractWalletBalance[key] > 0">
+                <div *ngIf="contractWalletBalance[key] != null && contractWalletBalance[key].displayBalance > 0">
                     <span>
-                        {{(contractWalletBalance[key] / pow(10, tokenList[key].decimals)).toFixed(tokenList[key].decimals)}}
+                        {{contractWalletBalance[key].displayBalance}}
                     </span>
-                    <button (click)="withdraw('neo', key, contractWalletBalance[key])">
+                    <button (click)="withdraw('neo', key, contractWalletBalance[key])" [disabled]="contractWalletBalance[key].isWithdrawDisabled">
                         Withdraw
                     </button>
                 </div>
-                <div *ngIf="lockedWalletBalance[key] != null && lockedWalletBalance[key] > 0">
-                    <b>{{(lockedWalletBalance[key] / pow(10, tokenList[key].decimals)).toFixed(tokenList[key].decimals)}}</b>
+                <div *ngIf="lockedWalletBalance[key] != null && lockedWalletBalance[key].displayBalance > 0">
+                    <b>{{lockedWalletBalance[key].displayBalance}}</b>
                 </div>
             </li>
         </ul>
