@@ -29,6 +29,8 @@ export class SCWalletComponent implements OnInit {
 
     public loadWallet() {
         this.isLoading = true;
+        this.resetWallet();
+
         this.switcheoService.getContractWalletBalance()
         .subscribe(walletBalance => {
             this.buildBalances(walletBalance);
@@ -38,8 +40,13 @@ export class SCWalletComponent implements OnInit {
     }
 
     public withdraw(blockchain, token, amount) {
-        this.switcheoService.withdrawTokens(blockchain, token, amount)
-            .subscribe();
+        this.switcheoService.withdrawTokens(blockchain, token, amount).subscribe();
+    }
+
+    private resetWallet() {
+        this.contractWalletBalance = {};
+        this.lockedWalletBalance = {};
+        this.assetList = [];
     }
 
     private buildBalances(walletBalance) {
@@ -59,7 +66,9 @@ export class SCWalletComponent implements OnInit {
             }
 
             if(newAsset) {
-                this.assetList.push(key);
+                if(this.assetList.indexOf(key) == -1) {
+                    this.assetList.push(key);
+                }
             }
         }
     }
