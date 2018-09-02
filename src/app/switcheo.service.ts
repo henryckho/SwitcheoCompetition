@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 
 import { UtilityService } from './utility.service';
 
@@ -28,7 +28,14 @@ export class SwitcheoService {
         return this.http.get<any>(`${this.switcheoEndpoint}/balances?addresses[]=${scriptHashAddress}&contract_hashes[]=${this.contractHashV2}`);
     }
 
-    public createWithdrawTokens(blockchain:string, token: string, amount: string): Observable<Object> {
+    public withdrawTokens(blockchain: string, token: string, amount: string): Observable<object> {
+        return this.createWithdrawTokens(blockchain, token, amount)
+        .pipe(
+            mergeMap(response => this.executeWithdrawToken((<any>response).id))
+        );
+    }
+
+    private createWithdrawTokens(blockchain: string, token: string, amount: string): Observable<Object> {
         let address = this.utilityService.loggedInWallet.scriptHash;
         let params = { blockchain, asset_id: token, amount, contract_hash: this.contractHashV2, timestamp: this.utilityService.getTimestamp() };
         let signature = this.utilityService.signParams(params);
@@ -37,10 +44,11 @@ export class SwitcheoService {
         return this.http.post(`${this.switcheoEndpoint}/withdrawals`, apiParams, this.httpOptions);
     }
 
-    public executeWithdrawToken(id: string) {
+    private executeWithdrawToken(id: string) : Observable<Object> {
         let params = {id, timestamp: this.utilityService.getTimestamp() };
         let signature = this.utilityService.signParams(params);
         let apiParams = { ...params, signature };
-        this.http.post(`${this.switcheoEndpoint}/withdrawals/${id}/broadcast`, apiParams, this.httpOptions).subscribe();
+        
+        return this.http.post(`${this.switcheoEndpoint}/withdrawals/${id}/broadcast`, apiParams, this.httpOptions);
     }
 }

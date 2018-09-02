@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { UtilityService } from '../utility.service';
 import { SwitcheoService } from '../switcheo.service';
@@ -39,12 +39,9 @@ export class SCWalletComponent implements OnInit {
         });
     }
 
-    public withdraw(token, amount) {
-        this.switcheoService.createWithdrawTokens('neo', token, amount)
-        .subscribe(response => {
-            var id = (<any>response).id;
-            this.switcheoService.executeWithdrawToken(id);
-        });
+    public withdraw(blockchain, token, amount) {
+        this.switcheoService.withdrawTokens(blockchain, token, amount)
+            .subscribe();
     }
 
     private buildBalances(walletBalance) {
