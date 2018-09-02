@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { UtilityService } from '../utility.service';
 import { SwitcheoService } from '../switcheo.service';
 
 @Component({
@@ -17,7 +16,6 @@ export class SCWalletComponent implements OnInit {
     lockedWalletBalance: any = {};
 
     constructor(
-        private utilityService: UtilityService,
         private switcheoService: SwitcheoService
     ) { }
 
