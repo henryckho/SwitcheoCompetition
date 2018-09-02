@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { UtilityService } from '../utility.service'
 
 @Component({
@@ -6,16 +6,13 @@ import { UtilityService } from '../utility.service'
     templateUrl: 'sc-login.component.html'
 })
 
-export class SCLoginComponent implements OnInit {
+export class SCLoginComponent {
     @Output() loadWallet = new EventEmitter();
     privateKey: string = "";
 
     constructor(
         private utilityService: UtilityService
     ) { }
-
-    public ngOnInit() {
-    }
 
     public loginToWallet() {
         let loggedInToWallet = this.utilityService.loginToWallet(this.privateKey);
