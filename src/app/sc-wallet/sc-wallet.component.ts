@@ -25,8 +25,6 @@ export class SCWalletComponent implements OnInit {
         this.switcheoService.getTokenList()
             .subscribe((tokenList) => this.tokenList = tokenList);
     }
-    
-    public pow = Math.pow;
 
     public loadWallet() {
         this.isLoading = true;
