@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 
+import { WalletService } from './wallet.service';
 import { UtilityService } from './utility.service';
 
 import { ResponseToken } from './models/responseToken';
@@ -13,12 +14,13 @@ import { ResponseCreateWithdraw } from './models/responseCreateWithdraw';
 
 @Injectable({ providedIn: 'root' })
 export class SwitcheoService {
-    private switcheoEndpoint = "https://test-api.switcheo.network/v2";
-    private contractHashV2 = "a195c1549e7da61b8da315765a790ac7e7633b82";
+    private switcheoEndpoint: string = "https://test-api.switcheo.network/v2";
+    private contractHashV2: string = "a195c1549e7da61b8da315765a790ac7e7633b82";
 
     constructor(
         private http: HttpClient,
-        private utilityService: UtilityService
+        private utilityService: UtilityService,
+        private walletService: WalletService
     ) { }
 
     public getTokenList(): Observable<Token[]> {
@@ -40,7 +42,7 @@ export class SwitcheoService {
     }
 
     public getContractWalletBalance(): Observable<Response> {
-        let scriptHashAddress: string = this.utilityService.loggedInWallet.scriptHash;
+        let scriptHashAddress: string = this.walletService.getScriptHash();
         return this.http.get<any>(`${this.switcheoEndpoint}/balances?addresses[]=${scriptHashAddress}&contract_hashes[]=${this.contractHashV2}`);
     }
 
@@ -52,7 +54,7 @@ export class SwitcheoService {
     }
 
     private createWithdrawTokens(blockchain: string, token: string, amount: string): Observable<ResponseCreateWithdraw> {
-        let address: string = this.utilityService.loggedInWallet.scriptHash;
+        let address: string = this.walletService.getScriptHash();
         let params: CreateWithdraw = {
             blockchain: blockchain,
             asset_id: token,
@@ -60,7 +62,7 @@ export class SwitcheoService {
             contract_hash: this.contractHashV2,
             timestamp: this.utilityService.getTimestamp()
         };
-        let signature: string = this.utilityService.signParams(params);
+        let signature: string = this.walletService.signParams(params);
         let apiParams = { ...params, address, signature };
 
         return this.http.post<ResponseCreateWithdraw>(`${this.switcheoEndpoint}/withdrawals`, apiParams);
@@ -68,7 +70,7 @@ export class SwitcheoService {
 
     private executeWithdrawToken(id: string) : Observable<Object> {
         let params = {id, timestamp: this.utilityService.getTimestamp() };
-        let signature = this.utilityService.signParams(params);
+        let signature = this.walletService.signParams(params);
         let apiParams = { ...params, signature };
         
         return this.http.post(`${this.switcheoEndpoint}/withdrawals/${id}/broadcast`, apiParams);

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { UtilityService } from '../utility.service'
+import { WalletService } from '../wallet.service';
 
 @Component({
     selector: 'sc-login',
@@ -8,14 +8,14 @@ import { UtilityService } from '../utility.service'
 
 export class SCLoginComponent {
     @Output() loadWallet = new EventEmitter();
-    privateKey: string = "";
+    private privateKey: string = "";
 
     constructor(
-        private utilityService: UtilityService
+        private walletService: WalletService
     ) { }
 
     public loginToWallet() {
-        let loggedInToWallet = this.utilityService.loginToWallet(this.privateKey);
+        let loggedInToWallet = this.walletService.loginToWallet(this.privateKey);
         if(loggedInToWallet) {
             this.loadWallet.emit();
         }
