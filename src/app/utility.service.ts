@@ -32,7 +32,7 @@ export class UtilityService {
         return this.signMessage(serialisedTransaction);
     }
 
-    public signTransaction(transaction: tx.Transaction, privateKey: string) {
+    public signTransaction(transaction: tx.Transaction, privateKey: string): string {
         let serialisedTxn: string = tx.serializeTransaction(transaction, false)
         return wallet.generateSignature(serialisedTxn, privateKey)
     }
