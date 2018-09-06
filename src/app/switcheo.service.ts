@@ -2,9 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 
 import { UtilityService } from './utility.service';
+
+import { ResponseToken } from './models/responseToken';
+import { Token } from './models/token';
 
 @Injectable({ providedIn: 'root' })
 export class SwitcheoService {
@@ -19,8 +22,22 @@ export class SwitcheoService {
         private utilityService: UtilityService
     ) { }
 
-    public getTokenList(): Observable<Response> {
-        return this.http.get<any>(`${this.switcheoEndpoint}/exchange/tokens`);
+    public getTokenList(): Observable<Token[]> {
+        return this.http.get(`${this.switcheoEndpoint}/exchange/tokens`)
+            .pipe(
+                map((response: ResponseToken)=>{
+                    let tokenList: Token[] = [];
+                    Object.keys(response).forEach(key => {
+                        let responseToken: ResponseToken = response[key];
+                        let token: Token = {
+                            decimals: responseToken.decimals,
+                            hash: responseToken.hash
+                        };
+                        tokenList[key] = token;
+                    });
+                    return tokenList;
+                })
+            );
     }
 
     public getContractWalletBalance(): Observable<Response> {
