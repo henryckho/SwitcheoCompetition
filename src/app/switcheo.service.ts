@@ -11,6 +11,7 @@ import { ResponseToken } from './models/responseToken';
 import { Token } from './models/token';
 import { CreateWithdraw } from './models/createWithdraw';
 import { ResponseCreateWithdraw } from './models/responseCreateWithdraw';
+import { ExecuteWithdraw } from './models/executeWithdraw';
 
 @Injectable({ providedIn: 'root' })
 export class SwitcheoService {
@@ -56,9 +57,9 @@ export class SwitcheoService {
     private createWithdrawTokens(blockchain: string, token: string, amount: string): Observable<ResponseCreateWithdraw> {
         let address: string = this.walletService.getScriptHash();
         let params: CreateWithdraw = {
-            blockchain: blockchain,
+            blockchain,
             asset_id: token,
-            amount: amount,
+            amount,
             contract_hash: this.contractHashV2,
             timestamp: this.utilityService.getTimestamp()
         };
@@ -69,8 +70,11 @@ export class SwitcheoService {
     }
 
     private executeWithdrawToken(id: string) : Observable<Object> {
-        let params = {id, timestamp: this.utilityService.getTimestamp() };
-        let signature = this.walletService.signParams(params);
+        let params: ExecuteWithdraw = {
+            id,
+            timestamp: this.utilityService.getTimestamp()
+        };
+        let signature: string = this.walletService.signParams(params);
         let apiParams = { ...params, signature };
         
         return this.http.post(`${this.switcheoEndpoint}/withdrawals/${id}/broadcast`, apiParams);
