@@ -28,7 +28,7 @@ export class SCWalletComponent implements OnInit {
             .subscribe((tokenList: Token[]) => this.tokenList = tokenList);
     }
 
-    public loadWallet() {
+    public loadWallet(): void {
         this.isLoading = true;
         this.resetWallet();
 
@@ -40,18 +40,18 @@ export class SCWalletComponent implements OnInit {
         });
     }
 
-    public withdraw(blockchain, token, contractWallet) {
+    public withdraw(blockchain, token, contractWallet): void {
         contractWallet.isWithdrawDisabled = true;
         this.switcheoService.withdrawTokens(blockchain, token, contractWallet.walletBalance).subscribe();
     }
 
-    private resetWallet() {
+    private resetWallet(): void {
         this.contractWalletBalance = {};
         this.lockedWalletBalance = {};
         this.assetList = [];
     }
 
-    private buildBalances(walletBalance) {
+    private buildBalances(walletBalance): void {
         for(let key of Object.keys(this.tokenList)) {
             let newAsset: boolean = false;
             let assetDecimals = this.tokenList[key].decimals;
