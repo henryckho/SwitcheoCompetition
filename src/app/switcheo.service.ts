@@ -25,7 +25,7 @@ export class SwitcheoService {
     public getTokenList(): Observable<Token[]> {
         return this.http.get(`${this.switcheoEndpoint}/exchange/tokens`)
             .pipe(
-                map((response: ResponseToken)=>{
+                map((response: any) => {
                     let tokenList: Token[] = [];
                     Object.keys(response).forEach(key => {
                         let responseToken: ResponseToken = response[key];
