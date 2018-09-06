@@ -11,12 +11,12 @@ import { Token } from '../models/token';
 })
 
 export class SCWalletComponent implements OnInit {
-    isLoading: boolean = false;
-    isWalletLoaded: boolean = false;
-    tokenList: Token[] = [];
-    assetList: string[] = [];
-    contractWalletBalance: any = {};
-    lockedWalletBalance: any = {};
+    public isLoading: boolean = false;
+    public isWalletLoaded: boolean = false;
+    private tokenList: Token[] = [];
+    private assetList: string[] = [];
+    private contractWalletBalance: any = {};
+    private lockedWalletBalance: any = {};
 
     constructor(
         private switcheoService: SwitcheoService,
@@ -46,9 +46,10 @@ export class SCWalletComponent implements OnInit {
     }
 
     private resetWallet(): void {
+        this.isWalletLoaded = false;
+        this.assetList = [];
         this.contractWalletBalance = {};
         this.lockedWalletBalance = {};
-        this.assetList = [];
     }
 
     private buildBalances(walletBalance): void {
