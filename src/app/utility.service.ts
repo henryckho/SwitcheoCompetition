@@ -24,29 +24,29 @@ export class UtilityService {
     }
 
     public signParams(reqParams): string {
-        let paramsString = stringify(reqParams);
-        let paramsHexString = u.str2hexstring(paramsString);
+        let paramsString: string = stringify(reqParams);
+        let paramsHexString: string = u.str2hexstring(paramsString);
         
-        let lengthHex = (paramsHexString.length / 2).toString(16).padStart(2, '0');
-        let serialisedTransaction = `010001f0${lengthHex}${paramsHexString}0000`;
+        let lengthHex: string = (paramsHexString.length / 2).toString(16).padStart(2, '0');
+        let serialisedTransaction: string = `010001f0${lengthHex}${paramsHexString}0000`;
         return this.signMessage(serialisedTransaction);
     }
 
     public signTransaction(transaction: tx.Transaction, privateKey: string) {
-        let serialisedTxn = tx.serializeTransaction(transaction, false)
+        let serialisedTxn: string = tx.serializeTransaction(transaction, false)
         return wallet.generateSignature(serialisedTxn, privateKey)
     }
     
-    public getTimestamp() {
+    public getTimestamp(): number{
         return new Date().getTime();
     }
     
-    public removeLastDecimalFromBalance(balance) {
+    public removeLastDecimalFromBalance(balance: string): string {
         return balance.substring(0, balance.lastIndexOf('.'));
     }
 
-    public convertBalanceToDisplay(balance, decimal) : string{
-        return (balance / Math.pow(10, decimal)).toFixed(decimal);
+    public convertBalanceToDisplay(balance: string, decimals: number) : string{
+        return (parseInt(balance) / Math.pow(10, decimals)).toFixed(decimals);
     }
     
     private signMessage(message: string): string {
