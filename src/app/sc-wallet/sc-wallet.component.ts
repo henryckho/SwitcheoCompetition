@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { SwitcheoService } from '../switcheo.service';
 import { UtilityService } from '../utility.service';
 
-import { Token } from '../models/token';
+import { ResponseToken } from '../models/response/responseToken';
 
 @Component({
     selector: 'sc-wallet',
@@ -13,7 +13,7 @@ import { Token } from '../models/token';
 export class SCWalletComponent implements OnInit {
     public isLoading: boolean = false;
     public isWalletLoaded: boolean = false;
-    private tokenList: Token[] = [];
+    private tokenList: ResponseToken[] = [];
     private assetList: string[] = [];
     private contractWalletBalance: any = {};
     private lockedWalletBalance: any = {};
@@ -25,7 +25,7 @@ export class SCWalletComponent implements OnInit {
 
     ngOnInit() {
         this.switcheoService.getTokenList()
-            .subscribe((tokenList: Token[]) => this.tokenList = tokenList);
+            .subscribe((tokenList: ResponseToken[]) => this.tokenList = tokenList);
     }
 
     public loadWallet(): void {

@@ -7,11 +7,10 @@ import { map, mergeMap } from 'rxjs/operators';
 import { WalletService } from './wallet.service';
 import { UtilityService } from './utility.service';
 
-import { ResponseToken } from './models/responseToken';
-import { Token } from './models/token';
 import { CreateWithdraw } from './models/createWithdraw';
-import { ResponseCreateWithdraw } from './models/responseCreateWithdraw';
 import { ExecuteWithdraw } from './models/executeWithdraw';
+import { ResponseCreateWithdraw } from './models/response/responseCreateWithdraw';
+import { ResponseToken } from './models/response/responseToken';
 
 @Injectable({ providedIn: 'root' })
 export class SwitcheoService {
@@ -24,22 +23,8 @@ export class SwitcheoService {
         private walletService: WalletService
     ) { }
 
-    public getTokenList(): Observable<Token[]> {
-        return this.http.get(`${this.switcheoEndpoint}/exchange/tokens`)
-            .pipe(
-                map((response: any) => {
-                    let tokenList: Token[] = [];
-                    Object.keys(response).forEach(key => {
-                        let responseToken: ResponseToken = response[key];
-                        let token: Token = {
-                            decimals: responseToken.decimals,
-                            hash: responseToken.hash
-                        };
-                        tokenList[key] = token;
-                    });
-                    return tokenList;
-                })
-            );
+    public getTokenList(): Observable<ResponseToken[]> {
+        return this.http.get<ResponseToken[]>(`${this.switcheoEndpoint}/exchange/tokens`);
     }
 
     public getContractWalletBalance(): Observable<Response> {
@@ -47,7 +32,7 @@ export class SwitcheoService {
         return this.http.get<any>(`${this.switcheoEndpoint}/balances?addresses[]=${scriptHashAddress}&contract_hashes[]=${this.contractHashV2}`);
     }
 
-    public withdrawTokens(blockchain: string, token: string, amount: string): Observable<object> {
+    public withdrawTokens(blockchain: string, token: string, amount: string): Observable<Object> {
         return this.createWithdrawTokens(blockchain, token, amount)
         .pipe(
             mergeMap((response: ResponseCreateWithdraw) => this.executeWithdrawToken(response.id))
