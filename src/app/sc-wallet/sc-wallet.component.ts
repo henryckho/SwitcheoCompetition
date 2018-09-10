@@ -4,6 +4,9 @@ import { SwitcheoService } from '../switcheo.service';
 import { UtilityService } from '../utility.service';
 
 import { ResponseToken } from '../models/response/responseToken';
+import { ResponseContractWallet } from '../models/response/responseContractWallet';
+import { ContractWalletBalance } from '../models/contractWalletBalance';
+import { LockedWalletBalance } from '../models/lockedWalletBalance';
 
 @Component({
     selector: 'sc-wallet',
@@ -13,10 +16,10 @@ import { ResponseToken } from '../models/response/responseToken';
 export class SCWalletComponent implements OnInit {
     public isLoading: boolean = false;
     public isWalletLoaded: boolean = false;
-    private tokenList: ResponseToken[] = [];
+    private tokenList: ResponseToken = {};
     private assetList: string[] = [];
-    private contractWalletBalance: any = {};
-    private lockedWalletBalance: any = {};
+    private contractWalletBalance: {[key:string]: ContractWalletBalance} = {};
+    private lockedWalletBalance: {[key:string]: LockedWalletBalance} = {};
 
     constructor(
         private switcheoService: SwitcheoService,
@@ -25,7 +28,7 @@ export class SCWalletComponent implements OnInit {
 
     ngOnInit() {
         this.switcheoService.getTokenList()
-            .subscribe((tokenList: ResponseToken[]) => this.tokenList = tokenList);
+            .subscribe((tokenList: ResponseToken) => this.tokenList = tokenList);
     }
 
     public loadWallet(): void {
@@ -33,11 +36,11 @@ export class SCWalletComponent implements OnInit {
         this.resetWallet();
 
         this.switcheoService.getContractWalletBalance()
-        .subscribe(walletBalance => {
-            this.buildBalances(walletBalance);
-            this.isLoading = false;
-            this.isWalletLoaded = true;
-        });
+            .subscribe((walletBalance: ResponseContractWallet) => {
+                this.buildBalances(walletBalance);
+                this.isLoading = false;
+                this.isWalletLoaded = true;
+            });
     }
 
     public withdraw(blockchain, token, contractWallet): void {
@@ -52,14 +55,14 @@ export class SCWalletComponent implements OnInit {
         this.lockedWalletBalance = {};
     }
 
-    private buildBalances(walletBalance): void {
+    private buildBalances(walletBalance: ResponseContractWallet): void {
         for(let key of Object.keys(this.tokenList)) {
             let newAsset: boolean = false;
-            let assetDecimals = this.tokenList[key].decimals;
-            let confirmedToken = walletBalance.confirmed[key];
-            let lockedToken = walletBalance.locked[key];
+            let assetDecimals: number = this.tokenList[key].decimals;
+            let confirmedToken: string = walletBalance.confirmed[key];
+            let lockedToken: string = walletBalance.locked[key];
 
-            if(confirmedToken && confirmedToken > 0) {
+            if(confirmedToken && parseInt(confirmedToken) > 0) {
                 let confirmedTokenWalletBalance = this.utilityService.removeLastDecimalFromBalance(confirmedToken);
                 let confirmedTokenDisplayBalance = this.utilityService.convertBalanceToDisplay(confirmedTokenWalletBalance, assetDecimals);
                 this.contractWalletBalance[key] = {
@@ -70,7 +73,7 @@ export class SCWalletComponent implements OnInit {
                 newAsset = true;
             }
 
-            if(lockedToken && lockedToken > 0) {
+            if(lockedToken && parseInt(lockedToken) > 0) {
                 let lockedTokenWalletBalance = this.utilityService.removeLastDecimalFromBalance(lockedToken);
                 let lockedTokenDisplayBalance = this.utilityService.convertBalanceToDisplay(lockedTokenWalletBalance, assetDecimals);
                 this.lockedWalletBalance[key] = {

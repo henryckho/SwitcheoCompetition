@@ -1,4 +1,6 @@
 export class ResponseToken {
-    hash: string;
-    decimals: number;
+    [key:string] : {
+        hash: string;
+        decimals: number;
+    }
 }

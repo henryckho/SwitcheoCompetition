@@ -11,6 +11,7 @@ import { CreateWithdraw } from './models/createWithdraw';
 import { ExecuteWithdraw } from './models/executeWithdraw';
 import { ResponseCreateWithdraw } from './models/response/responseCreateWithdraw';
 import { ResponseToken } from './models/response/responseToken';
+import { ResponseContractWallet } from './models/response/responseContractWallet';
 
 @Injectable({ providedIn: 'root' })
 export class SwitcheoService {
@@ -23,13 +24,13 @@ export class SwitcheoService {
         private walletService: WalletService
     ) { }
 
-    public getTokenList(): Observable<ResponseToken[]> {
-        return this.http.get<ResponseToken[]>(`${this.switcheoEndpoint}/exchange/tokens`);
+    public getTokenList(): Observable<ResponseToken> {
+        return this.http.get<ResponseToken>(`${this.switcheoEndpoint}/exchange/tokens`);
     }
 
-    public getContractWalletBalance(): Observable<Response> {
+    public getContractWalletBalance(): Observable<ResponseContractWallet> {
         let scriptHashAddress: string = this.walletService.getScriptHash();
-        return this.http.get<any>(`${this.switcheoEndpoint}/balances?addresses[]=${scriptHashAddress}&contract_hashes[]=${this.contractHashV2}`);
+        return this.http.get<ResponseContractWallet>(`${this.switcheoEndpoint}/balances?addresses[]=${scriptHashAddress}&contract_hashes[]=${this.contractHashV2}`);
     }
 
     public withdrawTokens(blockchain: string, token: string, amount: string): Observable<Object> {
