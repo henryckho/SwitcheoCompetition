@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { SCLoginComponent } from './sc-login/sc-login.component';
 import { SCWalletComponent } from './sc-wallet/sc-wallet.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SCContractComponent } from './sc-contract/sc-contract.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SCLoginComponent,
-    SCWalletComponent
+    SCWalletComponent,
+    SCContractComponent
   ],
   imports: [
     BrowserModule,

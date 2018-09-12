@@ -28,7 +28,11 @@ export class SCWalletComponent implements OnInit {
 
     ngOnInit() {
         this.switcheoService.getTokenList()
-            .subscribe((tokenList: ResponseToken) => this.tokenList = tokenList);
+        .subscribe((tokenList: ResponseToken) => {
+            this.tokenList = tokenList;
+            this.loadWallet();
+        });
+        
     }
 
     public loadWallet(): void {

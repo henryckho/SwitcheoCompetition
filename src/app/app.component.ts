@@ -1,17 +1,20 @@
-import { Component, ViewChild } from '@angular/core';
-import { SCWalletComponent } from './sc-wallet/sc-wallet.component';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  @ViewChild(SCWalletComponent) scWallet: SCWalletComponent;
+    private title = 'Switcheo Competition';
+    private loadLoginComponent = false;
+    private loadWalletComponent = false;
 
-  title = 'Switcheo Competition';
+    public loadLogin() {
+        this.loadLoginComponent = true;
+    }
 
-  public loadWallet() {
-    this.scWallet.loadWallet();
-  }
+    public loadWallet() {
+        this.loadWalletComponent = true;
+    }
 }
