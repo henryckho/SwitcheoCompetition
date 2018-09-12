@@ -7,6 +7,8 @@ import { tap, map } from 'rxjs/operators';
 import { WalletService } from './wallet.service';
 import { UtilityService } from './utility.service';
 
+import { config } from './app.config';
+
 import { CreateWithdraw } from './models/createWithdraw';
 import { ExecuteWithdraw } from './models/executeWithdraw';
 import { ResponseCreateWithdraw } from './models/response/responseCreateWithdraw';
@@ -14,7 +16,6 @@ import { ResponseToken } from './models/response/responseToken';
 import { ResponseContractWallet } from './models/response/responseContractWallet';
 import { ResponseContract } from './models/response/responseContract';
 import { DeploymentType } from './enum/DeploymentType';
-import { config } from './app.config';
 import { ContractVersion } from './enum/ContractVersion';
 
 @Injectable({ providedIn: 'root' })
