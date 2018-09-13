@@ -12,8 +12,8 @@ import { ContractVersion } from '../enum/ContractVersion';
 
 export class SCContractComponent {
     @Output() loadLogin = new EventEmitter();   
-    private deploymentType: string = null;
-    private contractVersion: string = null;
+    private deploymentType: string = "0";
+    private contractVersion: string = "2";
 
     constructor(
         private switcheoService: SwitcheoService

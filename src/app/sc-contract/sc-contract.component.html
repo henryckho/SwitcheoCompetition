@@ -1,12 +1,12 @@
 <div>
     <select [(ngModel)]="deploymentType">
-        <option value="0" selected="selected">Mainnet</option>
+        <option value="0">Mainnet</option>
         <option value="1">Testnet</option>
     </select>
     <select [(ngModel)]="contractVersion">
         <option value="0">v1</option>
         <option value="1">v1.5</option>
-        <option value="2" selected="selected">v2</option>
+        <option value="2">v2</option>
     </select>
     <input type="submit" (click)="selectContract()" />
 </div>
