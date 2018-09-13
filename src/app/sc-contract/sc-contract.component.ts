@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 
 import { SwitcheoService } from '../switcheo.service';
 
@@ -10,7 +10,7 @@ import { ContractVersion } from '../enum/ContractVersion';
     templateUrl: 'sc-contract.component.html'
 })
 
-export class SCContractComponent {
+export class SCContractComponent implements OnInit {
     @Output() loadLogin = new EventEmitter();   
     private deploymentType: string = "0";
     private contractVersion: string = "2";
@@ -18,6 +18,10 @@ export class SCContractComponent {
     constructor(
         private switcheoService: SwitcheoService
     ) { }
+
+    ngOnInit() {
+        this.selectContract();
+    }
 
     public selectContract() {
         let deploymentType: DeploymentType = parseInt(this.deploymentType);
