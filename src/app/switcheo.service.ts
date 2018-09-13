@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
+import { tap, mergeMap } from 'rxjs/operators';
 
 import { WalletService } from './wallet.service';
 import { UtilityService } from './utility.service';
@@ -61,7 +61,7 @@ export class SwitcheoService {
     public withdrawTokens(blockchain: string, token: string, amount: string): Observable<Object> {
         return this.createWithdrawTokens(blockchain, token, amount)
         .pipe(
-            map((response: ResponseCreateWithdraw) => this.executeWithdrawToken(response.id))
+            mergeMap((response: ResponseCreateWithdraw) => this.executeWithdrawToken(response.id))
         );
     }
 
