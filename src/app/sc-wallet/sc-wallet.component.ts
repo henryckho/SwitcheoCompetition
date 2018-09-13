@@ -32,7 +32,6 @@ export class SCWalletComponent implements OnInit {
             this.tokenList = tokenList;
             this.loadWallet();
         });
-        
     }
 
     public loadWallet(): void {
