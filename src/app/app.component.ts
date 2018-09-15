@@ -15,6 +15,11 @@ export class AppComponent {
         this.loadWalletComponent = false;
     }
 
+    public changeContract() {
+        this.loadLoginComponent = false;
+        this.loadWalletComponent = false;
+    }
+
     public loadWallet() {
         this.loadWalletComponent = true;
     }

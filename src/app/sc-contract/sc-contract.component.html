@@ -1,12 +1,17 @@
 <div>
-    <select [(ngModel)]="deploymentType">
+    <select [(ngModel)]="deploymentType" [disabled]="selectedContract">
         <option value="0">Testnet</option>
         <option value="1">Mainnet</option>
     </select>
-    <select [(ngModel)]="contractVersion">
+    <select [(ngModel)]="contractVersion" [disabled]="selectedContract">
         <option value="0">v1</option>
         <option value="1">v1.5</option>
         <option value="2">v2</option>
     </select>
-    <input type="submit" (click)="selectContract()" />
+    <button *ngIf="selectedContract" (click)="editContract()">
+        Edit
+    </button>
+    <button *ngIf="!selectedContract" (click)="selectContract()">
+        Submit
+    </button>
 </div>

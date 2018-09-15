@@ -1,4 +1,4 @@
 <h1>{{title}}</h1>
-<sc-contract (loadLogin)="loadLogin()"></sc-contract>
+<sc-contract (loadLogin)="loadLogin()" (changeContract)="changeContract()"></sc-contract>
 <sc-login *ngIf="loadLoginComponent" (loadWallet)="loadWallet()"></sc-login>
 <sc-wallet *ngIf="loadWalletComponent"></sc-wallet>
