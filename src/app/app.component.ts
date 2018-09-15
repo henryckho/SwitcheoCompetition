@@ -12,6 +12,7 @@ export class AppComponent {
 
     public loadLogin() {
         this.loadLoginComponent = true;
+        this.loadWalletComponent = false;
     }
 
     public loadWallet() {
