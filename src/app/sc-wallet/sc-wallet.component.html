@@ -8,6 +8,7 @@
                     <span>
                         {{contractWalletBalance[key].displayBalance}}
                     </span>
+                    <a href="javascript:void(0);" (click)="contractWalletBalance[key].withdrawAmount = contractWalletBalance[key].displayBalance">Max</a>
                     <input type="number"
                             (input)="displayInputAsDecimal($event, key)"
                             [(ngModel)]="contractWalletBalance[key].withdrawAmount"
