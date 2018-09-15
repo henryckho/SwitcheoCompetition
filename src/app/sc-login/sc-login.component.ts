@@ -8,16 +8,24 @@ import { WalletService } from '../wallet.service';
 
 export class SCLoginComponent {
     @Output() loadWallet = new EventEmitter();
+    @Output() logoutWallet = new EventEmitter();
     private privateKey: string = "";
+    private loggedIntoWallet: boolean = false;
 
     constructor(
         private walletService: WalletService
     ) { }
 
     public loginToWallet() {
-        let loggedInToWallet = this.walletService.loginToWallet(this.privateKey);
-        if(loggedInToWallet) {
+        this.loggedIntoWallet = this.walletService.login(this.privateKey);
+        if(this.loggedIntoWallet) {
             this.loadWallet.emit();
         }
+    }
+
+    public logoutOfWallet() {
+        this.loggedIntoWallet = false;
+        this.walletService.logout();
+        this.logoutWallet.emit();
     }
 }

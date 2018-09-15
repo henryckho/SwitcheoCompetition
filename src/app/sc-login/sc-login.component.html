@@ -1,4 +1,5 @@
 <div>
     <input type="text" [(ngModel)]="privateKey" placeholder="Private Key" />
-    <input type="submit" (click)="loginToWallet()" />
+    <button (click)="logoutOfWallet()" *ngIf="loggedIntoWallet">Logout</button>
+    <button (click)="loginToWallet()" [disabled]="!privateKey" *ngIf="!loggedIntoWallet">Login</button>
 </div>

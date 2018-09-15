@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { WalletService } from './wallet.service';
 
 @Component({
     selector: 'app-root',
@@ -10,6 +11,10 @@ export class AppComponent {
     private loadLoginComponent = false;
     private loadWalletComponent = false;
 
+    constructor(
+        private walletService: WalletService,
+    ) { }
+
     public loadLogin() {
         this.loadLoginComponent = true;
         this.loadWalletComponent = false;
@@ -17,10 +22,15 @@ export class AppComponent {
 
     public changeContract() {
         this.loadLoginComponent = false;
-        this.loadWalletComponent = false;
+        this.logoutWallet();
     }
 
     public loadWallet() {
         this.loadWalletComponent = true;
+    }
+
+    public logoutWallet() {
+        this.walletService.logout();
+        this.loadWalletComponent = false;
     }
 }

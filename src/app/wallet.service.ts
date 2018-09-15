@@ -9,7 +9,7 @@ export class WalletService {
 
     constructor() { }
 
-    public loginToWallet(privateKey: string) : boolean {
+    public login(privateKey: string): boolean {
         this.loggedInWallet = null;
 
         if(privateKey) {
@@ -20,6 +20,10 @@ export class WalletService {
         }
         
         return this.loggedInWallet != null;
+    }
+
+    public logout(): void {
+        this.loggedInWallet = null;
     }
 
     public getPrivateKey(): string {
