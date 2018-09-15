@@ -1,6 +1,7 @@
 <div *ngIf="!loggedIntoWallet">
     <input type="password" [(ngModel)]="privateKey" placeholder="Private Key" />
     <button (click)="loginToWallet()" [disabled]="!privateKey" >Login</button>
+    <span *ngIf="errorMessage">{{errorMessage}}</span>
 </div>
 <div *ngIf="loggedIntoWallet">
     <input type="text" [(ngModel)]="address" disabled />
