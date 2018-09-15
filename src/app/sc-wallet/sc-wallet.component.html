@@ -17,6 +17,7 @@
                     <button (click)="withdraw('neo', key)" [disabled]="contractWalletBalance[key].isWithdrawDisabled">
                         Withdraw
                     </button>
+                    <span *ngIf="contractWalletBalance[key].errorMessage">{{contractWalletBalance[key].errorMessage}}</span>
                 </div>
                 <div *ngIf="lockedWalletBalance[key] != null && lockedWalletBalance[key].displayBalance > 0">
                     <b>{{lockedWalletBalance[key].displayBalance}}</b>

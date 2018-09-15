@@ -3,4 +3,5 @@ export class ContractWalletBalance {
     displayBalance: string;
     isWithdrawDisabled: boolean;
     withdrawAmount?: number;
+    errorMessage?: string;
 }
