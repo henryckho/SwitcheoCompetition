@@ -30,29 +30,20 @@ export class SCWalletComponent implements OnInit {
         this.switcheoService.getTokenList()
         .subscribe((tokenList: ResponseTokenList) => {
             this.tokenList = tokenList;
-            this.loadWallet();
+            this.isLoading = true;
+            this.resetWallet();
+            this.updateWalletBalances();
         });
-    }
-
-    public loadWallet(): void {
-        this.isLoading = true;
-        this.resetWallet();
-
-        this.switcheoService.getContractWalletBalance()
-            .subscribe((walletBalance: ResponseContractWallet) => {
-                this.buildBalances(walletBalance);
-                this.isLoading = false;
-                this.isWalletLoaded = true;
-            });
     }
 
     public withdraw(blockchain, token): void {
         let tokenAsset: ResponseToken = this.tokenList[token];
         let contractWallet: ContractWalletBalance = this.contractWalletBalance[token];
         let withdrawAmount: number = this.utilityService.convertDisplayToBalance(contractWallet.withdrawAmount, tokenAsset.decimals);
+        contractWallet.isWithdrawDisabled = true;
         this.switcheoService.withdrawTokens(blockchain, token, withdrawAmount)
             .subscribe(
-                _ => contractWallet.isWithdrawDisabled = true,
+                _ => this.updateWalletBalances(),
                 (err) => contractWallet.errorMessage = err.error.error
             );
     }
@@ -69,7 +60,16 @@ export class SCWalletComponent implements OnInit {
         this.lockedWalletBalance = {};
     }
 
-    private buildBalances(walletBalance: ResponseContractWallet): void {
+    private updateWalletBalances() {
+        this.switcheoService.getContractWalletBalance()
+            .subscribe((walletBalance: ResponseContractWallet) => {
+                this.buildWalletBalances(walletBalance);
+                this.isLoading = false;
+                this.isWalletLoaded = true;
+            });
+    }
+
+    private buildWalletBalances(walletBalance: ResponseContractWallet): void {
         for(let key of Object.keys(this.tokenList)) {
             let newAsset: boolean = false;
             let assetDecimals: number = this.tokenList[key].decimals;
