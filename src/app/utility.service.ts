@@ -13,7 +13,11 @@ export class UtilityService {
         return balance.substring(0, balance.lastIndexOf('.'));
     }
 
-    public convertBalanceToDisplay(balance: string, decimals: number) : string{
+    public convertBalanceToDisplay(balance: string, decimals: number) : string {
         return (parseInt(balance) / Math.pow(10, decimals)).toFixed(decimals);
+    }
+
+    public convertDisplayToBalance(balance: number, decimals: number) : number {
+        return balance * Math.pow(10, decimals);
     }
 }

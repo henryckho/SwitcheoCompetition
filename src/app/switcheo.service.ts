@@ -58,7 +58,7 @@ export class SwitcheoService {
         return this.http.get<ResponseContractWallet>(`${this.switcheoEndpoint}/balances?addresses[]=${scriptHashAddress}&contract_hashes[]=${this.contractHash}`);
     }
 
-    public withdrawTokens(blockchain: string, token: string, amount: string): Observable<Object> {
+    public withdrawTokens(blockchain: string, token: string, amount: number): Observable<Object> {
         return this.createWithdrawTokens(blockchain, token, amount)
         .pipe(
             mergeMap((response: ResponseCreateWithdraw) => this.executeWithdrawToken(response.id))
@@ -69,7 +69,7 @@ export class SwitcheoService {
         return this.http.get<ResponseContract>(`${this.switcheoEndpoint}/exchange/contracts`);
     }
 
-    private createWithdrawTokens(blockchain: string, token: string, amount: string): Observable<ResponseCreateWithdraw> {
+    private createWithdrawTokens(blockchain: string, token: string, amount: number): Observable<ResponseCreateWithdraw> {
         let address: string = this.walletService.getScriptHash();
         let params: CreateWithdraw = {
             blockchain,

@@ -8,6 +8,12 @@
                     <span>
                         {{contractWalletBalance[key].displayBalance}}
                     </span>
+                    <input type="number"
+                            (input)="displayInputAsDecimal($event, key)"
+                            [(ngModel)]="contractWalletBalance[key].withdrawAmount"
+                            min="0"
+                            max="{{contractWalletBalance[key].displayBalance}}"
+                            step="0.00000001" />
                     <button (click)="withdraw('neo', key)" [disabled]="contractWalletBalance[key].isWithdrawDisabled">
                         Withdraw
                     </button>
