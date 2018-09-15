@@ -1,5 +1,8 @@
-<div>
-    <input type="text" [(ngModel)]="privateKey" placeholder="Private Key" />
-    <button (click)="logoutOfWallet()" *ngIf="loggedIntoWallet">Logout</button>
-    <button (click)="loginToWallet()" [disabled]="!privateKey" *ngIf="!loggedIntoWallet">Login</button>
+<div *ngIf="!loggedIntoWallet">
+    <input type="password" [(ngModel)]="privateKey" placeholder="Private Key" />
+    <button (click)="loginToWallet()" [disabled]="!privateKey" >Login</button>
+</div>
+<div *ngIf="loggedIntoWallet">
+    <input type="text" [(ngModel)]="address" disabled />
+    <button (click)="logoutOfWallet()">Logout</button>
 </div>

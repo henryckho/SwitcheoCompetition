@@ -26,6 +26,10 @@ export class WalletService {
         this.loggedInWallet = null;
     }
 
+    public getAddress(): string {
+        return this.loggedInWallet.address;
+    }
+
     public getPrivateKey(): string {
         return this.loggedInWallet.privateKey;
     }
