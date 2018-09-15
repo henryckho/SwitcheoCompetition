@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { SwitcheoService } from '../switcheo.service';
 import { UtilityService } from '../utility.service';
 
-import { ResponseToken } from '../models/response/responseToken';
+import { ResponseToken, ResponseTokenList } from '../models/response/responseToken';
 import { ResponseContractWallet } from '../models/response/responseContractWallet';
 import { ContractWalletBalance } from '../models/contractWalletBalance';
 import { LockedWalletBalance } from '../models/lockedWalletBalance';
@@ -16,7 +16,7 @@ import { LockedWalletBalance } from '../models/lockedWalletBalance';
 export class SCWalletComponent implements OnInit {
     public isLoading: boolean = false;
     public isWalletLoaded: boolean = false;
-    private tokenList: ResponseToken = {};
+    private tokenList: ResponseTokenList = {};
     private assetList: string[] = [];
     private contractWalletBalance: {[key:string]: ContractWalletBalance} = {};
     private lockedWalletBalance: {[key:string]: LockedWalletBalance} = {};
@@ -28,7 +28,7 @@ export class SCWalletComponent implements OnInit {
 
     ngOnInit() {
         this.switcheoService.getTokenList()
-        .subscribe((tokenList: ResponseToken) => {
+        .subscribe((tokenList: ResponseTokenList) => {
             this.tokenList = tokenList;
             this.loadWallet();
         });
@@ -46,7 +46,8 @@ export class SCWalletComponent implements OnInit {
             });
     }
 
-    public withdraw(blockchain, token, contractWallet): void {
+    public withdraw(blockchain, token): void {
+        let contractWallet: ContractWalletBalance = this.contractWalletBalance[token];
         contractWallet.isWithdrawDisabled = true;
         this.switcheoService.withdrawTokens(blockchain, token, contractWallet.walletBalance).subscribe();
     }

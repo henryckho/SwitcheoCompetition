@@ -1,6 +1,8 @@
+export class ResponseTokenList {
+    [key:string] : ResponseToken
+}
+
 export class ResponseToken {
-    [key:string] : {
-        hash: string;
-        decimals: number;
-    }
+    hash: string;
+    decimals: number;
 }

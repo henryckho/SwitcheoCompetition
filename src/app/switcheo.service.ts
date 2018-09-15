@@ -12,9 +12,9 @@ import { config } from './app.config';
 import { CreateWithdraw } from './models/createWithdraw';
 import { ExecuteWithdraw } from './models/executeWithdraw';
 import { ResponseCreateWithdraw } from './models/response/responseCreateWithdraw';
-import { ResponseToken } from './models/response/responseToken';
+import { ResponseTokenList } from './models/response/responseToken';
 import { ResponseContractWallet } from './models/response/responseContractWallet';
-import { ResponseContract } from './models/response/responseContract';
+import { ResponseContract, ResponseContractList } from './models/response/responseContract';
 import { DeploymentType } from './enum/DeploymentType';
 import { ContractVersion } from './enum/ContractVersion';
 
@@ -45,12 +45,12 @@ export class SwitcheoService {
         this.setDeploymentType(deploymentType);
         return this.getContracts()
                     .pipe(
-                        tap((response: ResponseToken) => this.contractHash = response[this.blockchain][ContractVersion[contractVersion]])
+                        tap((response: ResponseContractList) => this.contractHash = response[this.blockchain][ContractVersion[contractVersion]])
                     );
     }
 
-    public getTokenList(): Observable<ResponseToken> {
-        return this.http.get<ResponseToken>(`${this.switcheoEndpoint}/exchange/tokens`);
+    public getTokenList(): Observable<ResponseTokenList> {
+        return this.http.get<ResponseTokenList>(`${this.switcheoEndpoint}/exchange/tokens`);
     }
 
     public getContractWalletBalance(): Observable<ResponseContractWallet> {

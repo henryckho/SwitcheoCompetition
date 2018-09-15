@@ -1,5 +1,7 @@
+export class ResponseContractList {
+    [id:string]: ResponseContract;
+}
+
 export class ResponseContract {
-    [id:string]: {
-        [id:string] : string;
-    };
+    [id:string] : string;
 }

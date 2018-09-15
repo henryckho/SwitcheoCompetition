@@ -8,7 +8,7 @@
                     <span>
                         {{contractWalletBalance[key].displayBalance}}
                     </span>
-                    <button (click)="withdraw('neo', key, contractWalletBalance[key])" [disabled]="contractWalletBalance[key].isWithdrawDisabled">
+                    <button (click)="withdraw('neo', key)" [disabled]="contractWalletBalance[key].isWithdrawDisabled">
                         Withdraw
                     </button>
                 </div>
