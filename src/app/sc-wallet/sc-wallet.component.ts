@@ -50,8 +50,11 @@ export class SCWalletComponent implements OnInit {
         let tokenAsset: ResponseToken = this.tokenList[token];
         let contractWallet: ContractWalletBalance = this.contractWalletBalance[token];
         let withdrawAmount: number = this.utilityService.convertDisplayToBalance(contractWallet.withdrawAmount, tokenAsset.decimals);
-        contractWallet.isWithdrawDisabled = true;
-        this.switcheoService.withdrawTokens(blockchain, token, withdrawAmount).subscribe();
+        this.switcheoService.withdrawTokens(blockchain, token, withdrawAmount)
+            .subscribe(
+                _ => contractWallet.isWithdrawDisabled = true,
+                (err) => console.log(err)
+            );
     }
 
     public displayInputAsDecimal(element, token) {
