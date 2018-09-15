@@ -1,4 +1,4 @@
 export enum DeploymentType {
-    Mainnet = 0,
-    Testnet = 1
+    Testnet = 0,
+    Mainnet = 1
 }
