@@ -71,6 +71,11 @@ export class SCWalletComponent implements OnInit {
 
     private buildWalletBalances(walletBalance: ResponseContractWallet): void {
         for(let key of Object.keys(this.tokenList)) {
+            let existingAsset: number = this.assetList.indexOf(key);
+            if(existingAsset > -1){
+                this.removeAsset(key);
+            }
+
             let newAsset: boolean = false;
             let assetDecimals: number = this.tokenList[key].decimals;
             let confirmedToken: string = walletBalance.confirmed[key];
@@ -103,5 +108,11 @@ export class SCWalletComponent implements OnInit {
                 }
             }
         }
+    }
+
+    private removeAsset(token: string) {
+        this.assetList.splice(this.assetList.indexOf(token), 1);
+        delete this.contractWalletBalance[token];
+        delete this.lockedWalletBalance[token];
     }
 }
