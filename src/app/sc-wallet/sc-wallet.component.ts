@@ -53,6 +53,11 @@ export class SCWalletComponent implements OnInit {
 
     public displayInput(element, token): void {
         let tokenAsset: ResponseToken = this.tokenList[token];
+
+        if(element.data == "-") {
+            element.target.value = 0;
+            return;
+        }
         
         //Handle the length of the input text
         let fixedDecimalValue: string = Number(element.target.value).toFixed(tokenAsset.decimals);
