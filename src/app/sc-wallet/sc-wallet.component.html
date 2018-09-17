@@ -10,11 +10,11 @@
                     </span>
                     <a href="javascript:void(0);" (click)="contractWalletBalance[key].withdrawAmount = contractWalletBalance[key].displayBalance">Max</a>
                     <input type="number"
-                            (input)="displayInputAsDecimal($event, key)"
+                            (input)="displayInput($event, key)"
                             [(ngModel)]="contractWalletBalance[key].withdrawAmount"
                             min="0"
                             max="{{contractWalletBalance[key].displayBalance}}"
-                            step="0.00000001" />
+                            step="{{contractWalletBalance[key].withdrawInputSteps}}" />
                     <button (click)="withdraw('neo', key)" [disabled]="contractWalletBalance[key].isWithdrawDisabled">
                         Withdraw
                     </button>

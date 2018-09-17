@@ -48,9 +48,21 @@ export class SCWalletComponent implements OnInit {
             );
     }
 
-    public displayInputAsDecimal(element, token) {
+    public displayInput(element, token) {
         let tokenAsset: ResponseToken = this.tokenList[token];
-        element.target.value = Number(element.target.value).toFixed(tokenAsset.decimals);
+        
+        //Handle the length of the input text
+        let fixedDecimalValue: string = Number(element.target.value).toFixed(tokenAsset.decimals);
+        if(element.target.value.length > fixedDecimalValue.length) {
+            element.target.value = fixedDecimalValue;
+        }
+
+        //Handle the value of the input
+        let numberValue: number = Number(element.target.value);
+        let walletBalance: ContractWalletBalance = this.contractWalletBalance[token];
+        if(numberValue > Number(walletBalance.displayBalance)) {
+            element.target.value = walletBalance.displayBalance;
+        }
     }
 
     private resetWallet(): void {
@@ -81,18 +93,19 @@ export class SCWalletComponent implements OnInit {
             let confirmedToken: string = walletBalance.confirmed[key];
             let lockedToken: string = walletBalance.locked[key];
 
-            if(confirmedToken && parseInt(confirmedToken) > 0) {
+            if(confirmedToken && Number(confirmedToken) > 0) {
                 let confirmedTokenWalletBalance = this.utilityService.removeLastDecimalFromBalance(confirmedToken);
                 let confirmedTokenDisplayBalance = this.utilityService.convertBalanceToDisplay(confirmedTokenWalletBalance, assetDecimals);
                 this.contractWalletBalance[key] = {
                     walletBalance: confirmedTokenWalletBalance,
                     displayBalance: confirmedTokenDisplayBalance,
-                    isWithdrawDisabled: false
+                    isWithdrawDisabled: false,
+                    withdrawInputSteps: this.utilityService.convertDecimalsForStepInput(assetDecimals)
                 };
                 newAsset = true;
             }
 
-            if(lockedToken && parseInt(lockedToken) > 0) {
+            if(lockedToken && Number(lockedToken) > 0) {
                 let lockedTokenWalletBalance = this.utilityService.removeLastDecimalFromBalance(lockedToken);
                 let lockedTokenDisplayBalance = this.utilityService.convertBalanceToDisplay(lockedTokenWalletBalance, assetDecimals);
                 this.lockedWalletBalance[key] = {
