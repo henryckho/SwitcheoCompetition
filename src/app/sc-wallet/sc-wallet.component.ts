@@ -47,7 +47,10 @@ export class SCWalletComponent implements OnInit {
         this.switcheoService.withdrawTokens(blockchain, token, withdrawAmount)
             .subscribe(
                 _ => this.updateWalletBalances(),
-                (err) => contractWallet.errorMessage = err.error.error
+                (err) => {
+                    contractWallet.errorMessage = err.error.error;
+                    contractWallet.isWithdrawDisabled = false;
+                }
             );
     }
 
