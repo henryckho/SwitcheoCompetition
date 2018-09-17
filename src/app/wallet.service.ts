@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { u, wallet, tx } from '@cityofzion/neon-js';
+import { u, wallet } from '@cityofzion/neon-js';
 
 import stringify from 'json-stable-stringify';
 
