@@ -8,6 +8,8 @@ import { ResponseContractWallet, ConfirmingWallet } from '../models/response/res
 import { ContractWalletBalance } from '../models/contractWalletBalance';
 import { LockedWalletBalance } from '../models/lockedWalletBalance';
 
+import { config } from '../app.config';
+
 @Component({
     selector: 'sc-wallet',
     templateUrl: 'sc-wallet.component.html'
@@ -84,7 +86,7 @@ export class SCWalletComponent implements OnInit {
             this.refreshMessage = "";
             this.updateWalletBalances();
         } else {
-            this.refreshMessage = "Can only refresh contract balance once within a minute";
+            this.refreshMessage = config.REFRESH_WALLET_MESSAGE;
         }
     }
 
