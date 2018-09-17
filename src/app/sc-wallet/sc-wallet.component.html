@@ -1,5 +1,7 @@
 <div>
     <h1>Contract Wallet</h1>
+    <button (click)="refreshBalance()">Refresh</button>
+    <span *ngIf="refreshMessage">{{refreshMessage}}</span>
     <div *ngIf="isWalletLoaded">
         <ul>
             <li *ngFor="let key of assetList">

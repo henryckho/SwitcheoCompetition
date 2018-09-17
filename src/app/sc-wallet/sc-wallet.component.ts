@@ -20,6 +20,8 @@ export class SCWalletComponent implements OnInit {
     private assetList: string[] = [];
     private contractWalletBalance: {[key:string]: ContractWalletBalance} = {};
     private lockedWalletBalance: {[key:string]: LockedWalletBalance} = {};
+    private lastUpdatedBalance: number = null;
+    private refreshMessage: string = "";
 
     constructor(
         private switcheoService: SwitcheoService,
@@ -65,6 +67,16 @@ export class SCWalletComponent implements OnInit {
         }
     }
 
+    public refreshBalance(): void {
+        let millisecondsNow = new Date().getTime();
+        if(millisecondsNow - this.lastUpdatedBalance > 60000) {
+            this.refreshMessage = "";
+            this.updateWalletBalances();
+        } else {
+            this.refreshMessage = "Can only refresh contract balance once within a minute";
+        }
+    }
+
     private resetWallet(): void {
         this.isWalletLoaded = false;
         this.assetList = [];
@@ -75,6 +87,7 @@ export class SCWalletComponent implements OnInit {
     private updateWalletBalances(): void {
         this.switcheoService.getContractWalletBalance()
             .subscribe((walletBalance: ResponseContractWallet) => {
+                this.lastUpdatedBalance = new Date().getTime();
                 this.buildWalletBalances(walletBalance);
                 this.isLoading = false;
                 this.isWalletLoaded = true;
