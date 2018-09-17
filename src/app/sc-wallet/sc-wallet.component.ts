@@ -48,7 +48,7 @@ export class SCWalletComponent implements OnInit {
             );
     }
 
-    public displayInput(element, token) {
+    public displayInput(element, token): void {
         let tokenAsset: ResponseToken = this.tokenList[token];
         
         //Handle the length of the input text
@@ -72,7 +72,7 @@ export class SCWalletComponent implements OnInit {
         this.lockedWalletBalance = {};
     }
 
-    private updateWalletBalances() {
+    private updateWalletBalances(): void {
         this.switcheoService.getContractWalletBalance()
             .subscribe((walletBalance: ResponseContractWallet) => {
                 this.buildWalletBalances(walletBalance);

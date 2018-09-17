@@ -25,12 +25,12 @@ export class SCContractComponent implements OnInit {
         this.selectContract();
     }
 
-    public editContract() {
+    public editContract(): void {
         this.selectedContract = false;
         this.changeContract.emit();
     }
 
-    public selectContract() {
+    public selectContract(): void {
         this.selectedContract = true;
         let deploymentType: DeploymentType = parseInt(this.deploymentType);
         let contractVersion: ContractVersion = parseInt(this.contractVersion);

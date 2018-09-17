@@ -19,7 +19,7 @@ export class SCLoginComponent {
         private walletService: WalletService
     ) { }
 
-    public loginToWallet() {
+    public loginToWallet(): void {
         this.loggedIntoWallet = this.walletService.login(this.privateKey);
         if(this.loggedIntoWallet) {
             this.address = this.walletService.getAddress();
@@ -29,7 +29,7 @@ export class SCLoginComponent {
         }
     }
 
-    public logoutOfWallet() {
+    public logoutOfWallet(): void {
         this.loggedIntoWallet = false;
         this.address = "";
         this.privateKey = "";
