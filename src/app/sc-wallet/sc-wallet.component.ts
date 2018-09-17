@@ -4,7 +4,7 @@ import { SwitcheoService } from '../switcheo.service';
 import { UtilityService } from '../utility.service';
 
 import { ResponseToken, ResponseTokenList } from '../models/response/responseToken';
-import { ResponseContractWallet } from '../models/response/responseContractWallet';
+import { ResponseContractWallet, ConfirmingWallet } from '../models/response/responseContractWallet';
 import { ContractWalletBalance } from '../models/contractWalletBalance';
 import { LockedWalletBalance } from '../models/lockedWalletBalance';
 
@@ -20,6 +20,7 @@ export class SCWalletComponent implements OnInit {
     private assetList: string[] = [];
     private contractWalletBalance: {[key:string]: ContractWalletBalance} = {};
     private lockedWalletBalance: {[key:string]: LockedWalletBalance} = {};
+    private confirmingWalletBalance: {[key:string]: ConfirmingWallet[]} = {};
     private lastUpdatedBalance: number = null;
     private refreshMessage: string = "";
 
@@ -97,6 +98,7 @@ export class SCWalletComponent implements OnInit {
     }
 
     private buildWalletBalances(walletBalance: ResponseContractWallet): void {
+        let confirmingWallet: {[key:string]: ConfirmingWallet[]} = walletBalance.confirming;
         for(let key of Object.keys(this.tokenList)) {
             let existingAsset: number = this.assetList.indexOf(key);
             if(existingAsset > -1){
@@ -107,6 +109,7 @@ export class SCWalletComponent implements OnInit {
             let assetDecimals: number = this.tokenList[key].decimals;
             let confirmedToken: string = walletBalance.confirmed[key];
             let lockedToken: string = walletBalance.locked[key];
+            let confirmingWalletTx: ConfirmingWallet[] = confirmingWallet[key]
 
             if(confirmedToken && Number(confirmedToken) > 0) {
                 let confirmedTokenWalletBalance = this.utilityService.removeLastDecimalFromBalance(confirmedToken);
@@ -127,6 +130,11 @@ export class SCWalletComponent implements OnInit {
                     walletBalance: lockedTokenWalletBalance,
                     displayBalance: lockedTokenDisplayBalance
                 };
+                newAsset = true;
+            }
+
+            if(confirmingWalletTx && confirmingWalletTx.length > 0) {
+                this.confirmingWalletBalance[key] = confirmingWalletTx;
                 newAsset = true;
             }
 

@@ -25,6 +25,12 @@
                 <div *ngIf="lockedWalletBalance[key] != null && lockedWalletBalance[key].displayBalance > 0">
                     <b>{{lockedWalletBalance[key].displayBalance}}</b>
                 </div>
+                <div *ngIf="confirmingWalletBalance[key] != null">
+                    <div *ngFor="let confirmingWalletTx of confirmingWalletBalance[key]">
+                        <span>{{confirmingWalletTx.event_type}}</span>
+                        <span>{{confirmingWalletTx.amount}}</span>
+                    </div>
+                </div>
             </li>
         </ul>
     </div>

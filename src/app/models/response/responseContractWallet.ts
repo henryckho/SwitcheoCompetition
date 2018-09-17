@@ -2,7 +2,9 @@ export class ResponseContractWallet {
     confirmed: {
         [key:string]: string
     };
-    confirming: ConfirmingWallet[];
+    confirming: {
+        [key:string] : ConfirmingWallet[]   
+    };
     locked: {
         [key:string]: string
     };
