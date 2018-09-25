@@ -18,7 +18,7 @@ export class UtilityService {
     }
 
     public convertDisplayToBalance(balance: number, decimals: number): number {
-        return balance * Math.pow(10, decimals);
+        return parseFloat((balance * Math.pow(10, decimals)).toFixed(0));
     }
 
     public convertDecimalsForStepInput(decimals: number): number {
