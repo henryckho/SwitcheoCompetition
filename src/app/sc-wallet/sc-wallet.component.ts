@@ -42,18 +42,22 @@ export class SCWalletComponent implements OnInit {
     }
 
     public withdraw(blockchain, token): void {
-        let tokenAsset: ResponseToken = this.tokenList[token];
         let contractWallet: ContractWalletBalance = this.contractWalletBalance[token];
-        let withdrawAmount: number = this.utilityService.convertDisplayToBalance(contractWallet.withdrawAmount, tokenAsset.decimals);
-        contractWallet.isWithdrawDisabled = true;
-        this.switcheoService.withdrawTokens(blockchain, token, withdrawAmount)
-            .subscribe(
-                _ => this.updateWalletBalances(),
-                (err) => {
-                    contractWallet.errorMessage = err.error.error;
-                    contractWallet.isWithdrawDisabled = false;
-                }
-            );
+        if(contractWallet.withdrawAmount && !isNaN(contractWallet.withdrawAmount)) {
+            let tokenAsset: ResponseToken = this.tokenList[token];
+            let withdrawAmount: number = this.utilityService.convertDisplayToBalance(contractWallet.withdrawAmount, tokenAsset.decimals);
+            contractWallet.isWithdrawDisabled = true;
+            this.switcheoService.withdrawTokens(blockchain, token, withdrawAmount)
+                .subscribe(
+                    _ => this.updateWalletBalances(),
+                    (err) => {
+                        contractWallet.errorMessage = err.error.error;
+                        contractWallet.isWithdrawDisabled = false;
+                    }
+                );
+        } else {
+            contractWallet.errorMessage = config.WITHDRAW_INVALID_AMOUNT_MESSAGE;
+        }
     }
 
     public displayInput(element, token): void {
