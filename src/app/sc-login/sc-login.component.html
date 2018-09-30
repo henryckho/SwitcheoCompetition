@@ -4,6 +4,6 @@
     <span *ngIf="errorMessage">{{errorMessage}}</span>
 </div>
 <div *ngIf="loggedIntoWallet">
-    <input type="text" [(ngModel)]="address" disabled />
+    <input type="text" class="form-control" [(ngModel)]="address" readonly />
     <button (click)="logoutOfWallet()">Logout</button>
 </div>
