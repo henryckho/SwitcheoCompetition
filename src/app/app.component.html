@@ -1,4 +1,22 @@
-<h1>{{title}}</h1>
-<sc-contract (loadLogin)="loadLogin()" (changeContract)="changeContract()"></sc-contract>
-<sc-login *ngIf="loadLoginComponent" (loadWallet)="loadWallet()" (logoutWallet)="logoutWallet()"></sc-login>
-<sc-wallet *ngIf="loadWalletComponent"></sc-wallet>
+<div class="container text-center">
+    <div class="row">
+        <div class="col">
+            <h1>{{title}}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <sc-contract (loadLogin)="loadLogin()" (changeContract)="changeContract()"></sc-contract>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <sc-login *ngIf="loadLoginComponent" (loadWallet)="loadWallet()" (logoutWallet)="logoutWallet()"></sc-login>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <sc-wallet *ngIf="loadWalletComponent"></sc-wallet>
+        </div>
+    </div>
+</div>
