@@ -22,6 +22,7 @@ export class SCLoginComponent {
     public loginToWallet(): void {
         this.loggedIntoWallet = this.walletService.login(this.privateKey);
         if(this.loggedIntoWallet) {
+            this.errorMessage = "";
             this.address = this.walletService.getAddress();
             this.loadWallet.emit();
         } else {
