@@ -1,9 +1,25 @@
 <div *ngIf="!loggedIntoWallet">
-    <input type="password" [(ngModel)]="privateKey" placeholder="Private Key" />
-    <button (click)="loginToWallet()" [disabled]="!privateKey" >Login</button>
-    <span *ngIf="errorMessage">{{errorMessage}}</span>
+    <div class="form-row justify-content-center">
+        <div class="col-12 col-md-6">
+            <input type="password" class="form-control form-control-sm" [(ngModel)]="privateKey" placeholder="Private Key" />
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-success btn-sm" (click)="loginToWallet()" [disabled]="!privateKey">Login</button>
+        </div>
+    </div>
+    <div class="form-row justify-content-center">
+        <div class="col-auto">
+            <p *ngIf="errorMessage">{{errorMessage}}</p>
+        </div>
+    </div>
 </div>
 <div *ngIf="loggedIntoWallet">
-    <input type="text" class="form-control" [(ngModel)]="address" readonly />
-    <button (click)="logoutOfWallet()">Logout</button>
+    <div class="form-row justify-content-center">
+        <div class="col-12 col-md-6">
+            <input type="text" class="form-control form-control-sm text-center" [(ngModel)]="address" readonly />
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-danger btn-sm" (click)="logoutOfWallet()">Logout</button>
+        </div>
+    </div>
 </div>
