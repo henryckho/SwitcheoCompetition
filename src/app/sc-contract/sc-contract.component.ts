@@ -13,7 +13,7 @@ import { ContractVersion } from '../enum/ContractVersion';
 export class SCContractComponent implements OnInit {
     @Output() loadLogin = new EventEmitter();
     @Output() changeContract = new EventEmitter();
-    private deploymentType: string = "0";
+    private deploymentType: string = "1";
     private contractVersion: string = "2";
     private selectedContract: boolean = false;
 

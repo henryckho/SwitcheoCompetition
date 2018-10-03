@@ -1,18 +1,25 @@
-<div class="row justify-content-md-center">
-    <div class="form-inline">
+<h5 class="text-info">Step 1: Select Switcheo contract (this is defaulted to Mainnet v2 upon start up)</h5>
+<div class="form-row justify-content-center">
+    <div class="col-auto">
         <select class="custom-select custom-select-sm" [(ngModel)]="deploymentType" [disabled]="selectedContract">
             <option value="0">Testnet</option>
             <option value="1">Mainnet</option>
         </select>
+    </div>
+    <div class="col-auto">
         <select class="custom-select custom-select-sm" [(ngModel)]="contractVersion" [disabled]="selectedContract">
             <option value="0">v1</option>
             <option value="1">v1.5</option>
             <option value="2">v2</option>
         </select>
-        <button class="btn btn-danger btn-sm" *ngIf="selectedContract" (click)="editContract()">
+    </div>
+    <div class="col-auto" *ngIf="selectedContract">
+        <button class="btn btn-danger btn-sm" (click)="editContract()">
             Edit
         </button>
-        <button class="btn btn-success btn-sm" *ngIf="!selectedContract" (click)="selectContract()">
+    </div>
+    <div class="col-auto" *ngIf="!selectedContract">
+        <button class="btn btn-success btn-sm" (click)="selectContract()">
             Submit
         </button>
     </div>
