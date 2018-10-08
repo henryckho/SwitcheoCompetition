@@ -43,16 +43,19 @@
                     </div>
                     <div class="col-auto">
                         <a href="javascript:void(0);" (click)="contractWalletBalance[key].withdrawAmount = contractWalletBalance[key].displayBalance">{{contractWalletBalance[key].displayBalance}}</a>
-                        <div>
-                            <input type="number"
-                                    (input)="displayInput($event, key)"
-                                    [(ngModel)]="contractWalletBalance[key].withdrawAmount"
-                                    min="0"
-                                    max="{{contractWalletBalance[key].displayBalance}}"
-                                    step="{{contractWalletBalance[key].withdrawInputSteps}}" />
-                            <button (click)="withdraw('neo', key)" [disabled]="contractWalletBalance[key].isWithdrawDisabled">
-                                Withdraw
-                            </button>
+                        <div class="row justify-content-center">
+                            <div class="col">
+                                <input class="form-control form-control-sm text-center"
+                                        type="number"
+                                        (input)="displayInput($event, key)"
+                                        [(ngModel)]="contractWalletBalance[key].withdrawAmount"
+                                        min="0"
+                                        max="{{contractWalletBalance[key].displayBalance}}"
+                                        step="{{contractWalletBalance[key].withdrawInputSteps}}" />
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-success btn-sm" (click)="withdraw('neo', key)" [disabled]="contractWalletBalance[key].isWithdrawDisabled">Withdraw</button>
+                            </div>
                         </div>
                     </div>
                     <div class="col-12" *ngIf="contractWalletBalance[key].errorMessage">
