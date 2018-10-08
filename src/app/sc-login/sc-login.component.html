@@ -1,6 +1,6 @@
-<h6 class="text-info">Step 2: Type in your NEO private key (your private key never leaves the browser)</h6>
+<h6 class="text-info">Step 2: Type in your NEO private key<span class="badge badge-pill badge-info">!</span><span class="text-info">Your keys never leaves the browser</span></h6>
 <div *ngIf="!loggedIntoWallet">
-    <div class="form-row justify-content-center">
+    <div class="row justify-content-center">
         <div class="col-12 col-md-6">
             <input type="password" class="form-control form-control-sm text-center" [(ngModel)]="privateKey" placeholder="Private Key" />
         </div>
@@ -17,7 +17,7 @@
     </div>
 </div>
 <div *ngIf="loggedIntoWallet">
-    <div class="form-row justify-content-center">
+    <div class="row justify-content-center">
         <div class="col-12 col-md-6">
             <input type="text" class="form-control form-control-sm text-center" [(ngModel)]="address" readonly />
         </div>

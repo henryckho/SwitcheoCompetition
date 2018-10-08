@@ -4,7 +4,8 @@ import { config } from '../app.config';
 
 @Component({
     selector: 'sc-login',
-    templateUrl: 'sc-login.component.html'
+    templateUrl: 'sc-login.component.html',
+    styleUrls: ['sc-login.component.css']
 })
 
 export class SCLoginComponent {
