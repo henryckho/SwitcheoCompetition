@@ -19,7 +19,7 @@
                     <b class="switcheo-text">Locked in trades</b>
                 </div>
                 <div class="row justify-content-center" *ngFor="let key of assetListLockedWallet">
-                    <div class="col-auto">
+                    <div class="col-12 col-md-auto">
                         <img class="token-img" src="https://henryckho.github.io/NeoBlockXp/img/{{key}}.png" />
                         <br/>
                         <b>{{key}}</b>
@@ -36,13 +36,18 @@
                     <b class="switcheo-text">Contract Balance</b>
                 </div>
                 <div class="row justify-content-center" *ngFor="let key of assetListContractWallet">
-                    <div class="col-auto">
+                    <div class="col-12 col-md-auto">
                         <img class="token-img" src="https://henryckho.github.io/NeoBlockXp/img/{{key}}.png" />
                         <br/>
                         <b>{{key}}</b>
                     </div>
                     <div class="col-auto">
-                        <a href="javascript:void(0);" (click)="contractWalletBalance[key].withdrawAmount = contractWalletBalance[key].displayBalance">{{contractWalletBalance[key].displayBalance}}</a>
+                        <div class="row">
+                            <div class="col-12 text-lg-left">
+                                <span>Amount: </span>
+                                <a href="javascript:void(0);" (click)="contractWalletBalance[key].withdrawAmount = contractWalletBalance[key].displayBalance">{{contractWalletBalance[key].displayBalance}}</a>
+                            </div>
+                        </div>
                         <div class="row justify-content-center">
                             <div class="col">
                                 <input class="form-control form-control-sm text-center"
