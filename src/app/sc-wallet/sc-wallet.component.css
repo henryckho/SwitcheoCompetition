@@ -1,0 +1,15 @@
+.token-img {
+    border-radius: 25px;
+    border: 1px solid white;
+    padding: 5px;
+    background-color: white;
+    width: 50px;
+    height: 50px;
+}
+
+.asset-list {
+    border: 1px solid white;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+}

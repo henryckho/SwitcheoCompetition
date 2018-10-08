@@ -12,14 +12,17 @@ import { config } from '../app.config';
 
 @Component({
     selector: 'sc-wallet',
-    templateUrl: 'sc-wallet.component.html'
+    templateUrl: 'sc-wallet.component.html',
+    styleUrls: ['sc-wallet.component.css']
 })
 
 export class SCWalletComponent implements OnInit {
     public isLoading: boolean = false;
     public isWalletLoaded: boolean = false;
     private tokenList: ResponseTokenList = {};
-    private assetList: string[] = [];
+    private assetListContractWallet: string[] = [];
+    private assetListLockedWallet: string[] = [];
+    private assetListConfirmingWallet: string[] = [];
     private contractWalletBalance: {[key:string]: ContractWalletBalance} = {};
     private lockedWalletBalance: {[key:string]: LockedWalletBalance} = {};
     private confirmingWalletBalance: {[key:string]: ConfirmingWallet[]} = {};
@@ -96,7 +99,9 @@ export class SCWalletComponent implements OnInit {
 
     private resetWallet(): void {
         this.isWalletLoaded = false;
-        this.assetList = [];
+        this.assetListContractWallet = [];
+        this.assetListLockedWallet = [];
+        this.assetListConfirmingWallet = [];
         this.contractWalletBalance = {};
         this.lockedWalletBalance = {};
     }
@@ -114,12 +119,8 @@ export class SCWalletComponent implements OnInit {
     private buildWalletBalances(walletBalance: ResponseContractWallet): void {
         let confirmingWallet: {[key:string]: ConfirmingWallet[]} = walletBalance.confirming;
         for(let key of Object.keys(this.tokenList)) {
-            let existingAsset: number = this.assetList.indexOf(key);
-            if(existingAsset > -1){
-                this.removeAsset(key);
-            }
+            this.removeAsset(key);
 
-            let newAsset: boolean = false;
             let assetDecimals: number = this.tokenList[key].decimals;
             let confirmedToken: string = walletBalance.confirmed[key];
             let lockedToken: string = walletBalance.locked[key];
@@ -134,7 +135,7 @@ export class SCWalletComponent implements OnInit {
                     isWithdrawDisabled: false,
                     withdrawInputSteps: this.utilityService.convertDecimalsForStepInput(assetDecimals)
                 };
-                newAsset = true;
+                this.assetListContractWallet.push(key);
             }
 
             if(lockedToken && Number(lockedToken) > 0) {
@@ -144,24 +145,30 @@ export class SCWalletComponent implements OnInit {
                     walletBalance: lockedTokenWalletBalance,
                     displayBalance: lockedTokenDisplayBalance
                 };
-                newAsset = true;
+                this.assetListLockedWallet.push(key);
             }
 
             if(confirmingWalletTx && confirmingWalletTx.length > 0) {
                 this.confirmingWalletBalance[key] = confirmingWalletTx;
-                newAsset = true;
-            }
-
-            if(newAsset) {
-                if(this.assetList.indexOf(key) == -1) {
-                    this.assetList.push(key);
-                }
+                this.assetListConfirmingWallet.push(key);
             }
         }
     }
 
     private removeAsset(token: string) {
-        this.assetList.splice(this.assetList.indexOf(token), 1);
+        let existingAssetContractWallet: number = this.assetListContractWallet.indexOf(token);
+        let existingAssetLockedWallet: number = this.assetListLockedWallet.indexOf(token);
+        let existingAssetConfirmingWallet: number = this.assetListConfirmingWallet.indexOf(token);
+
+        if(existingAssetContractWallet > -1) {
+            this.assetListContractWallet.splice(existingAssetContractWallet, 1);
+        }
+        if(existingAssetLockedWallet > -1) {
+            this.assetListLockedWallet.splice(existingAssetLockedWallet, 1);
+        }
+        if(existingAssetConfirmingWallet > -1) {
+            this.assetListConfirmingWallet.splice(existingAssetConfirmingWallet, 1);
+        }
         delete this.contractWalletBalance[token];
         delete this.lockedWalletBalance[token];
     }
