@@ -1,37 +1,69 @@
-<h5 class="text-info">Step 3: Withdraw!</h5>
-<div>
-    <button (click)="refreshBalance()">Refresh</button>
-    <span *ngIf="refreshMessage">{{refreshMessage}}</span>
-    <div *ngIf="isWalletLoaded">
-        <ul>
-            <li *ngFor="let key of assetList">
-                {{key}} : 
-                <div *ngIf="contractWalletBalance[key] != null && contractWalletBalance[key].displayBalance > 0">
-                    <span>
-                        {{contractWalletBalance[key].displayBalance}}
-                    </span>
-                    <a href="javascript:void(0);" (click)="contractWalletBalance[key].withdrawAmount = contractWalletBalance[key].displayBalance">Max</a>
-                    <input type="number"
-                            (input)="displayInput($event, key)"
-                            [(ngModel)]="contractWalletBalance[key].withdrawAmount"
-                            min="0"
-                            max="{{contractWalletBalance[key].displayBalance}}"
-                            step="{{contractWalletBalance[key].withdrawInputSteps}}" />
-                    <button (click)="withdraw('neo', key)" [disabled]="contractWalletBalance[key].isWithdrawDisabled">
-                        Withdraw
-                    </button>
-                    <span *ngIf="contractWalletBalance[key].errorMessage">{{contractWalletBalance[key].errorMessage}}</span>
+<b class="text-info">Step 3: Withdraw!</b>
+<div *ngIf="isWalletLoaded">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <button class="btn btn-info btn-sm" (click)="refreshBalance()">Refresh</button>
+        </div>
+    </div>
+    <div class="row justify-content-center" *ngIf="refreshMessage">
+        <div class="col">
+            <div class="alert alert-danger" role="alert">
+                <span>{{refreshMessage}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="asset-list">
+                <div>
+                    <b>Locked in trades</b>
                 </div>
-                <div *ngIf="lockedWalletBalance[key] != null && lockedWalletBalance[key].displayBalance > 0">
-                    <b>{{lockedWalletBalance[key].displayBalance}}</b>
-                </div>
-                <div *ngIf="confirmingWalletBalance[key] != null">
-                    <div *ngFor="let confirmingWalletTx of confirmingWalletBalance[key]">
-                        <span>{{confirmingWalletTx.event_type}}</span>
-                        <span>{{confirmingWalletTx.amount}}</span>
+                <div class="row justify-content-center" *ngFor="let key of assetListLockedWallet">
+                    <div class="col-auto">
+                        <img class="token-img" src="https://henryckho.github.io/NeoBlockXp/img/{{key}}.png" />
+                        <br/>
+                        <b>{{key}}</b>
+                    </div>
+                    <div class="col-auto">
+                        <b>{{lockedWalletBalance[key].displayBalance}}</b>
                     </div>
                 </div>
-            </li>
-        </ul>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="asset-list">
+                <div>
+                    <b>Contract Balance</b>
+                </div>
+                <div class="row justify-content-center" *ngFor="let key of assetListContractWallet">
+                    <div class="col-auto">
+                        <img class="token-img" src="https://henryckho.github.io/NeoBlockXp/img/{{key}}.png" />
+                        <br/>
+                        <b>{{key}}</b>
+                    </div>
+                    <div class="col-auto">
+                        <span>{{contractWalletBalance[key].displayBalance}}</span>
+                        <a href="javascript:void(0);" (click)="contractWalletBalance[key].withdrawAmount = contractWalletBalance[key].displayBalance">Max</a>
+                        <input type="number"
+                                (input)="displayInput($event, key)"
+                                [(ngModel)]="contractWalletBalance[key].withdrawAmount"
+                                min="0"
+                                max="{{contractWalletBalance[key].displayBalance}}"
+                                step="{{contractWalletBalance[key].withdrawInputSteps}}" />
+                        <button (click)="withdraw('neo', key)" [disabled]="contractWalletBalance[key].isWithdrawDisabled">
+                            Withdraw
+                        </button>
+                        <span *ngIf="contractWalletBalance[key].errorMessage">{{contractWalletBalance[key].errorMessage}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<!-- <div class="col" *ngIf="confirmingWalletBalance[key] != null">
+        <div *ngFor="let confirmingWalletTx of confirmingWalletBalance[key]">
+            <span>{{confirmingWalletTx.event_type}}</span>
+            <span>{{confirmingWalletTx.amount}}</span>
+        </div>
+    </div> -->
