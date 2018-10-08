@@ -42,18 +42,27 @@
                         <b>{{key}}</b>
                     </div>
                     <div class="col-auto">
-                        <span>{{contractWalletBalance[key].displayBalance}}</span>
-                        <a href="javascript:void(0);" (click)="contractWalletBalance[key].withdrawAmount = contractWalletBalance[key].displayBalance">Max</a>
-                        <input type="number"
-                                (input)="displayInput($event, key)"
-                                [(ngModel)]="contractWalletBalance[key].withdrawAmount"
-                                min="0"
-                                max="{{contractWalletBalance[key].displayBalance}}"
-                                step="{{contractWalletBalance[key].withdrawInputSteps}}" />
-                        <button (click)="withdraw('neo', key)" [disabled]="contractWalletBalance[key].isWithdrawDisabled">
-                            Withdraw
-                        </button>
-                        <span *ngIf="contractWalletBalance[key].errorMessage">{{contractWalletBalance[key].errorMessage}}</span>
+                        <a href="javascript:void(0);" (click)="contractWalletBalance[key].withdrawAmount = contractWalletBalance[key].displayBalance">{{contractWalletBalance[key].displayBalance}}</a>
+                        <div>
+                            <input type="number"
+                                    (input)="displayInput($event, key)"
+                                    [(ngModel)]="contractWalletBalance[key].withdrawAmount"
+                                    min="0"
+                                    max="{{contractWalletBalance[key].displayBalance}}"
+                                    step="{{contractWalletBalance[key].withdrawInputSteps}}" />
+                            <button (click)="withdraw('neo', key)" [disabled]="contractWalletBalance[key].isWithdrawDisabled">
+                                Withdraw
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12" *ngIf="contractWalletBalance[key].errorMessage">
+                        <div class="row">
+                            <div class="col">
+                                <div class="alert alert-danger" role="alert">
+                                    <span>{{contractWalletBalance[key].errorMessage}}</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
