@@ -5,3 +5,7 @@ body {
     background-color: #222a3f;
     color: white;
 }
+
+.row {
+    margin-top: 10px;
+}
