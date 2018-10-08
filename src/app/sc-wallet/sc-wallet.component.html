@@ -12,8 +12,8 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-12 col-md-6">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6" *ngIf="assetListLockedWallet.length > 0">
             <div class="asset-list">
                 <div>
                     <b>Locked in trades</b>
@@ -30,7 +30,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-6" *ngIf="assetListContractWallet.length > 0">
             <div class="asset-list">
                 <div>
                     <b>Contract Balance</b>
