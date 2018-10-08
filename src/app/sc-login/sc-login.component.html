@@ -8,9 +8,11 @@
             <button class="btn btn-success btn-sm" (click)="loginToWallet()" [disabled]="!privateKey">Login</button>
         </div>
     </div>
-    <div class="form-row justify-content-center">
+    <div class="row justify-content-center" *ngIf="errorMessage">
         <div class="col-auto">
-            <p *ngIf="errorMessage">{{errorMessage}}</p>
+            <div class="alert alert-danger" role="alert">
+                <span>{{errorMessage}}</span>
+            </div>
         </div>
     </div>
 </div>
