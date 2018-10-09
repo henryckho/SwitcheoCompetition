@@ -4,7 +4,7 @@ import { SwitcheoService } from '../switcheo.service';
 import { UtilityService } from '../utility.service';
 
 import { ResponseToken, ResponseTokenList } from '../models/response/responseToken';
-import { ResponseContractWallet, ResponseConfirmingWallet } from '../models/response/responseContractWallet';
+import { ResponseContractWallet } from '../models/response/responseContractWallet';
 import { ContractWalletBalance } from '../models/contractWalletBalance';
 import { LockedWalletBalance } from '../models/lockedWalletBalance';
 
@@ -23,10 +23,8 @@ export class SCWalletComponent implements OnInit {
     private tokenList: ResponseTokenList = {};
     private assetListContractWallet: string[] = [];
     private assetListLockedWallet: string[] = [];
-    private assetListConfirmingWallet: string[] = [];
     private contractWalletBalance: {[key:string]: ContractWalletBalance} = {};
     private lockedWalletBalance: {[key:string]: LockedWalletBalance} = {};
-    private confirmingWalletBalance: {[key:string]: ResponseConfirmingWallet[]} = {};
     private lastUpdatedBalance: number = null;
     private refreshMessage: string = "";
     private canAccessPrivateKey: boolean = false;
@@ -113,7 +111,6 @@ export class SCWalletComponent implements OnInit {
     private resetWallet(): void {
         this.assetListContractWallet = [];
         this.assetListLockedWallet = [];
-        this.assetListConfirmingWallet = [];
         this.contractWalletBalance = {};
         this.lockedWalletBalance = {};
     }
@@ -142,28 +139,18 @@ export class SCWalletComponent implements OnInit {
             if(lockedTokenBalance && Number(lockedTokenBalance) > 0) {
                 this.buildLockedWalletBalances(key, lockedTokenBalance, assetDecimals);
             }
-
-            let confirmingWalletTx: ResponseConfirmingWallet[] = walletBalance.confirming[key]
-            if(confirmingWalletTx && confirmingWalletTx.length > 0) {
-                this.confirmingWalletBalance[key] = confirmingWalletTx;
-                this.assetListConfirmingWallet.push(key);
-            }
         }
     }
 
     private removeAsset(token: string): void {
         let existingAssetContractWallet: number = this.assetListContractWallet.indexOf(token);
         let existingAssetLockedWallet: number = this.assetListLockedWallet.indexOf(token);
-        let existingAssetConfirmingWallet: number = this.assetListConfirmingWallet.indexOf(token);
 
         if(existingAssetContractWallet > -1) {
             this.assetListContractWallet.splice(existingAssetContractWallet, 1);
         }
         if(existingAssetLockedWallet > -1) {
             this.assetListLockedWallet.splice(existingAssetLockedWallet, 1);
-        }
-        if(existingAssetConfirmingWallet > -1) {
-            this.assetListConfirmingWallet.splice(existingAssetConfirmingWallet, 1);
         }
         delete this.contractWalletBalance[token];
         delete this.lockedWalletBalance[token];

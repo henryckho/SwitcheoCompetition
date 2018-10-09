@@ -476,10 +476,8 @@ var SCWalletComponent = /** @class */ (function () {
         this.tokenList = {};
         this.assetListContractWallet = [];
         this.assetListLockedWallet = [];
-        this.assetListConfirmingWallet = [];
         this.contractWalletBalance = {};
         this.lockedWalletBalance = {};
-        this.confirmingWalletBalance = {};
         this.lastUpdatedBalance = null;
         this.refreshMessage = "";
         this.canAccessPrivateKey = false;
@@ -552,7 +550,6 @@ var SCWalletComponent = /** @class */ (function () {
     SCWalletComponent.prototype.resetWallet = function () {
         this.assetListContractWallet = [];
         this.assetListLockedWallet = [];
-        this.assetListConfirmingWallet = [];
         this.contractWalletBalance = {};
         this.lockedWalletBalance = {};
     };
@@ -578,25 +575,16 @@ var SCWalletComponent = /** @class */ (function () {
             if (lockedTokenBalance && Number(lockedTokenBalance) > 0) {
                 this.buildLockedWalletBalances(key, lockedTokenBalance, assetDecimals);
             }
-            var confirmingWalletTx = walletBalance.confirming[key];
-            if (confirmingWalletTx && confirmingWalletTx.length > 0) {
-                this.confirmingWalletBalance[key] = confirmingWalletTx;
-                this.assetListConfirmingWallet.push(key);
-            }
         }
     };
     SCWalletComponent.prototype.removeAsset = function (token) {
         var existingAssetContractWallet = this.assetListContractWallet.indexOf(token);
         var existingAssetLockedWallet = this.assetListLockedWallet.indexOf(token);
-        var existingAssetConfirmingWallet = this.assetListConfirmingWallet.indexOf(token);
         if (existingAssetContractWallet > -1) {
             this.assetListContractWallet.splice(existingAssetContractWallet, 1);
         }
         if (existingAssetLockedWallet > -1) {
             this.assetListLockedWallet.splice(existingAssetLockedWallet, 1);
-        }
-        if (existingAssetConfirmingWallet > -1) {
-            this.assetListConfirmingWallet.splice(existingAssetConfirmingWallet, 1);
         }
         delete this.contractWalletBalance[token];
         delete this.lockedWalletBalance[token];
