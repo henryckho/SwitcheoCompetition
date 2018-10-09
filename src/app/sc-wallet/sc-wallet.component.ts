@@ -19,7 +19,6 @@ import { WalletService } from '../wallet.service';
 
 export class SCWalletComponent implements OnInit {
     public isLoading: boolean = false;
-    public isWalletLoaded: boolean = false;
     private tokenList: ResponseTokenList = {};
     private assetListContractWallet: string[] = [];
     private assetListLockedWallet: string[] = [];
@@ -91,6 +90,7 @@ export class SCWalletComponent implements OnInit {
     }
 
     public refreshBalance(): void {
+        this.isLoading = true;
         let millisecondsNow = new Date().getTime();
         let oneMinute: number = 60000;
         let refreshTimeElapsed: number = millisecondsNow - this.lastUpdatedBalance;
@@ -103,7 +103,6 @@ export class SCWalletComponent implements OnInit {
     }
 
     private resetWallet(): void {
-        this.isWalletLoaded = false;
         this.assetListContractWallet = [];
         this.assetListLockedWallet = [];
         this.assetListConfirmingWallet = [];
@@ -117,7 +116,6 @@ export class SCWalletComponent implements OnInit {
                 this.lastUpdatedBalance = new Date().getTime();
                 this.buildWalletBalances(walletBalance);
                 this.isLoading = false;
-                this.isWalletLoaded = true;
             });
     }
 

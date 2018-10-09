@@ -1,9 +1,9 @@
-<div *ngIf="isWalletLoaded">
-    <div class="row">
-        <div class="col-12">
-            <button class="btn btn-info btn-sm" (click)="refreshBalance()">Refresh</button>
-        </div>
+<div class="row">
+    <div class="col-12">
+        <button class="btn btn-info btn-sm" (click)="refreshBalance()">Refresh</button>
     </div>
+</div>
+<div *ngIf="!isLoading">
     <div class="row justify-content-center" *ngIf="refreshMessage">
         <div class="col-12 col-md-auto">
             <div class="alert alert-danger" role="alert">
