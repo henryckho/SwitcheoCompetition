@@ -130,30 +130,16 @@ export class SCWalletComponent implements OnInit {
             this.removeAsset(key);
 
             let assetDecimals: number = this.tokenList[key].decimals;
-            let confirmedToken: string = walletBalance.confirmed[key];
-            let lockedToken: string = walletBalance.locked[key];
+            let confirmedTokenBalance: string = walletBalance.confirmed[key];
+            let lockedTokenBalance: string = walletBalance.locked[key];
             let confirmingWalletTx: ConfirmingWallet[] = confirmingWallet[key]
 
-            if(confirmedToken && Number(confirmedToken) > 0) {
-                let confirmedTokenWalletBalance = this.utilityService.removeLastDecimalFromBalance(confirmedToken);
-                let confirmedTokenDisplayBalance = this.utilityService.convertBalanceToDisplay(confirmedTokenWalletBalance, assetDecimals);
-                this.contractWalletBalance[key] = {
-                    walletBalance: confirmedTokenWalletBalance,
-                    displayBalance: confirmedTokenDisplayBalance,
-                    isWithdrawDisabled: false,
-                    withdrawInputSteps: this.utilityService.convertDecimalsForStepInput(assetDecimals)
-                };
-                this.assetListContractWallet.push(key);
+            if(confirmedTokenBalance && Number(confirmedTokenBalance) > 0) {
+                this.buildConfirmedWalletBalances(key, confirmedTokenBalance, assetDecimals);
             }
 
-            if(lockedToken && Number(lockedToken) > 0) {
-                let lockedTokenWalletBalance = this.utilityService.removeLastDecimalFromBalance(lockedToken);
-                let lockedTokenDisplayBalance = this.utilityService.convertBalanceToDisplay(lockedTokenWalletBalance, assetDecimals);
-                this.lockedWalletBalance[key] = {
-                    walletBalance: lockedTokenWalletBalance,
-                    displayBalance: lockedTokenDisplayBalance
-                };
-                this.assetListLockedWallet.push(key);
+            if(lockedTokenBalance && Number(lockedTokenBalance) > 0) {
+                this.buildLockedWalletBalances(key, lockedTokenBalance, assetDecimals);
             }
 
             if(confirmingWalletTx && confirmingWalletTx.length > 0) {
@@ -163,7 +149,7 @@ export class SCWalletComponent implements OnInit {
         }
     }
 
-    private removeAsset(token: string) {
+    private removeAsset(token: string): void {
         let existingAssetContractWallet: number = this.assetListContractWallet.indexOf(token);
         let existingAssetLockedWallet: number = this.assetListLockedWallet.indexOf(token);
         let existingAssetConfirmingWallet: number = this.assetListConfirmingWallet.indexOf(token);
@@ -179,5 +165,27 @@ export class SCWalletComponent implements OnInit {
         }
         delete this.contractWalletBalance[token];
         delete this.lockedWalletBalance[token];
+    }
+
+    private buildConfirmedWalletBalances(key: string, confirmedTokenBalance: string, assetDecimals: number): void {
+        let confirmedTokenWalletBalance = this.utilityService.removeLastDecimalFromBalance(confirmedTokenBalance);
+        let confirmedTokenDisplayBalance = this.utilityService.convertBalanceToDisplay(confirmedTokenWalletBalance, assetDecimals);
+        this.contractWalletBalance[key] = {
+            walletBalance: confirmedTokenWalletBalance,
+            displayBalance: confirmedTokenDisplayBalance,
+            isWithdrawDisabled: false,
+            withdrawInputSteps: this.utilityService.convertDecimalsForStepInput(assetDecimals)
+        };
+        this.assetListContractWallet.push(key);
+    }
+
+    private buildLockedWalletBalances(key: string, lockedTokenBalance: string, assetDecimals): void {
+        let lockedTokenWalletBalance = this.utilityService.removeLastDecimalFromBalance(lockedTokenBalance);
+        let lockedTokenDisplayBalance = this.utilityService.convertBalanceToDisplay(lockedTokenWalletBalance, assetDecimals);
+        this.lockedWalletBalance[key] = {
+            walletBalance: lockedTokenWalletBalance,
+            displayBalance: lockedTokenDisplayBalance
+        };
+        this.assetListLockedWallet.push(key);
     }
 }
