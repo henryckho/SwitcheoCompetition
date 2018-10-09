@@ -19,7 +19,7 @@
                 </div>
                 <div class="row justify-content-center" *ngFor="let key of assetListLockedWallet">
                     <div class="col-12 col-md-auto">
-                        <img class="token-img" src="https://henryckho.github.io/NeoBlockXp/img/{{key}}.png" />
+                        <img class="token-img" src="{{imgDir}}/{{key}}.png" (error)="handleImgError($event);" />
                         <br/>
                         <b>{{key}}</b>
                     </div>
@@ -36,7 +36,7 @@
                 </div>
                 <div class="row justify-content-center" *ngFor="let key of assetListContractWallet">
                     <div class="col-12 col-md-auto">
-                        <img class="token-img" src="https://henryckho.github.io/NeoBlockXp/img/{{key}}.png" />
+                        <img class="token-img" src="{{imgDir}}/{{key}}.png" (error)="handleImgError($event);" />
                         <br/>
                         <b>{{key}}</b>
                     </div>

@@ -18,7 +18,8 @@ import { WalletService } from '../wallet.service';
 })
 
 export class SCWalletComponent implements OnInit {
-    public isLoading: boolean = false;
+    private isLoading: boolean = false;
+    private imgDir: string = config.IMG_DIR;
     private tokenList: ResponseTokenList = {};
     private assetListContractWallet: string[] = [];
     private assetListLockedWallet: string[] = [];
@@ -87,6 +88,10 @@ export class SCWalletComponent implements OnInit {
         if(numberValue > Number(walletBalance.displayBalance)) {
             element.target.value = walletBalance.displayBalance;
         }
+    }
+
+    public handleImgError(element) {
+        element.target.src = `${this.imgDir}/empty.png`;
     }
 
     public refreshBalance(): void {
