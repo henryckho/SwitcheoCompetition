@@ -43,11 +43,11 @@
                     <div class="col-auto">
                         <div class="row">
                             <div class="col-12 text-lg-left">
-                                <span>Amount: </span>
-                                <a href="javascript:void(0);" (click)="contractWalletBalance[key].withdrawAmount = contractWalletBalance[key].displayBalance">{{contractWalletBalance[key].displayBalance}}</a>
+                                <a *ngIf="canAccessPrivateKey" href="javascript:void(0);" (click)="contractWalletBalance[key].withdrawAmount = contractWalletBalance[key].displayBalance">{{contractWalletBalance[key].displayBalance}}</a>
+                                <span *ngIf="!canAccessPrivateKey" >{{contractWalletBalance[key].displayBalance}}</span>
                             </div>
                         </div>
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center" *ngIf="canAccessPrivateKey">
                             <div class="col">
                                 <input class="form-control form-control-sm text-center"
                                         type="number"

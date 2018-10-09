@@ -6,15 +6,17 @@ import stringify from 'json-stable-stringify';
 @Injectable({ providedIn: 'root' })
 export class WalletService {
     private loggedInWallet: wallet.Account = null;
+    public canAccessPrivateKey: boolean = false;
 
     constructor() { }
 
-    public login(privateKey: string): boolean {
+    public login(key: string): boolean {
         this.loggedInWallet = null;
 
-        if(privateKey) {
+        if(key) {
             try {
-                this.loggedInWallet = new wallet.Account(privateKey);
+                this.loggedInWallet = new wallet.Account(key);
+                this.canAccessPrivateKey = wallet.isWIF(key);
             }
             catch{}
         }
@@ -24,6 +26,7 @@ export class WalletService {
 
     public logout(): void {
         this.loggedInWallet = null;
+        this.canAccessPrivateKey = false;
     }
 
     public getAddress(): string {

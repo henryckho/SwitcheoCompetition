@@ -9,6 +9,7 @@ import { ContractWalletBalance } from '../models/contractWalletBalance';
 import { LockedWalletBalance } from '../models/lockedWalletBalance';
 
 import { config } from '../app.config';
+import { WalletService } from '../wallet.service';
 
 @Component({
     selector: 'sc-wallet',
@@ -28,13 +29,17 @@ export class SCWalletComponent implements OnInit {
     private confirmingWalletBalance: {[key:string]: ConfirmingWallet[]} = {};
     private lastUpdatedBalance: number = null;
     private refreshMessage: string = "";
+    private canAccessPrivateKey: boolean = false;
 
     constructor(
         private switcheoService: SwitcheoService,
-        private utilityService: UtilityService
+        private utilityService: UtilityService,
+        private walletService: WalletService
     ) { }
 
     ngOnInit() {
+        this.canAccessPrivateKey = this.walletService.canAccessPrivateKey;
+
         this.switcheoService.getTokenList()
             .subscribe((tokenList: ResponseTokenList) => {
                 this.tokenList = tokenList;

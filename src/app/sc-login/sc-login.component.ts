@@ -13,7 +13,7 @@ export class SCLoginComponent {
     @Output() logoutWallet = new EventEmitter();
     private loggedIntoWallet: boolean = false;
     private address: string = "";
-    private privateKey: string = "";
+    private key: string = "";
     private errorMessage: string = "";
 
     constructor(
@@ -21,7 +21,7 @@ export class SCLoginComponent {
     ) { }
 
     public loginToWallet(): void {
-        this.loggedIntoWallet = this.walletService.login(this.privateKey);
+        this.loggedIntoWallet = this.walletService.login(this.key);
         if(this.loggedIntoWallet) {
             this.errorMessage = "";
             this.address = this.walletService.getAddress();
@@ -34,7 +34,7 @@ export class SCLoginComponent {
     public logoutOfWallet(): void {
         this.loggedIntoWallet = false;
         this.address = "";
-        this.privateKey = "";
+        this.key = "";
         this.walletService.logout();
         this.logoutWallet.emit();
     }
