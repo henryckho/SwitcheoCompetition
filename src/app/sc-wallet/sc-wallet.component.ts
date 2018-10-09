@@ -57,7 +57,10 @@ export class SCWalletComponent implements OnInit {
             contractWallet.isWithdrawDisabled = true;
             this.switcheoService.withdrawTokens(blockchain, token, withdrawAmount)
                 .subscribe(
-                    _ => this.updateWalletBalances(),
+                    _ => {
+                        this.isLoading = true;
+                        this.updateWalletBalances()
+                    },
                     (err) => {
                         contractWallet.errorMessage = err.error.error;
                         contractWallet.isWithdrawDisabled = false;
@@ -125,23 +128,22 @@ export class SCWalletComponent implements OnInit {
     }
 
     private buildWalletBalances(walletBalance: ResponseContractWallet): void {
-        let confirmingWallet: {[key:string]: ConfirmingWallet[]} = walletBalance.confirming;
         for(let key of Object.keys(this.tokenList)) {
+            let assetDecimals: number = this.tokenList[key].decimals;
+
             this.removeAsset(key);
 
-            let assetDecimals: number = this.tokenList[key].decimals;
             let confirmedTokenBalance: string = walletBalance.confirmed[key];
-            let lockedTokenBalance: string = walletBalance.locked[key];
-            let confirmingWalletTx: ConfirmingWallet[] = confirmingWallet[key]
-
             if(confirmedTokenBalance && Number(confirmedTokenBalance) > 0) {
                 this.buildConfirmedWalletBalances(key, confirmedTokenBalance, assetDecimals);
             }
 
+            let lockedTokenBalance: string = walletBalance.locked[key];
             if(lockedTokenBalance && Number(lockedTokenBalance) > 0) {
                 this.buildLockedWalletBalances(key, lockedTokenBalance, assetDecimals);
             }
 
+            let confirmingWalletTx: ConfirmingWallet[] = walletBalance.confirming[key]
             if(confirmingWalletTx && confirmingWalletTx.length > 0) {
                 this.confirmingWalletBalance[key] = confirmingWalletTx;
                 this.assetListConfirmingWallet.push(key);
