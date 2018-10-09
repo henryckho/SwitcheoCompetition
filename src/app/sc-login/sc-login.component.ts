@@ -14,7 +14,8 @@ export class SCLoginComponent {
     private loggedIntoWallet: boolean = false;
     private address: string = "";
     private key: string = "";
-    private errorMessage: string = "";
+    private errorMessage: string = config.LOGIN_ERROR_MESSAGE;
+    private showErrorMessage: boolean = false;
 
     constructor(
         private walletService: WalletService
@@ -23,11 +24,11 @@ export class SCLoginComponent {
     public loginToWallet(): void {
         this.loggedIntoWallet = this.walletService.login(this.key);
         if(this.loggedIntoWallet) {
-            this.errorMessage = "";
+            this.showErrorMessage = false;
             this.address = this.walletService.getAddress();
             this.loadWallet.emit();
         } else {
-            this.errorMessage = config.LOGIN_ERROR_MESSAGE;
+            this.showErrorMessage = true;
         }
     }
 

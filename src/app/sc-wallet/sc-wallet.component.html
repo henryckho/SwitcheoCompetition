@@ -3,14 +3,23 @@
         <button class="btn btn-info btn-sm" (click)="refreshBalance()">Refresh</button>
     </div>
 </div>
-<div *ngIf="!isLoading">
-    <div class="row justify-content-center" *ngIf="refreshMessage">
-        <div class="col-12 col-md-auto">
-            <div class="alert alert-danger" role="alert">
-                <span>{{refreshMessage}}</span>
-            </div>
+<div class="row justify-content-center">
+    <div class="col-12 col-md-auto">
+        <div class="alert alert-danger alert-dismissible" role="alert" *ngIf="showRefreshMessage">
+            <span>{{refreshMessage}}</span>
+            <button type="button" class="close" (click)="showRefreshMessage = false;">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="alert alert-success alert-dismissible" role="alert" *ngIf="showWithdrawMessage">
+            <span>{{withdrawMessage}}</span>
+            <button type="button" class="close" (click)="showWithdrawMessage = false;">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
     </div>
+</div>
+<div *ngIf="!isLoading">
     <div class="row justify-content-center">
         <div class="col-12 col-md-6" *ngIf="assetListLockedWallet.length > 0">
             <div class="asset-list">
@@ -65,8 +74,11 @@
                     <div class="col-11 col-md-auto" *ngIf="contractWalletBalance[key].errorMessage">
                         <div class="row">
                             <div class="col">
-                                <div class="alert alert-danger" role="alert">
+                                <div class="alert alert-danger alert-dismissible" role="alert">
                                     <span>{{contractWalletBalance[key].errorMessage}}</span>
+                                    <button type="button" class="close" (click)="contractWalletBalance[key].errorMessage = '';">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
                             </div>
                         </div>

@@ -26,7 +26,10 @@ export class SCWalletComponent implements OnInit {
     private contractWalletBalance: {[key:string]: ContractWalletBalance} = {};
     private lockedWalletBalance: {[key:string]: LockedWalletBalance} = {};
     private lastUpdatedBalance: number = null;
-    private refreshMessage: string = "";
+    private withdrawMessage: string = config.WITHDRAW_SUCCESS_WALLET_MESSAGE;
+    private refreshMessage: string = config.REFRESH_ERROR_WALLET_MESSAGE;
+    private showWithdrawMessage: boolean = false;
+    private showRefreshMessage: boolean = false;
     private canAccessPrivateKey: boolean = false;
 
     constructor(
@@ -57,9 +60,11 @@ export class SCWalletComponent implements OnInit {
                 .subscribe(
                     _ => {
                         this.isLoading = true;
+                        this.showWithdrawMessage = true;
                         this.updateWalletBalances()
                     },
                     (err) => {
+                        this.showWithdrawMessage = false;
                         contractWallet.errorMessage = err.error.error;
                         contractWallet.isWithdrawDisabled = false;
                     }
@@ -92,7 +97,7 @@ export class SCWalletComponent implements OnInit {
     }
 
     public handleImgError(element) {
-        element.target.src = `${this.imgDir}/empty.png`;
+        element.target.src = config.EMPTY_IMG;
     }
 
     public refreshBalance(): void {
@@ -100,11 +105,11 @@ export class SCWalletComponent implements OnInit {
         let oneMinute: number = 60000;
         let refreshTimeElapsed: number = millisecondsNow - this.lastUpdatedBalance;
         if(refreshTimeElapsed > oneMinute) {
+            this.showRefreshMessage = false;
             this.isLoading = true;
-            this.refreshMessage = "";
             this.updateWalletBalances();
         } else {
-            this.refreshMessage = config.REFRESH_WALLET_MESSAGE;
+            this.showRefreshMessage = true;
         }
     }
 
