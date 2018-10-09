@@ -3,14 +3,14 @@ export class ResponseContractWallet {
         [key:string]: string
     };
     confirming: {
-        [key:string] : ConfirmingWallet[]   
+        [key:string] : ResponseConfirmingWallet[]   
     };
     locked: {
         [key:string]: string
     };
 }
 
-export class ConfirmingWallet {
+export class ResponseConfirmingWallet {
     amount: string;
     asset_id: string;
     created_at: string;

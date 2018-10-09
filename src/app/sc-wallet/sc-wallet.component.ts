@@ -4,7 +4,7 @@ import { SwitcheoService } from '../switcheo.service';
 import { UtilityService } from '../utility.service';
 
 import { ResponseToken, ResponseTokenList } from '../models/response/responseToken';
-import { ResponseContractWallet, ConfirmingWallet } from '../models/response/responseContractWallet';
+import { ResponseContractWallet, ResponseConfirmingWallet } from '../models/response/responseContractWallet';
 import { ContractWalletBalance } from '../models/contractWalletBalance';
 import { LockedWalletBalance } from '../models/lockedWalletBalance';
 
@@ -26,7 +26,7 @@ export class SCWalletComponent implements OnInit {
     private assetListConfirmingWallet: string[] = [];
     private contractWalletBalance: {[key:string]: ContractWalletBalance} = {};
     private lockedWalletBalance: {[key:string]: LockedWalletBalance} = {};
-    private confirmingWalletBalance: {[key:string]: ConfirmingWallet[]} = {};
+    private confirmingWalletBalance: {[key:string]: ResponseConfirmingWallet[]} = {};
     private lastUpdatedBalance: number = null;
     private refreshMessage: string = "";
     private canAccessPrivateKey: boolean = false;
@@ -143,7 +143,7 @@ export class SCWalletComponent implements OnInit {
                 this.buildLockedWalletBalances(key, lockedTokenBalance, assetDecimals);
             }
 
-            let confirmingWalletTx: ConfirmingWallet[] = walletBalance.confirming[key]
+            let confirmingWalletTx: ResponseConfirmingWallet[] = walletBalance.confirming[key]
             if(confirmingWalletTx && confirmingWalletTx.length > 0) {
                 this.confirmingWalletBalance[key] = confirmingWalletTx;
                 this.assetListConfirmingWallet.push(key);
