@@ -71,7 +71,7 @@ export class SCWalletComponent implements OnInit {
                     (err) => {
                         this.showWithdrawMessage = false;
                         contractWallet.isWithdrawDisabled = false;
-                        if(err.error && err.error.error) {
+                        if(err.error != null && err.error.error != undefined) {
                             contractWallet.errorMessage = err.error.error;
                         } else {
                             this.showUnknownErrorMessage = true;
