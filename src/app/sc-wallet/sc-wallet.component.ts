@@ -90,11 +90,11 @@ export class SCWalletComponent implements OnInit {
     }
 
     public refreshBalance(): void {
-        this.isLoading = true;
         let millisecondsNow = new Date().getTime();
         let oneMinute: number = 60000;
         let refreshTimeElapsed: number = millisecondsNow - this.lastUpdatedBalance;
         if(refreshTimeElapsed > oneMinute) {
+            this.isLoading = true;
             this.refreshMessage = "";
             this.updateWalletBalances();
         } else {
