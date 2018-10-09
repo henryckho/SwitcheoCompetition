@@ -28,8 +28,10 @@ export class SCWalletComponent implements OnInit {
     private lastUpdatedBalance: number = null;
     private withdrawMessage: string = config.WITHDRAW_SUCCESS_WALLET_MESSAGE;
     private refreshMessage: string = config.REFRESH_ERROR_WALLET_MESSAGE;
+    private unknownErrorMessage: string = config.UNKNOWN_ERROR_MESSAGE;
     private showWithdrawMessage: boolean = false;
     private showRefreshMessage: boolean = false;
+    private showUnknownErrorMessage: boolean = false;
     private canAccessPrivateKey: boolean = false;
 
     constructor(
@@ -42,12 +44,15 @@ export class SCWalletComponent implements OnInit {
         this.canAccessPrivateKey = this.walletService.canAccessPrivateKey;
 
         this.switcheoService.getTokenList()
-            .subscribe((tokenList: ResponseTokenList) => {
-                this.tokenList = tokenList;
-                this.isLoading = true;
-                this.resetWallet();
-                this.updateWalletBalances();
-            });
+            .subscribe(
+                (tokenList: ResponseTokenList) => {
+                    this.tokenList = tokenList;
+                    this.isLoading = true;
+                    this.resetWallet();
+                    this.updateWalletBalances();
+                },
+                _ => this.showUnknownErrorMessage = true
+            );
     }
 
     public withdraw(blockchain, token): void {
@@ -65,8 +70,12 @@ export class SCWalletComponent implements OnInit {
                     },
                     (err) => {
                         this.showWithdrawMessage = false;
-                        contractWallet.errorMessage = err.error.error;
                         contractWallet.isWithdrawDisabled = false;
+                        if(err.error) {
+                            contractWallet.errorMessage = err.error.error;
+                        } else {
+                            this.showUnknownErrorMessage = true;
+                        }
                     }
                 );
         } else {
@@ -122,11 +131,14 @@ export class SCWalletComponent implements OnInit {
 
     private updateWalletBalances(): void {
         this.switcheoService.getContractWalletBalance()
-            .subscribe((walletBalance: ResponseContractWallet) => {
-                this.lastUpdatedBalance = new Date().getTime();
-                this.buildWalletBalances(walletBalance);
-                this.isLoading = false;
-            });
+            .subscribe(
+                (walletBalance: ResponseContractWallet) => {
+                    this.lastUpdatedBalance = new Date().getTime();
+                    this.buildWalletBalances(walletBalance);
+                    this.isLoading = false;
+                },
+                _ => this.showUnknownErrorMessage = true
+            );
     }
 
     private buildWalletBalances(walletBalance: ResponseContractWallet): void {
