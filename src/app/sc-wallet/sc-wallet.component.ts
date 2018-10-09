@@ -68,7 +68,7 @@ export class SCWalletComponent implements OnInit {
         }
     }
 
-    public displayInput(element, token): void {
+    public handleInputWithdraw(element, token): void {
         let tokenAsset: ResponseToken = this.tokenList[token];
 
         if(element.data == "-") {

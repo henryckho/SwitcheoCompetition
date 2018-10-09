@@ -51,7 +51,7 @@
                             <div class="col">
                                 <input class="form-control form-control-sm text-center input-withdraw"
                                         type="number"
-                                        (input)="displayInput($event, key)"
+                                        (input)="handleInputWithdraw($event, key)"
                                         [(ngModel)]="contractWalletBalance[key].withdrawAmount"
                                         min="0"
                                         max="{{contractWalletBalance[key].displayBalance}}"
