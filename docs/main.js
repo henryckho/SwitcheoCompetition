@@ -517,7 +517,7 @@ var SCWalletComponent = /** @class */ (function () {
             }, function (err) {
                 _this.showWithdrawMessage = false;
                 contractWallet.isWithdrawDisabled = false;
-                if (err.error && err.error.error) {
+                if (err.error != null && err.error.error != undefined) {
                     contractWallet.errorMessage = err.error.error;
                 }
                 else {
