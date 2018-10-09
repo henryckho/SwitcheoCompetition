@@ -433,7 +433,7 @@ module.exports = ".token-img {\r\n    border-radius: 25px;\r\n    border: 1px so
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\r\n    <div class=\"col-12\">\r\n        <button class=\"btn btn-info btn-sm\" (click)=\"refreshBalance()\">Refresh</button>\r\n    </div>\r\n</div>\r\n<div *ngIf=\"!isLoading\">\r\n    <div class=\"row justify-content-center\" *ngIf=\"refreshMessage\">\r\n        <div class=\"col-12 col-md-auto\">\r\n            <div class=\"alert alert-danger\" role=\"alert\">\r\n                <span>{{refreshMessage}}</span>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"row justify-content-center\">\r\n        <div class=\"col-12 col-md-6\" *ngIf=\"assetListLockedWallet.length > 0\">\r\n            <div class=\"asset-list\">\r\n                <div>\r\n                    <b class=\"switcheo-text\">Locked in trades</b>\r\n                </div>\r\n                <div class=\"row justify-content-center\" *ngFor=\"let key of assetListLockedWallet\">\r\n                    <div class=\"col-12 col-md-auto\">\r\n                        <img class=\"token-img\" src=\"{{imgDir}}/{{key}}.png\" (error)=\"handleImgError($event);\" />\r\n                        <br/>\r\n                        <b>{{key}}</b>\r\n                    </div>\r\n                    <div class=\"col-auto\">\r\n                        <b>{{lockedWalletBalance[key].displayBalance}}</b>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"col-12 col-md-6\" *ngIf=\"assetListContractWallet.length > 0\">\r\n            <div class=\"asset-list\">\r\n                <div>\r\n                    <b class=\"switcheo-text\">Contract Balance</b>\r\n                </div>\r\n                <div class=\"row justify-content-center\" *ngFor=\"let key of assetListContractWallet\">\r\n                    <div class=\"col-12 col-md-auto\">\r\n                        <img class=\"token-img\" src=\"{{imgDir}}/{{key}}.png\" (error)=\"handleImgError($event);\" />\r\n                        <br/>\r\n                        <b>{{key}}</b>\r\n                    </div>\r\n                    <div class=\"col-auto\">\r\n                        <div class=\"row\">\r\n                            <div class=\"col-12 text-lg-left\">\r\n                                <a *ngIf=\"canAccessPrivateKey\" href=\"javascript:void(0);\" (click)=\"contractWalletBalance[key].withdrawAmount = contractWalletBalance[key].displayBalance\">{{contractWalletBalance[key].displayBalance}}</a>\r\n                                <span *ngIf=\"!canAccessPrivateKey\" >{{contractWalletBalance[key].displayBalance}}</span>\r\n                            </div>\r\n                        </div>\r\n                        <div class=\"row justify-content-center\" *ngIf=\"canAccessPrivateKey\">\r\n                            <div class=\"col\">\r\n                                <input class=\"form-control form-control-sm text-center input-withdraw\"\r\n                                        type=\"number\"\r\n                                        (input)=\"displayInput($event, key)\"\r\n                                        [(ngModel)]=\"contractWalletBalance[key].withdrawAmount\"\r\n                                        min=\"0\"\r\n                                        max=\"{{contractWalletBalance[key].displayBalance}}\"\r\n                                        step=\"{{contractWalletBalance[key].withdrawInputSteps}}\" />\r\n                            </div>\r\n                            <div class=\"col-auto\">\r\n                                <button class=\"btn btn-success btn-sm\" (click)=\"withdraw('neo', key)\" [disabled]=\"contractWalletBalance[key].isWithdrawDisabled\">Withdraw</button>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"col-11 col-md-auto\" *ngIf=\"contractWalletBalance[key].errorMessage\">\r\n                        <div class=\"row\">\r\n                            <div class=\"col\">\r\n                                <div class=\"alert alert-danger\" role=\"alert\">\r\n                                    <span>{{contractWalletBalance[key].errorMessage}}</span>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
+module.exports = "<div class=\"row\">\r\n    <div class=\"col-12\">\r\n        <button class=\"btn btn-info btn-sm\" (click)=\"refreshBalance()\">Refresh</button>\r\n    </div>\r\n</div>\r\n<div *ngIf=\"!isLoading\">\r\n    <div class=\"row justify-content-center\" *ngIf=\"refreshMessage\">\r\n        <div class=\"col-12 col-md-auto\">\r\n            <div class=\"alert alert-danger\" role=\"alert\">\r\n                <span>{{refreshMessage}}</span>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"row justify-content-center\">\r\n        <div class=\"col-12 col-md-6\" *ngIf=\"assetListLockedWallet.length > 0\">\r\n            <div class=\"asset-list\">\r\n                <div>\r\n                    <b class=\"switcheo-text\">Locked in trades</b>\r\n                </div>\r\n                <div class=\"row justify-content-center\" *ngFor=\"let key of assetListLockedWallet\">\r\n                    <div class=\"col-12 col-md-auto\">\r\n                        <img class=\"token-img\" src=\"{{imgDir}}/{{key}}.png\" (error)=\"handleImgError($event);\" />\r\n                        <br/>\r\n                        <b>{{key}}</b>\r\n                    </div>\r\n                    <div class=\"col-auto\">\r\n                        <b>{{lockedWalletBalance[key].displayBalance}}</b>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"col-12 col-md-6\" *ngIf=\"assetListContractWallet.length > 0\">\r\n            <div class=\"asset-list\">\r\n                <div>\r\n                    <b class=\"switcheo-text\">Contract Balance</b>\r\n                </div>\r\n                <div class=\"row justify-content-center\" *ngFor=\"let key of assetListContractWallet\">\r\n                    <div class=\"col-12 col-md-auto\">\r\n                        <img class=\"token-img\" src=\"{{imgDir}}/{{key}}.png\" (error)=\"handleImgError($event);\" />\r\n                        <br/>\r\n                        <b>{{key}}</b>\r\n                    </div>\r\n                    <div class=\"col-auto\">\r\n                        <div class=\"row\">\r\n                            <div class=\"col-12 text-lg-left\">\r\n                                <a *ngIf=\"canAccessPrivateKey\" href=\"javascript:void(0);\" (click)=\"contractWalletBalance[key].withdrawAmount = contractWalletBalance[key].displayBalance\">{{contractWalletBalance[key].displayBalance}}</a>\r\n                                <span *ngIf=\"!canAccessPrivateKey\" >{{contractWalletBalance[key].displayBalance}}</span>\r\n                            </div>\r\n                        </div>\r\n                        <div class=\"row justify-content-center\" *ngIf=\"canAccessPrivateKey\">\r\n                            <div class=\"col\">\r\n                                <input class=\"form-control form-control-sm text-center input-withdraw\"\r\n                                        type=\"number\"\r\n                                        (input)=\"handleInputWithdraw($event, key)\"\r\n                                        [(ngModel)]=\"contractWalletBalance[key].withdrawAmount\"\r\n                                        min=\"0\"\r\n                                        max=\"{{contractWalletBalance[key].displayBalance}}\"\r\n                                        step=\"{{contractWalletBalance[key].withdrawInputSteps}}\" />\r\n                            </div>\r\n                            <div class=\"col-auto\">\r\n                                <button class=\"btn btn-success btn-sm\" (click)=\"withdraw('neo', key)\" [disabled]=\"contractWalletBalance[key].isWithdrawDisabled\">Withdraw</button>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"col-11 col-md-auto\" *ngIf=\"contractWalletBalance[key].errorMessage\">\r\n                        <div class=\"row\">\r\n                            <div class=\"col\">\r\n                                <div class=\"alert alert-danger\" role=\"alert\">\r\n                                    <span>{{contractWalletBalance[key].errorMessage}}</span>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -503,7 +503,10 @@ var SCWalletComponent = /** @class */ (function () {
             var withdrawAmount = this.utilityService.convertDisplayToBalance(contractWallet.withdrawAmount, tokenAsset.decimals);
             contractWallet.isWithdrawDisabled = true;
             this.switcheoService.withdrawTokens(blockchain, token, withdrawAmount)
-                .subscribe(function (_) { return _this.updateWalletBalances(); }, function (err) {
+                .subscribe(function (_) {
+                _this.isLoading = true;
+                _this.updateWalletBalances();
+            }, function (err) {
                 contractWallet.errorMessage = err.error.error;
                 contractWallet.isWithdrawDisabled = false;
             });
@@ -512,7 +515,7 @@ var SCWalletComponent = /** @class */ (function () {
             contractWallet.errorMessage = _app_config__WEBPACK_IMPORTED_MODULE_3__["config"].WITHDRAW_INVALID_AMOUNT_MESSAGE;
         }
     };
-    SCWalletComponent.prototype.displayInput = function (element, token) {
+    SCWalletComponent.prototype.handleInputWithdraw = function (element, token) {
         var tokenAsset = this.tokenList[token];
         if (element.data == "-") {
             element.target.value = 0;
@@ -563,34 +566,19 @@ var SCWalletComponent = /** @class */ (function () {
         });
     };
     SCWalletComponent.prototype.buildWalletBalances = function (walletBalance) {
-        var confirmingWallet = walletBalance.confirming;
         for (var _i = 0, _a = Object.keys(this.tokenList); _i < _a.length; _i++) {
             var key = _a[_i];
-            this.removeAsset(key);
             var assetDecimals = this.tokenList[key].decimals;
-            var confirmedToken = walletBalance.confirmed[key];
-            var lockedToken = walletBalance.locked[key];
-            var confirmingWalletTx = confirmingWallet[key];
-            if (confirmedToken && Number(confirmedToken) > 0) {
-                var confirmedTokenWalletBalance = this.utilityService.removeLastDecimalFromBalance(confirmedToken);
-                var confirmedTokenDisplayBalance = this.utilityService.convertBalanceToDisplay(confirmedTokenWalletBalance, assetDecimals);
-                this.contractWalletBalance[key] = {
-                    walletBalance: confirmedTokenWalletBalance,
-                    displayBalance: confirmedTokenDisplayBalance,
-                    isWithdrawDisabled: false,
-                    withdrawInputSteps: this.utilityService.convertDecimalsForStepInput(assetDecimals)
-                };
-                this.assetListContractWallet.push(key);
+            this.removeAsset(key);
+            var confirmedTokenBalance = walletBalance.confirmed[key];
+            if (confirmedTokenBalance && Number(confirmedTokenBalance) > 0) {
+                this.buildConfirmedWalletBalances(key, confirmedTokenBalance, assetDecimals);
             }
-            if (lockedToken && Number(lockedToken) > 0) {
-                var lockedTokenWalletBalance = this.utilityService.removeLastDecimalFromBalance(lockedToken);
-                var lockedTokenDisplayBalance = this.utilityService.convertBalanceToDisplay(lockedTokenWalletBalance, assetDecimals);
-                this.lockedWalletBalance[key] = {
-                    walletBalance: lockedTokenWalletBalance,
-                    displayBalance: lockedTokenDisplayBalance
-                };
-                this.assetListLockedWallet.push(key);
+            var lockedTokenBalance = walletBalance.locked[key];
+            if (lockedTokenBalance && Number(lockedTokenBalance) > 0) {
+                this.buildLockedWalletBalances(key, lockedTokenBalance, assetDecimals);
             }
+            var confirmingWalletTx = walletBalance.confirming[key];
             if (confirmingWalletTx && confirmingWalletTx.length > 0) {
                 this.confirmingWalletBalance[key] = confirmingWalletTx;
                 this.assetListConfirmingWallet.push(key);
@@ -612,6 +600,26 @@ var SCWalletComponent = /** @class */ (function () {
         }
         delete this.contractWalletBalance[token];
         delete this.lockedWalletBalance[token];
+    };
+    SCWalletComponent.prototype.buildConfirmedWalletBalances = function (key, confirmedTokenBalance, assetDecimals) {
+        var confirmedTokenWalletBalance = this.utilityService.removeLastDecimalFromBalance(confirmedTokenBalance);
+        var confirmedTokenDisplayBalance = this.utilityService.convertBalanceToDisplay(confirmedTokenWalletBalance, assetDecimals);
+        this.contractWalletBalance[key] = {
+            walletBalance: confirmedTokenWalletBalance,
+            displayBalance: confirmedTokenDisplayBalance,
+            isWithdrawDisabled: false,
+            withdrawInputSteps: this.utilityService.convertDecimalsForStepInput(assetDecimals)
+        };
+        this.assetListContractWallet.push(key);
+    };
+    SCWalletComponent.prototype.buildLockedWalletBalances = function (key, lockedTokenBalance, assetDecimals) {
+        var lockedTokenWalletBalance = this.utilityService.removeLastDecimalFromBalance(lockedTokenBalance);
+        var lockedTokenDisplayBalance = this.utilityService.convertBalanceToDisplay(lockedTokenWalletBalance, assetDecimals);
+        this.lockedWalletBalance[key] = {
+            walletBalance: lockedTokenWalletBalance,
+            displayBalance: lockedTokenDisplayBalance
+        };
+        this.assetListLockedWallet.push(key);
     };
     SCWalletComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
