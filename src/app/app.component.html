@@ -4,19 +4,7 @@
             <h2><span class="switcheo-text">Switcheo</span> Contract Wallet</h2>
         </div>
     </div>
-    <div class="row">
-        <div class="col">
-            <sc-contract (loadLogin)="loadLogin()" (changeContract)="changeContract()"></sc-contract>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <sc-login *ngIf="loadLoginComponent" (loadWallet)="loadWallet()" (logoutWallet)="logoutWallet()"></sc-login>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <sc-wallet *ngIf="loadWalletComponent"></sc-wallet>
-        </div>
-    </div>
+    <sc-contract (loadLogin)="loadLogin()" (changeContract)="changeContract()"></sc-contract>
+    <sc-login *ngIf="loadLoginComponent" (loadWallet)="loadWallet()" (logoutWallet)="logoutWallet()"></sc-login>
+    <sc-wallet *ngIf="loadWalletComponent"></sc-wallet>
 </div>

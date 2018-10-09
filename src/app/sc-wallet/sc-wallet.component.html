@@ -1,12 +1,11 @@
-<b class="text-info">Step 3: Withdraw!</b>
 <div *ngIf="isWalletLoaded">
-    <div class="row justify-content-center">
+    <div class="row">
         <div class="col-12">
             <button class="btn btn-info btn-sm" (click)="refreshBalance()">Refresh</button>
         </div>
     </div>
     <div class="row justify-content-center" *ngIf="refreshMessage">
-        <div class="col">
+        <div class="col-12 col-md-auto">
             <div class="alert alert-danger" role="alert">
                 <span>{{refreshMessage}}</span>
             </div>
@@ -63,7 +62,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12" *ngIf="contractWalletBalance[key].errorMessage">
+                    <div class="col-11 col-md-auto" *ngIf="contractWalletBalance[key].errorMessage">
                         <div class="row">
                             <div class="col">
                                 <div class="alert alert-danger" role="alert">
@@ -77,10 +76,3 @@
         </div>
     </div>
 </div>
-
-<!-- <div class="col" *ngIf="confirmingWalletBalance[key] != null">
-        <div *ngFor="let confirmingWalletTx of confirmingWalletBalance[key]">
-            <span>{{confirmingWalletTx.event_type}}</span>
-            <span>{{confirmingWalletTx.amount}}</span>
-        </div>
-    </div> -->

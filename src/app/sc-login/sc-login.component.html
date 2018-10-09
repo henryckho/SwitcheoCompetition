@@ -1,30 +1,37 @@
-<b class="text-info">Step 2: Type in your NEO private key</b>
-<br/>
-<span class="badge badge-pill badge-light">!</span><span class="text-white">Your keys never leaves the browser</span>
-<div *ngIf="!loggedIntoWallet">
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-6">
-            <input type="password" class="form-control form-control-sm text-center" [(ngModel)]="privateKey" placeholder="Private Key" />
-        </div>
-        <div class="col-auto">
-            <button class="btn btn-success btn-sm" (click)="loginToWallet()" [disabled]="!privateKey">Login</button>
-        </div>
+<div class="row">
+    <div class="col-12">
+        <b class="text-info">Step 2: Enter your NEO address or private key</b>
     </div>
-    <div class="row justify-content-center" *ngIf="errorMessage">
-        <div class="col">
-            <div class="alert alert-danger" role="alert">
-                <span>{{errorMessage}}</span>
+    <div class="col-12">
+        <span class="badge badge-pill badge-light">!</span><span class="text-white">Your keys never leave the browser</span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12" *ngIf="!loggedIntoWallet">
+        <div class="form-row justify-content-center">
+            <div class="col-12 col-md-6">
+                <input type="password" class="form-control form-control-sm text-center" [(ngModel)]="privateKey" placeholder="Private Key" />
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-success btn-sm" (click)="loginToWallet()" [disabled]="!privateKey">Login</button>
+            </div>
+        </div>
+        <div class="row justify-content-center" *ngIf="errorMessage">
+            <div class="col-12 col-md-auto">
+                <div class="alert alert-danger" role="alert">
+                    <span>{{errorMessage}}</span>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div *ngIf="loggedIntoWallet">
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-6">
-            <input type="text" class="form-control form-control-sm text-center" [(ngModel)]="address" readonly />
-        </div>
-        <div class="col-auto">
-            <button class="btn btn-danger btn-sm" (click)="logoutOfWallet()">Logout</button>
+    <div class="col-12" *ngIf="loggedIntoWallet">
+        <div class="form-row justify-content-center">
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control form-control-sm text-center" [(ngModel)]="address" readonly />
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-danger btn-sm" (click)="logoutOfWallet()">Logout</button>
+            </div>
         </div>
     </div>
 </div>

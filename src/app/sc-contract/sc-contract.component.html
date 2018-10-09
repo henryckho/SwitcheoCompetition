@@ -1,28 +1,37 @@
-<b class="text-info">Step 1: Select Switcheo contract</b>
-<br/>
-<span class="badge badge-pill badge-light">!</span><span class="text-white">This is defaulted to Mainnet v2 upon start up</span>
-<div class="form-row justify-content-center">
-    <div class="col-auto">
-        <select class="custom-select custom-select-sm" [(ngModel)]="deploymentType" [disabled]="selectedContract">
-            <option value="0">Testnet</option>
-            <option value="1">Mainnet</option>
-        </select>
+<div class="row">
+    <div class="col-12">
+        <b class="text-info">Step 1: Select Switcheo contract</b>
     </div>
-    <div class="col-auto">
-        <select class="custom-select custom-select-sm" [(ngModel)]="contractVersion" [disabled]="selectedContract">
-            <option value="0">v1</option>
-            <option value="1">v1.5</option>
-            <option value="2">v2</option>
-        </select>
+    <div class="col-12">
+        <span class="badge badge-pill badge-light">!</span><span class="text-white">This is defaulted to Mainnet v2 upon start up</span>
     </div>
-    <div class="col-auto" *ngIf="selectedContract">
-        <button class="btn btn-danger btn-sm" (click)="editContract()">
-            Edit
-        </button>
-    </div>
-    <div class="col-auto" *ngIf="!selectedContract">
-        <button class="btn btn-success btn-sm" (click)="selectContract()">
-            Submit
-        </button>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="form-row justify-content-center">
+            <div class="col-auto">
+                <select class="custom-select custom-select-sm" [(ngModel)]="deploymentType" [disabled]="selectedContract">
+                    <option value="0">Testnet</option>
+                    <option value="1">Mainnet</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <select class="custom-select custom-select-sm" [(ngModel)]="contractVersion" [disabled]="selectedContract">
+                    <option value="0">v1</option>
+                    <option value="1">v1.5</option>
+                    <option value="2">v2</option>
+                </select>
+            </div>
+            <div class="col-auto" *ngIf="selectedContract">
+                <button class="btn btn-danger btn-sm" (click)="editContract()">
+                    Edit
+                </button>
+            </div>
+            <div class="col-auto" *ngIf="!selectedContract">
+                <button class="btn btn-success btn-sm" (click)="selectContract()">
+                    Submit
+                </button>
+            </div>
+        </div>
     </div>
 </div>
