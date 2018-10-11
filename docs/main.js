@@ -851,11 +851,11 @@ var WalletService = /** @class */ (function () {
     WalletService.prototype.login = function (key) {
         this.loggedInWallet = null;
         if (key) {
-            try {
+            var isAddress = _cityofzion_neon_js__WEBPACK_IMPORTED_MODULE_1__["wallet"].isAddress(key);
+            this.canAccessPrivateKey = isAddress ? false : _cityofzion_neon_js__WEBPACK_IMPORTED_MODULE_1__["wallet"].isWIF(key) || _cityofzion_neon_js__WEBPACK_IMPORTED_MODULE_1__["wallet"].isPrivateKey(key);
+            if (isAddress || this.canAccessPrivateKey) {
                 this.loggedInWallet = new _cityofzion_neon_js__WEBPACK_IMPORTED_MODULE_1__["wallet"].Account(key);
-                this.canAccessPrivateKey = _cityofzion_neon_js__WEBPACK_IMPORTED_MODULE_1__["wallet"].isWIF(key);
             }
-            catch (_a) { }
         }
         return this.loggedInWallet != null;
     };
