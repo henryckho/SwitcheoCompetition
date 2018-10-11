@@ -27,6 +27,13 @@
 </div>
 <div *ngIf="!isLoading">
     <div class="row justify-content-center">
+        <div class="col-12" *ngIf="assetListLockedWallet.length == 0 && assetListContractWallet.length == 0">
+            <div class="asset-list">
+                <div>
+                    <p><b class="switcheo-text">{{emptyWalletMessage}}</b></p>
+                </div>
+            </div>
+        </div>
         <div class="col-12 col-md-6" *ngIf="assetListLockedWallet.length > 0">
             <div class="asset-list">
                 <div>
