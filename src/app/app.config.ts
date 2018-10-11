@@ -5,6 +5,7 @@ export const config = {
     EMPTY_IMG: "https://henryckho.github.io/NeoBlockXp/img/empty.png",
     LOGIN_ERROR_MESSAGE: "Failed to login. Please make sure your address or private key is valid.",
     REFRESH_ERROR_WALLET_MESSAGE: "You can only refresh contract balance once every minute",
+    EMPTY_WALLET_MESSAGE: "You have nothing in your contract wallet",
     WITHDRAW_SUCCESS_WALLET_MESSAGE: "Withdraw initiated successfully",
     WITHDRAW_INVALID_AMOUNT_MESSAGE: "Attempting to withdraw an invalid amount",
     UNKNOWN_ERROR_MESSAGE: "An unknown error has occured, please try again later"

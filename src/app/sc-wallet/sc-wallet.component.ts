@@ -18,7 +18,7 @@ import { WalletService } from '../wallet.service';
 })
 
 export class SCWalletComponent implements OnInit {
-    private isLoading: boolean = false;
+    private isLoading: boolean = true;
     private imgDir: string = config.IMG_DIR;
     private tokenList: ResponseTokenList = {};
     private assetListContractWallet: string[] = [];
@@ -29,6 +29,7 @@ export class SCWalletComponent implements OnInit {
     private withdrawMessage: string = config.WITHDRAW_SUCCESS_WALLET_MESSAGE;
     private refreshMessage: string = config.REFRESH_ERROR_WALLET_MESSAGE;
     private unknownErrorMessage: string = config.UNKNOWN_ERROR_MESSAGE;
+    private emptyWalletMessage: string = config.EMPTY_WALLET_MESSAGE;
     private showWithdrawMessage: boolean = false;
     private showRefreshMessage: boolean = false;
     private showUnknownErrorMessage: boolean = false;
