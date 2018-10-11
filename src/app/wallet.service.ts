@@ -14,11 +14,11 @@ export class WalletService {
         this.loggedInWallet = null;
 
         if(key) {
-            try {
+            let isAddress = wallet.isAddress(key);
+            this.canAccessPrivateKey = isAddress ? false : wallet.isWIF(key) || wallet.isPrivateKey(key);
+            if(isAddress || this.canAccessPrivateKey) {                
                 this.loggedInWallet = new wallet.Account(key);
-                this.canAccessPrivateKey = wallet.isWIF(key);
             }
-            catch{}
         }
         
         return this.loggedInWallet != null;
