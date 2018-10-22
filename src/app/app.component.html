@@ -5,6 +5,9 @@
         </div>
     </div>
     <sc-contract (loadLogin)="loadLogin()" (changeContract)="changeContract()"></sc-contract>
-    <sc-login *ngIf="loadLoginComponent" (loadWallet)="loadWallet()" (logoutWallet)="logoutWallet()"></sc-login>
-    <sc-wallet *ngIf="loadWalletComponent"></sc-wallet>
+    <sc-login *ngIf="loadLoginComponent" (loadWallet)="loadWalletAndTrades()" (logoutWallet)="logoutWallet()"></sc-login>
+    <div *ngIf="loadWalletComponent && loadTradesComponent">
+        <sc-wallet></sc-wallet>
+        <sc-trades></sc-trades>
+    </div>
 </div>

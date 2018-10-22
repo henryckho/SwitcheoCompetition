@@ -7,9 +7,9 @@ import { WalletService } from './wallet.service';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    private title = 'Switcheo Competition';
     private loadLoginComponent = false;
     private loadWalletComponent = false;
+    private loadTradesComponent = false;
 
     constructor(
         private walletService: WalletService,
@@ -18,6 +18,7 @@ export class AppComponent {
     public loadLogin() {
         this.loadLoginComponent = true;
         this.loadWalletComponent = false;
+        this.loadTradesComponent = false;
     }
 
     public changeContract() {
@@ -25,12 +26,14 @@ export class AppComponent {
         this.logoutWallet();
     }
 
-    public loadWallet() {
+    public loadWalletAndTrades() {
         this.loadWalletComponent = true;
+        this.loadTradesComponent = true;
     }
 
     public logoutWallet() {
         this.walletService.logout();
         this.loadWalletComponent = false;
+        this.loadTradesComponent = false;
     }
 }
