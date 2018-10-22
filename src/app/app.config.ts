@@ -1,7 +1,7 @@
 export const config = {
     MAINNET_URL: "https://api.switcheo.network/v2",
     TESTNET_URL: "https://test-api.switcheo.network/v2",
-    IMG_DIR: "https://henryckho.github.io/NeoBlockXp/img/",
+    IMG_DIR: "assets/img/",
     EMPTY_IMG: "https://henryckho.github.io/NeoBlockXp/img/empty.png",
     LOGIN_ERROR_MESSAGE: "Failed to login. Please make sure your address or private key is valid.",
     REFRESH_ERROR_WALLET_MESSAGE: "You can only refresh contract balance once every minute",
