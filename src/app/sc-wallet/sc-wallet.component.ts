@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 
+import { config } from '../app.config';
 import { SwitcheoService } from '../switcheo.service';
 import { UtilityService } from '../utility.service';
+import { WalletService } from '../wallet.service';
 
 import { ResponseToken, ResponseTokenList } from '../models/response/responseToken';
 import { ResponseContractWallet } from '../models/response/responseContractWallet';
 import { ContractWalletBalance } from '../models/contractWalletBalance';
 import { LockedWalletBalance } from '../models/lockedWalletBalance';
 
-import { config } from '../app.config';
-import { WalletService } from '../wallet.service';
 
 @Component({
     selector: 'sc-wallet',
@@ -48,9 +48,9 @@ export class SCWalletComponent implements OnInit {
             .subscribe(
                 (tokenList: ResponseTokenList) => {
                     this.tokenList = tokenList;
-                    this.isLoading = true;
                     this.resetWallet();
                     this.updateWalletBalances();
+                    this.isLoading = true;
                 },
                 _ => this.showUnknownErrorMessage = true
             );
