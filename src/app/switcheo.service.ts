@@ -17,6 +17,7 @@ import { ResponseContractWallet } from './models/response/responseContractWallet
 import { ResponseContract, ResponseContractList } from './models/response/responseContract';
 import { DeploymentType } from './enum/DeploymentType';
 import { ContractVersion } from './enum/ContractVersion';
+import { ResponseOpenOrder } from './models/response/responseOpenOrder';
 
 @Injectable({ providedIn: 'root' })
 export class SwitcheoService {
@@ -56,6 +57,11 @@ export class SwitcheoService {
     public getContractWalletBalance(): Observable<ResponseContractWallet> {
         let scriptHashAddress: string = this.walletService.getScriptHash();
         return this.http.get<ResponseContractWallet>(`${this.switcheoEndpoint}/balances?addresses[]=${scriptHashAddress}&contract_hashes[]=${this.contractHash}`);
+    }
+
+    public getOpenOrders(): Observable<ResponseOpenOrder[]> {
+        let scriptHashAddress: string = this.walletService.getScriptHash();
+        return this.http.get<ResponseOpenOrder[]>(`${this.switcheoEndpoint}/orders?address=${scriptHashAddress}&contract_hash=${this.contractHash}&order_status=open`);
     }
 
     public withdrawTokens(blockchain: string, token: string, amount: number): Observable<Object> {
