@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { config } from '../app.config';
 import { SwitcheoService } from '../switcheo.service';
@@ -18,9 +18,10 @@ import { LockedWalletBalance } from '../models/lockedWalletBalance';
 })
 
 export class SCWalletComponent implements OnInit {
+    @Input() tokenList: ResponseTokenList;
+    
     private isLoading: boolean = true;
     private imgDir: string = config.IMG_DIR;
-    private tokenList: ResponseTokenList = {};
     private assetListContractWallet: string[] = [];
     private assetListLockedWallet: string[] = [];
     private contractWalletBalance: {[key:string]: ContractWalletBalance} = {};
@@ -42,18 +43,10 @@ export class SCWalletComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.isLoading = true;
         this.canAccessPrivateKey = this.walletService.canAccessPrivateKey;
-
-        this.switcheoService.getTokenList()
-            .subscribe(
-                (tokenList: ResponseTokenList) => {
-                    this.tokenList = tokenList;
-                    this.resetWallet();
-                    this.updateWalletBalances();
-                    this.isLoading = true;
-                },
-                _ => this.showUnknownErrorMessage = true
-            );
+        this.resetWallet();
+        this.updateWalletBalances();
     }
 
     public withdraw(blockchain, token): void {
@@ -70,6 +63,7 @@ export class SCWalletComponent implements OnInit {
                         this.updateWalletBalances()
                     },
                     (err) => {
+                        this.isLoading = false;
                         this.showWithdrawMessage = false;
                         contractWallet.isWithdrawDisabled = false;
                         if(err.error != null && err.error.error != undefined) {
@@ -136,9 +130,9 @@ export class SCWalletComponent implements OnInit {
                 (walletBalance: ResponseContractWallet) => {
                     this.lastUpdatedBalance = new Date().getTime();
                     this.buildWalletBalances(walletBalance);
-                    this.isLoading = false;
                 },
-                _ => this.showUnknownErrorMessage = true
+                _ => this.showUnknownErrorMessage = true,
+                () => this.isLoading = false
             );
     }
 
