@@ -7,6 +7,7 @@ import { WalletService } from '../wallet.service';
 import { ResponseOpenOrder } from '../models/response/responseOpenOrder';
 import { ResponseTokenList, ResponseToken } from '../models/response/responseToken';
 import { OpenOrdersBalance } from '../models/openOrdersBalance';
+import { UtilityService } from '../utility.service';
 
 @Component({
     selector: 'sc-trades',
@@ -23,6 +24,7 @@ export class SCTradesComponent implements OnInit {
     private openOrdersBalances: OpenOrdersBalance[] = [];
 
     constructor(
+        private utilityService: UtilityService,
         private walletService: WalletService,
         private switcheoService: SwitcheoService
     ) { }
@@ -47,9 +49,11 @@ export class SCTradesComponent implements OnInit {
                 return this.tokenList[token].hash == responseOrder.offer_asset_id;
             })[0];
 
+            let offerAmount = this.utilityService.convertBalanceToDisplay(responseOrder.offer_amount, this.tokenList[token].decimals);
+
             let order: OpenOrdersBalance = {
                 id: responseOrder.id,
-                offerAmount: responseOrder.offer_amount,
+                offerAmount: offerAmount,
                 tokenName: token,
                 token: this.tokenList[token]
             }
