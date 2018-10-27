@@ -13,7 +13,7 @@
                 <input type="password" class="form-control form-control-sm text-center" [(ngModel)]="key" placeholder="Address or Private Key" />
             </div>
             <div class="col-auto">
-                <button class="btn btn-success btn-sm" (click)="loginToWallet()" [disabled]="!key">Login</button>
+                <button class="btn btn-success btn-sm mt-2 mt-sm-0" (click)="loginToWallet()" [disabled]="!key">Login</button>
             </div>
         </div>
         <div class="row justify-content-center" *ngIf="showErrorMessage">
