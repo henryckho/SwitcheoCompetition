@@ -32,6 +32,22 @@ export class SCTradesComponent implements OnInit {
     ngOnInit() {
         this.isLoading = true;
         this.canAccessPrivateKey = this.walletService.canAccessPrivateKey;
+        this.updateTrades();
+    }
+
+    public cancelTrade(orderIdToCancel: string): void {
+        this.switcheoService.cancelOrder(orderIdToCancel)
+            .subscribe(
+                _ => {
+                    this.isLoading = true;
+                    this.showUnknownErrorMessage = false;
+                    this.updateTrades();
+                }
+            );
+    }
+
+    private updateTrades(): void {
+        this.openOrdersBalances.length = 0;
         this.switcheoService.getOpenOrders()
             .subscribe(
                 (openOrders: ResponseOpenOrder[]) => {
@@ -42,18 +58,21 @@ export class SCTradesComponent implements OnInit {
             );
     }
 
-    private buildOpenOrdersBalances(openOrders: ResponseOpenOrder[]) {
+    private buildOpenOrdersBalances(openOrders: ResponseOpenOrder[]): void {
         for(let i = 0; i < openOrders.length; i++) {
             let responseOrder: ResponseOpenOrder = openOrders[i];
             let token: string = Object.keys(this.tokenList).filter((token)=>{
                 return this.tokenList[token].hash == responseOrder.offer_asset_id;
             })[0];
-
-            let offerAmount = this.utilityService.convertBalanceToDisplay(responseOrder.offer_amount, this.tokenList[token].decimals);
+            let totalFilledAmount = responseOrder.fills.reduce(function(value, orderFill) {
+                return value + parseInt(orderFill.fill_amount);
+            }, 0);
+            let amountLeft = parseInt(responseOrder.offer_amount) - totalFilledAmount;
+            let orderAmountLeft = this.utilityService.convertBalanceToDisplay(amountLeft.toString(), this.tokenList[token].decimals);
 
             let order: OpenOrdersBalance = {
                 id: responseOrder.id,
-                offerAmount: offerAmount,
+                offerAmount: orderAmountLeft,
                 tokenName: token,
                 token: this.tokenList[token]
             }
