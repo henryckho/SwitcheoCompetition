@@ -3,6 +3,9 @@ import { ResponseToken } from "./response/responseToken";
 export class OpenOrdersBalance {
     id: string;
     offerAmount: string;
-    tokenName: string;
-    token: ResponseToken;
+    offerTokenName: string;
+    offerToken: ResponseToken;
+    wantTokenName: string;
+    wantToken: ResponseToken;
+    price: string;
 }

@@ -46,7 +46,7 @@ export class SCTradesComponent implements OnInit {
             );
     }
 
-    private updateTrades(): void {
+    public updateTrades(): void {
         this.openOrdersBalances.length = 0;
         this.switcheoService.getOpenOrders()
             .subscribe(
@@ -61,20 +61,30 @@ export class SCTradesComponent implements OnInit {
     private buildOpenOrdersBalances(openOrders: ResponseOpenOrder[]): void {
         for(let i = 0; i < openOrders.length; i++) {
             let responseOrder: ResponseOpenOrder = openOrders[i];
-            let token: string = Object.keys(this.tokenList).filter((token)=>{
+            let offerTokenName: string = Object.keys(this.tokenList).filter((token)=>{
                 return this.tokenList[token].hash == responseOrder.offer_asset_id;
             })[0];
-            let totalFilledAmount = responseOrder.fills.reduce(function(value, orderFill) {
+            let wantTokenName: string = Object.keys(this.tokenList).filter((token)=>{
+                return this.tokenList[token].hash == responseOrder.want_asset_id;
+            })[0];
+            let totalFilledOfferAmount = responseOrder.fills.reduce(function(value, orderFill) {
                 return value + parseInt(orderFill.fill_amount);
             }, 0);
-            let amountLeft = parseInt(responseOrder.offer_amount) - totalFilledAmount;
-            let orderAmountLeft = this.utilityService.convertBalanceToDisplay(amountLeft.toString(), this.tokenList[token].decimals);
+            let offerAmountLeft = parseInt(responseOrder.offer_amount) - totalFilledOfferAmount;
+            let orderOfferAmountLeft = this.utilityService.convertBalanceToDisplay(offerAmountLeft.toString(), this.tokenList[offerTokenName].decimals);
+
+            let totalFilledWantAmount = responseOrder.fills.reduce(function(value, orderFill) {
+                return value + parseInt(orderFill.fill_amount);
+            }, 0);
 
             let order: OpenOrdersBalance = {
                 id: responseOrder.id,
-                offerAmount: orderAmountLeft,
-                tokenName: token,
-                token: this.tokenList[token]
+                offerAmount: orderOfferAmountLeft,
+                offerTokenName: offerTokenName,
+                offerToken: this.tokenList[offerTokenName],
+                price: responseOrder.price,
+                wantTokenName: wantTokenName,
+                wantToken: this.tokenList[wantTokenName]
             }
             this.openOrdersBalances.push(order);
         }
