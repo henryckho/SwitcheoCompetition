@@ -18,6 +18,8 @@ import { ResponseContract, ResponseContractList } from './models/response/respon
 import { DeploymentType } from './enum/DeploymentType';
 import { ContractVersion } from './enum/ContractVersion';
 import { ResponseOpenOrder } from './models/response/responseOpenOrder';
+import { CreateCancellation } from './models/createCancellation';
+import { ResponseCreateCancellation, CancellationTransaction } from './models/response/responseCreateCancellation';
 
 @Injectable({ providedIn: 'root' })
 export class SwitcheoService {
@@ -66,9 +68,16 @@ export class SwitcheoService {
 
     public withdrawTokens(blockchain: string, token: string, amount: number): Observable<Object> {
         return this.createWithdrawTokens(blockchain, token, amount)
-        .pipe(
-            mergeMap((response: ResponseCreateWithdraw) => this.executeWithdrawToken(response.id))
-        );
+                    .pipe(
+                        mergeMap((response: ResponseCreateWithdraw) => this.executeWithdrawToken(response.id))
+                    );
+    }
+
+    public cancelOrder(orderId: string): Observable<Object> {
+        return this.createOrderCancellation(orderId)
+                    .pipe(
+                        mergeMap((response: ResponseCreateCancellation) => this.executeOrderCancellation(response.id, response.transaction))
+                    );
     }
 
     private getContracts(): Observable<ResponseContract> {
@@ -90,7 +99,7 @@ export class SwitcheoService {
         return this.http.post<ResponseCreateWithdraw>(`${this.switcheoEndpoint}/withdrawals`, apiParams);
     }
 
-    private executeWithdrawToken(id: string) : Observable<Object> {
+    private executeWithdrawToken(id: string): Observable<Object> {
         let params: ExecuteWithdraw = {
             id,
             timestamp: this.utilityService.getTimestamp()
@@ -99,5 +108,24 @@ export class SwitcheoService {
         let apiParams = { ...params, signature };
         
         return this.http.post(`${this.switcheoEndpoint}/withdrawals/${id}/broadcast`, apiParams);
+    }
+
+    private createOrderCancellation(orderId: string): Observable<ResponseCreateCancellation> {
+        let address: string = this.walletService.getScriptHash();
+        let params: CreateCancellation = {
+            order_id: orderId,
+            timestamp: this.utilityService.getTimestamp()
+        };
+        let signature: string = this.walletService.signParams(params);
+        let apiParams = { ...params, address, signature };
+
+        return this.http.post<ResponseCreateCancellation>(`${this.switcheoEndpoint}/cancellations`, apiParams);
+    }
+
+    private executeOrderCancellation(id:string, transaction: CancellationTransaction): Observable<Object> {
+        let signature: string = this.walletService.signTransaction(transaction);
+        let apiParams = { signature };
+        
+        return this.http.post(`${this.switcheoEndpoint}/cancellations/${id}/broadcast`, apiParams);
     }
 }
