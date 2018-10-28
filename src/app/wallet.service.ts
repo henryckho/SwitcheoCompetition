@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { u, wallet } from '@cityofzion/neon-js';
+import { u, wallet, tx } from '@cityofzion/neon-js';
 
 import stringify from 'json-stable-stringify';
 
@@ -47,6 +47,11 @@ export class WalletService {
         
         let lengthHex: string = (paramsHexString.length / 2).toString(16).padStart(2, '0');
         let serialisedTransaction: string = `010001f0${lengthHex}${paramsHexString}0000`;
+        return this.signMessage(serialisedTransaction);
+    }
+
+    public signTransaction(transaction): string {
+        let serialisedTransaction: string = tx.serializeTransaction(transaction, false);
         return this.signMessage(serialisedTransaction);
     }
 
