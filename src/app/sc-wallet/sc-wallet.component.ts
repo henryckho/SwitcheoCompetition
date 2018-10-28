@@ -106,9 +106,9 @@ export class SCWalletComponent implements OnInit {
 
     public refreshBalance(): void {
         let millisecondsNow = new Date().getTime();
-        let oneMinute: number = 60000;
+        let refreshDisabledPeriod: number = 10000;
         let refreshTimeElapsed: number = millisecondsNow - this.lastUpdatedBalance;
-        if(refreshTimeElapsed > oneMinute) {
+        if(refreshTimeElapsed > refreshDisabledPeriod) {
             this.showRefreshMessage = false;
             this.isLoading = true;
             this.updateWalletBalances();
