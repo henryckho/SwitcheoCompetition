@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { WalletService } from './wallet.service';
-import { SwitcheoService } from './switcheo.service';
-import { ResponseTokenList } from './models/response/responseToken';
 
 @Component({
     selector: 'app-root',
@@ -10,42 +8,28 @@ import { ResponseTokenList } from './models/response/responseToken';
 })
 export class AppComponent {
     private loadLoginComponent = false;
-    private loadWalletComponent = false;
-    private loadTradesComponent = false;
-
-    private tokenList: ResponseTokenList = {};
+    private loadContentComponent = false;
 
     constructor(
-        private walletService: WalletService,
-        private switcheoService: SwitcheoService
+        private walletService: WalletService
     ) { }
-
-    public loadLogin() {
-        this.loadLoginComponent = true;
-        this.loadWalletComponent = false;
-        this.loadTradesComponent = false;
-    }
 
     public changeContract() {
         this.loadLoginComponent = false;
         this.logoutWallet();
     }
 
-    public loadWalletAndTrades() {
-        this.switcheoService.getTokenList()
-            .subscribe(
-                (tokenList: ResponseTokenList) => {
-                    this.tokenList = tokenList;
-
-                    this.loadWalletComponent = true;
-                    this.loadTradesComponent = true;
-                }
-            )
+    public loadLogin() {
+        this.loadLoginComponent = true;
+        this.loadContentComponent = false;
     }
 
     public logoutWallet() {
         this.walletService.logout();
-        this.loadWalletComponent = false;
-        this.loadTradesComponent = false;
+        this.loadContentComponent = false;
+    }
+
+    public loadContent() {
+        this.loadContentComponent = true;
     }
 }

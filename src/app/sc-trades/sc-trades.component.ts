@@ -5,7 +5,7 @@ import { SwitcheoService } from '../switcheo.service';
 import { WalletService } from '../wallet.service';
 
 import { ResponseOpenOrder } from '../models/response/responseOpenOrder';
-import { ResponseTokenList, ResponseToken } from '../models/response/responseToken';
+import { ResponseTokenList } from '../models/response/responseToken';
 import { OpenOrdersBalance } from '../models/openOrdersBalance';
 import { UtilityService } from '../utility.service';
 
@@ -45,7 +45,7 @@ export class SCTradesComponent implements OnInit {
             );
     }
 
-    public updateTrades(): void {
+    private updateTrades(): void {
         this.openOrdersBalances.length = 0;
         this.switcheoService.getOpenOrders()
             .subscribe(
