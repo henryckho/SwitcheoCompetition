@@ -3,7 +3,7 @@
         <button class="btn btn-info btn-sm" (click)="refreshBalance()">Refresh</button>
     </div>
 </div>
-<div class="row justify-content-center">
+<div class="row justify-content-center" *ngIf="showRefreshMessage || showUnknownErrorMessage || showWithdrawMessage">
     <div class="col-12 col-md-auto">
         <div class="alert alert-danger alert-dismissible" role="alert" *ngIf="showRefreshMessage">
             <span>{{refreshMessage}}</span>
