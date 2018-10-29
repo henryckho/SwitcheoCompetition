@@ -48,7 +48,7 @@ module.exports = "/*!\n * Bootstrap v4.1.3 (https://getbootstrap.com/)\n * Copyr
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "body {\r\n    font-family: Verdana, Geneva, Tahoma, sans-serif;\r\n    background-color: #222a3f;\r\n    color: white;\r\n}\r\n\r\n.row {\r\n    margin-top: 10px;\r\n}\r\n\r\n.switcheo-text {\r\n    color: #88c773;\r\n}"
+module.exports = "body {\r\n    font-family: Verdana, Geneva, Tahoma, sans-serif;\r\n    background-color: #222a3f;\r\n    color: white;\r\n}\r\n\r\n.row {\r\n    margin-top: 10px;\r\n}\r\n\r\n.switcheo-text {\r\n    color: #88c773;\r\n}\r\n\r\n.token-img {\r\n    border-radius: 25px;\r\n    border: 1px solid white;\r\n    padding: 5px;\r\n    background-color: white;\r\n    width: 50px;\r\n    height: 50px;\r\n}\r\n\r\n.asset-list {\r\n    border: 1px solid white;\r\n    margin-top: 10px;\r\n    padding: 10px 0px;\r\n    background-color: rgba(255, 255, 255, 0.1);\r\n}\r\n\r\n.input-withdraw {\r\n    min-width: 150px;\r\n}"
 
 /***/ }),
 
