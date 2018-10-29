@@ -12,8 +12,7 @@ import { LockedWalletBalance } from '../models/lockedWalletBalance';
 
 @Component({
     selector: 'sc-wallet',
-    templateUrl: 'sc-wallet.component.html',
-    styleUrls: ['sc-wallet.component.css']
+    templateUrl: 'sc-wallet.component.html'
 })
 
 export class SCWalletComponent implements OnInit {

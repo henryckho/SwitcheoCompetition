@@ -7,8 +7,7 @@ import { ContractVersion } from '../enum/ContractVersion';
 
 @Component({
     selector: 'sc-contract',
-    templateUrl: 'sc-contract.component.html',
-    styleUrls: ['sc-contract.component.css']
+    templateUrl: 'sc-contract.component.html'
 })
 
 export class SCContractComponent implements OnInit {
