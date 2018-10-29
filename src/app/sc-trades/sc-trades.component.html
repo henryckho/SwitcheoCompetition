@@ -1,7 +1,7 @@
 <div *ngIf="openOrdersBalances.length > 0">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" *ngIf="showUnknownErrorMessage">
         <div class="col-12 col-md-auto">
-            <div class="alert alert-danger alert-dismissible" role="alert" *ngIf="showUnknownErrorMessage">
+            <div class="alert alert-danger alert-dismissible" role="alert">
                 <span>{{unknownErrorMessage}}</span>
                 <button type="button" class="close" (click)="showUnknownErrorMessage = false;">
                     <span aria-hidden="true">&times;</span>
