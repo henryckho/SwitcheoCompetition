@@ -61,21 +61,14 @@ export class SCTradesComponent implements OnInit {
     private buildOpenOrdersBalances(openOrders: ResponseOpenOrder[]): void {
         for(let i = 0; i < openOrders.length; i++) {
             let responseOrder: ResponseOpenOrder = openOrders[i];
-            let offerTokenName: string = Object.keys(this.tokenList).filter((token)=>{
-                return this.tokenList[token].hash == responseOrder.offer_asset_id;
-            })[0];
-            let wantTokenName: string = Object.keys(this.tokenList).filter((token)=>{
-                return this.tokenList[token].hash == responseOrder.want_asset_id;
-            })[0];
+            let offerTokenName: string = this.getTokenFromTokenScriptHash(responseOrder.offer_asset_id);
+            let wantTokenName: string = this.getTokenFromTokenScriptHash(responseOrder.want_asset_id);
+            
             let totalFilledOfferAmount = responseOrder.fills.reduce(function(value, orderFill) {
                 return value + parseInt(orderFill.fill_amount);
             }, 0);
             let offerAmountLeft = parseInt(responseOrder.offer_amount) - totalFilledOfferAmount;
             let orderOfferAmountLeft = this.utilityService.convertBalanceToDisplay(offerAmountLeft.toString(), this.tokenList[offerTokenName].decimals);
-
-            let totalFilledWantAmount = responseOrder.fills.reduce(function(value, orderFill) {
-                return value + parseInt(orderFill.fill_amount);
-            }, 0);
 
             let order: OpenOrdersBalance = {
                 id: responseOrder.id,
@@ -88,5 +81,11 @@ export class SCTradesComponent implements OnInit {
             }
             this.openOrdersBalances.push(order);
         }
+    }
+
+    private getTokenFromTokenScriptHash(scriptHash: string): string {
+        return Object.keys(this.tokenList).filter((token)=>{
+            return this.tokenList[token].hash == scriptHash;
+        })[0];
     }
 }
