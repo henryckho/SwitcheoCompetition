@@ -67,10 +67,6 @@ export class SCWalletComponent implements OnInit {
         }
     }
 
-    public handleImgError(element) {
-        element.target.src = config.EMPTY_IMG;
-    }
-
     public refreshBalance(): void {
         let millisecondsNow = new Date().getTime();
         let refreshDisabledPeriod: number = 10000;

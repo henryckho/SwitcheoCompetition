@@ -10,4 +10,8 @@ import { config } from '../app.config';
 export class SCLogoComponent {
     @Input() tokenName: string;
     private imgDir: string = config.IMG_DIR;
+    
+    public handleImgError(element) {
+        element.target.src = config.EMPTY_IMG;
+    }
 }
