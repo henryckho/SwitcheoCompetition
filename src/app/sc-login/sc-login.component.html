@@ -13,7 +13,7 @@
                 <input type="password" class="form-control form-control-sm text-center" [(ngModel)]="key" placeholder="Address or Private Key" />
             </div>
             <div class="col-auto">
-                <button class="btn btn-success btn-sm" (click)="loginToWallet()" [disabled]="!key">Login</button>
+                <button class="btn btn-success btn-sm mt-2 mt-sm-0" (click)="loginToWallet()" [disabled]="!key">Login</button>
             </div>
         </div>
         <div class="row justify-content-center" *ngIf="showErrorMessage">
@@ -33,7 +33,7 @@
                 <input type="text" class="form-control form-control-sm text-center" [(ngModel)]="address" readonly />
             </div>
             <div class="col-auto">
-                <button class="btn btn-danger btn-sm" (click)="logoutOfWallet()">Logout</button>
+                <button class="btn btn-danger btn-sm mt-2 mt-sm-0" (click)="logoutOfWallet()">Logout</button>
             </div>
         </div>
     </div>

@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
+import { config } from '../app.config';
 import { SwitcheoService } from '../switcheo.service';
 import { UtilityService } from '../utility.service';
+import { WalletService } from '../wallet.service';
 
 import { ResponseToken, ResponseTokenList } from '../models/response/responseToken';
 import { ResponseContractWallet } from '../models/response/responseContractWallet';
 import { ContractWalletBalance } from '../models/contractWalletBalance';
 import { LockedWalletBalance } from '../models/lockedWalletBalance';
 
-import { config } from '../app.config';
-import { WalletService } from '../wallet.service';
 
 @Component({
     selector: 'sc-wallet',
@@ -18,9 +18,10 @@ import { WalletService } from '../wallet.service';
 })
 
 export class SCWalletComponent implements OnInit {
+    @Input() tokenList: ResponseTokenList;
+    
     private isLoading: boolean = true;
     private imgDir: string = config.IMG_DIR;
-    private tokenList: ResponseTokenList = {};
     private assetListContractWallet: string[] = [];
     private assetListLockedWallet: string[] = [];
     private contractWalletBalance: {[key:string]: ContractWalletBalance} = {};
@@ -42,18 +43,10 @@ export class SCWalletComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.isLoading = true;
         this.canAccessPrivateKey = this.walletService.canAccessPrivateKey;
-
-        this.switcheoService.getTokenList()
-            .subscribe(
-                (tokenList: ResponseTokenList) => {
-                    this.tokenList = tokenList;
-                    this.isLoading = true;
-                    this.resetWallet();
-                    this.updateWalletBalances();
-                },
-                _ => this.showUnknownErrorMessage = true
-            );
+        this.resetWallet();
+        this.updateWalletBalances();
     }
 
     public withdraw(blockchain, token): void {
@@ -70,6 +63,7 @@ export class SCWalletComponent implements OnInit {
                         this.updateWalletBalances()
                     },
                     (err) => {
+                        this.isLoading = false;
                         this.showWithdrawMessage = false;
                         contractWallet.isWithdrawDisabled = false;
                         if(err.error != null && err.error.error != undefined) {
@@ -112,9 +106,9 @@ export class SCWalletComponent implements OnInit {
 
     public refreshBalance(): void {
         let millisecondsNow = new Date().getTime();
-        let oneMinute: number = 60000;
+        let refreshDisabledPeriod: number = 10000;
         let refreshTimeElapsed: number = millisecondsNow - this.lastUpdatedBalance;
-        if(refreshTimeElapsed > oneMinute) {
+        if(refreshTimeElapsed > refreshDisabledPeriod) {
             this.showRefreshMessage = false;
             this.isLoading = true;
             this.updateWalletBalances();
@@ -136,9 +130,9 @@ export class SCWalletComponent implements OnInit {
                 (walletBalance: ResponseContractWallet) => {
                     this.lastUpdatedBalance = new Date().getTime();
                     this.buildWalletBalances(walletBalance);
-                    this.isLoading = false;
                 },
-                _ => this.showUnknownErrorMessage = true
+                _ => this.showUnknownErrorMessage = true,
+                () => this.isLoading = false
             );
     }
 
