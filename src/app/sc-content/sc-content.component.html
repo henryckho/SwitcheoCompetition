@@ -1,0 +1,19 @@
+<div *ngIf="tokenList">
+    <div class="row">
+        <div class="col-12">
+            <button class="btn btn-info btn-sm" (click)="refresh()">Refresh</button>
+        </div>
+    </div>
+    <div class="row justify-content-center" *ngIf="showRefreshMessage">
+        <div class="col-12 col-md-auto">
+            <div class="alert alert-danger alert-dismissible" role="alert" *ngIf="showRefreshMessage">
+                <span>{{refreshMessage}}</span>
+                <button type="button" class="close" (click)="showRefreshMessage = false;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <sc-wallet [tokenList]="tokenList"></sc-wallet>
+    <sc-trades [tokenList]="tokenList" (refreshBalances)="refreshBalances()"></sc-trades>
+</div>

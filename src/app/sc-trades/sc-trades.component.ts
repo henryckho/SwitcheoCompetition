@@ -1,11 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 import { config } from '../app.config';
 import { SwitcheoService } from '../switcheo.service';
 import { WalletService } from '../wallet.service';
 
 import { ResponseOpenOrder } from '../models/response/responseOpenOrder';
-import { ResponseTokenList, ResponseToken } from '../models/response/responseToken';
+import { ResponseTokenList } from '../models/response/responseToken';
 import { OpenOrdersBalance } from '../models/openOrdersBalance';
 import { UtilityService } from '../utility.service';
 
@@ -16,6 +16,8 @@ import { UtilityService } from '../utility.service';
 
 export class SCTradesComponent implements OnInit {
     @Input() tokenList: ResponseTokenList;
+    @Output() refreshBalances = new EventEmitter();
+    
     private isLoading: boolean = true;
     private canAccessPrivateKey: boolean = false;
     private unknownErrorMessage: string = config.UNKNOWN_ERROR_MESSAGE;
@@ -31,7 +33,7 @@ export class SCTradesComponent implements OnInit {
     ngOnInit() {
         this.isLoading = true;
         this.canAccessPrivateKey = this.walletService.canAccessPrivateKey;
-        this.updateTrades();
+        this.refreshTrades();
     }
 
     public cancelTrade(orderIdToCancel: string): void {
@@ -40,12 +42,13 @@ export class SCTradesComponent implements OnInit {
                 _ => {
                     this.isLoading = true;
                     this.showUnknownErrorMessage = false;
-                    this.updateTrades();
+                    this.refreshTrades();
+                    this.refreshBalances.emit();
                 }
             );
     }
 
-    public updateTrades(): void {
+    public refreshTrades(): void {
         this.openOrdersBalances.length = 0;
         this.switcheoService.getOpenOrders()
             .subscribe(

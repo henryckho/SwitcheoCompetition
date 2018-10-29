@@ -1,36 +1,34 @@
-<div *ngIf="openOrdersBalances.length > 0">
-    <div class="row justify-content-center" *ngIf="showUnknownErrorMessage">
-        <div class="col-12 col-md-auto">
-            <div class="alert alert-danger alert-dismissible" role="alert">
-                <span>{{unknownErrorMessage}}</span>
-                <button type="button" class="close" (click)="showUnknownErrorMessage = false;">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+<div class="row justify-content-center" *ngIf="showUnknownErrorMessage">
+    <div class="col-12 col-md-auto">
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <span>{{unknownErrorMessage}}</span>
+            <button type="button" class="close" (click)="showUnknownErrorMessage = false;">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
     </div>
-    <div *ngIf="!isLoading">
-        <div class="row justify-content-center">
-            <div class="col-12">
-                <div class="asset-list">
-                    <div>
-                        <b class="switcheo-text">Open trades</b>
+</div>
+<div *ngIf="!isLoading">
+    <div class="row justify-content-center" *ngIf="openOrdersBalances.length > 0">
+        <div class="col-12">
+            <div class="asset-list">
+                <div>
+                    <b class="switcheo-text">Open trades</b>
+                </div>
+                <div class="row justify-content-center" *ngFor="let order of openOrdersBalances">
+                    <div class="col-6 col-md-auto">
+                        <sc-logo [tokenName]="order.offerTokenName"></sc-logo>
                     </div>
-                    <div class="row justify-content-center" *ngFor="let order of openOrdersBalances">
-                        <div class="col-6 col-md-auto">
-                            <sc-logo [tokenName]="order.offerTokenName"></sc-logo>
-                        </div>
-                        <div class="col-6 col-md-auto">
-                            <sc-logo [tokenName]="order.wantTokenName"></sc-logo>
-                        </div>
-                        <div class="col-auto">
-                            <b>{{order.offerAmount}}</b>
-                            <br/>
-                            <span> @ {{order.price}} {{order.offerTokenName}}/{{order.wantTokenName}}</span>
-                            <div class="row justify-content-center" *ngIf="canAccessPrivateKey">
-                                <div class="col-auto">
-                                    <button class="btn btn-danger btn-sm" (click)="cancelTrade(order.id)">Cancel</button>
-                                </div>
+                    <div class="col-6 col-md-auto">
+                        <sc-logo [tokenName]="order.wantTokenName"></sc-logo>
+                    </div>
+                    <div class="col-auto">
+                        <b>{{order.offerAmount}}</b>
+                        <br/>
+                        <span> @ {{order.price}} {{order.offerTokenName}}/{{order.wantTokenName}}</span>
+                        <div class="row justify-content-center" *ngIf="canAccessPrivateKey">
+                            <div class="col-auto">
+                                <button class="btn btn-danger btn-sm" (click)="cancelTrade(order.id)">Cancel</button>
                             </div>
                         </div>
                     </div>
