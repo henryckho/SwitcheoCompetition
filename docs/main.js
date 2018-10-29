@@ -522,6 +522,9 @@ var SCTradesComponent = /** @class */ (function () {
         this.canAccessPrivateKey = this.walletService.canAccessPrivateKey;
         this.updateTrades();
     };
+    SCTradesComponent.prototype.handleImgError = function (element) {
+        element.target.src = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"].EMPTY_IMG;
+    };
     SCTradesComponent.prototype.cancelTrade = function (orderIdToCancel) {
         var _this = this;
         this.switcheoService.cancelOrder(orderIdToCancel)
