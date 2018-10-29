@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 import { config } from '../app.config';
 import { SwitcheoService } from '../switcheo.service';
@@ -16,6 +16,8 @@ import { UtilityService } from '../utility.service';
 
 export class SCTradesComponent implements OnInit {
     @Input() tokenList: ResponseTokenList;
+    @Output() refreshBalances = new EventEmitter();
+    
     private isLoading: boolean = true;
     private canAccessPrivateKey: boolean = false;
     private unknownErrorMessage: string = config.UNKNOWN_ERROR_MESSAGE;
@@ -41,6 +43,7 @@ export class SCTradesComponent implements OnInit {
                     this.isLoading = true;
                     this.showUnknownErrorMessage = false;
                     this.refreshTrades();
+                    this.refreshBalances.emit();
                 }
             );
     }

@@ -13,6 +13,7 @@ import { config } from '../app.config';
 export class SCContentComponent implements OnInit {
     @ViewChild(SCWalletComponent) walletChild: SCWalletComponent;
     @ViewChild(SCTradesComponent) tradesChild: SCTradesComponent;
+
     private tokenList: ResponseTokenList = {};
     private lastUpdatedBalance: number = new Date().getTime();;
     private refreshMessage: string = config.REFRESH_ERROR_WALLET_MESSAGE;
@@ -33,11 +34,15 @@ export class SCContentComponent implements OnInit {
         if(refreshTimeElapsed > refreshDisabledPeriod) {
             this.lastUpdatedBalance = new Date().getTime();
             this.showRefreshMessage = false;
-            this.walletChild.refreshBalances();
+            this.refreshBalances();
             this.tradesChild.refreshTrades();
         } else {
             this.showRefreshMessage = true;
         }
+    }
+
+    public refreshBalances(): void {
+        this.walletChild.refreshBalances();
     }
 
     private loadWalletAndTrades(): void {
