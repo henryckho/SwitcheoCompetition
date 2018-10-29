@@ -16,7 +16,6 @@ import { UtilityService } from '../utility.service';
 
 export class SCTradesComponent implements OnInit {
     @Input() tokenList: ResponseTokenList;
-    private imgDir: string = config.IMG_DIR;
     private isLoading: boolean = true;
     private canAccessPrivateKey: boolean = false;
     private unknownErrorMessage: string = config.UNKNOWN_ERROR_MESSAGE;

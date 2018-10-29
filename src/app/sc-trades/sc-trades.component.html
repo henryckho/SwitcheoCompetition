@@ -18,14 +18,10 @@
                     </div>
                     <div class="row justify-content-center" *ngFor="let order of openOrdersBalances">
                         <div class="col-6 col-md-auto">
-                            <img class="token-img" src="{{imgDir}}/{{order.offerTokenName}}.png" (error)="handleImgError($event);" />
-                            <br/>
-                            <b>{{order.offerTokenName}}</b>
+                            <sc-logo [tokenName]="order.offerTokenName"></sc-logo>
                         </div>
                         <div class="col-6 col-md-auto">
-                            <img class="token-img" src="{{imgDir}}/{{order.wantTokenName}}.png" (error)="handleImgError($event);" />
-                            <br/>
-                            <b>{{order.wantTokenName}}</b>
+                            <sc-logo [tokenName]="order.wantTokenName"></sc-logo>
                         </div>
                         <div class="col-auto">
                             <b>{{order.offerAmount}}</b>

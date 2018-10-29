@@ -19,7 +19,6 @@ export class SCWalletComponent implements OnInit {
     @Input() tokenList: ResponseTokenList;
     
     private isLoading: boolean = true;
-    private imgDir: string = config.IMG_DIR;
     private assetListContractWallet: string[] = [];
     private assetListLockedWallet: string[] = [];
     private contractWalletBalance: {[key:string]: ContractWalletBalance} = {};
