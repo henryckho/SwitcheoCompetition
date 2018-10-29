@@ -8,6 +8,7 @@ import { SCWalletComponent } from './sc-wallet/sc-wallet.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SCContractComponent } from './sc-contract/sc-contract.component';
 import { SCTradesComponent } from './sc-trades/sc-trades.component';
+import { SCLogoComponent } from './sc-logo/sc-logo.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { SCTradesComponent } from './sc-trades/sc-trades.component';
     SCLoginComponent,
     SCWalletComponent,
     SCContractComponent,
-    SCTradesComponent
+    SCTradesComponent,
+    SCLogoComponent
   ],
   imports: [
     BrowserModule,

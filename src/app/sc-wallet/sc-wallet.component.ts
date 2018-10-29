@@ -10,18 +10,15 @@ import { ResponseContractWallet } from '../models/response/responseContractWalle
 import { ContractWalletBalance } from '../models/contractWalletBalance';
 import { LockedWalletBalance } from '../models/lockedWalletBalance';
 
-
 @Component({
     selector: 'sc-wallet',
-    templateUrl: 'sc-wallet.component.html',
-    styleUrls: ['sc-wallet.component.css']
+    templateUrl: 'sc-wallet.component.html'
 })
 
 export class SCWalletComponent implements OnInit {
     @Input() tokenList: ResponseTokenList;
     
     private isLoading: boolean = true;
-    private imgDir: string = config.IMG_DIR;
     private assetListContractWallet: string[] = [];
     private assetListLockedWallet: string[] = [];
     private contractWalletBalance: {[key:string]: ContractWalletBalance} = {};
@@ -45,37 +42,7 @@ export class SCWalletComponent implements OnInit {
     ngOnInit() {
         this.isLoading = true;
         this.canAccessPrivateKey = this.walletService.canAccessPrivateKey;
-        this.resetWallet();
         this.updateWalletBalances();
-    }
-
-    public withdraw(blockchain, token): void {
-        let contractWallet: ContractWalletBalance = this.contractWalletBalance[token];
-        if(contractWallet.withdrawAmount && !isNaN(contractWallet.withdrawAmount)) {
-            let tokenAsset: ResponseToken = this.tokenList[token];
-            let withdrawAmount: number = this.utilityService.convertDisplayToBalance(contractWallet.withdrawAmount, tokenAsset.decimals);
-            contractWallet.isWithdrawDisabled = true;
-            this.switcheoService.withdrawTokens(blockchain, token, withdrawAmount)
-                .subscribe(
-                    _ => {
-                        this.isLoading = true;
-                        this.showWithdrawMessage = true;
-                        this.updateWalletBalances()
-                    },
-                    (err) => {
-                        this.isLoading = false;
-                        this.showWithdrawMessage = false;
-                        contractWallet.isWithdrawDisabled = false;
-                        if(err.error != null && err.error.error != undefined) {
-                            contractWallet.errorMessage = err.error.error;
-                        } else {
-                            this.showUnknownErrorMessage = true;
-                        }
-                    }
-                );
-        } else {
-            contractWallet.errorMessage = config.WITHDRAW_INVALID_AMOUNT_MESSAGE;
-        }
     }
 
     public handleInputWithdraw(element, token): void {
@@ -100,20 +67,43 @@ export class SCWalletComponent implements OnInit {
         }
     }
 
-    public handleImgError(element) {
-        element.target.src = config.EMPTY_IMG;
-    }
-
     public refreshBalance(): void {
         let millisecondsNow = new Date().getTime();
         let refreshDisabledPeriod: number = 10000;
         let refreshTimeElapsed: number = millisecondsNow - this.lastUpdatedBalance;
         if(refreshTimeElapsed > refreshDisabledPeriod) {
             this.showRefreshMessage = false;
-            this.isLoading = true;
             this.updateWalletBalances();
         } else {
             this.showRefreshMessage = true;
+        }
+    }
+
+    public withdraw(blockchain: string, token: string): void {
+        let contractWallet: ContractWalletBalance = this.contractWalletBalance[token];
+        if(contractWallet.withdrawAmount && !isNaN(contractWallet.withdrawAmount)) {
+            let tokenAsset: ResponseToken = this.tokenList[token];
+            let withdrawAmount: number = this.utilityService.convertDisplayToBalance(contractWallet.withdrawAmount, tokenAsset.decimals);
+            contractWallet.isWithdrawDisabled = true;
+            this.switcheoService.withdrawTokens(blockchain, token, withdrawAmount)
+                .subscribe(
+                    _ => {
+                        this.showWithdrawMessage = true;
+                        this.updateWalletBalances()
+                    },
+                    (err) => {
+                        this.isLoading = false;
+                        this.showWithdrawMessage = false;
+                        contractWallet.isWithdrawDisabled = false;
+                        if(err.error != null && err.error.error != undefined) {
+                            contractWallet.errorMessage = err.error.error;
+                        } else {
+                            this.showUnknownErrorMessage = true;
+                        }
+                    }
+                );
+        } else {
+            contractWallet.errorMessage = config.WITHDRAW_INVALID_AMOUNT_MESSAGE;
         }
     }
 
@@ -125,6 +115,8 @@ export class SCWalletComponent implements OnInit {
     }
 
     private updateWalletBalances(): void {
+        this.isLoading = true;
+        this.resetWallet();
         this.switcheoService.getContractWalletBalance()
             .subscribe(
                 (walletBalance: ResponseContractWallet) => {
@@ -140,8 +132,6 @@ export class SCWalletComponent implements OnInit {
         for(let key of Object.keys(this.tokenList)) {
             let assetDecimals: number = this.tokenList[key].decimals;
 
-            this.removeAsset(key);
-
             let confirmedTokenBalance: string = walletBalance.confirmed[key];
             if(confirmedTokenBalance && Number(confirmedTokenBalance) > 0) {
                 this.buildConfirmedWalletBalances(key, confirmedTokenBalance, assetDecimals);
@@ -152,20 +142,6 @@ export class SCWalletComponent implements OnInit {
                 this.buildLockedWalletBalances(key, lockedTokenBalance, assetDecimals);
             }
         }
-    }
-
-    private removeAsset(token: string): void {
-        let existingAssetContractWallet: number = this.assetListContractWallet.indexOf(token);
-        let existingAssetLockedWallet: number = this.assetListLockedWallet.indexOf(token);
-
-        if(existingAssetContractWallet > -1) {
-            this.assetListContractWallet.splice(existingAssetContractWallet, 1);
-        }
-        if(existingAssetLockedWallet > -1) {
-            this.assetListLockedWallet.splice(existingAssetLockedWallet, 1);
-        }
-        delete this.contractWalletBalance[token];
-        delete this.lockedWalletBalance[token];
     }
 
     private buildConfirmedWalletBalances(key: string, confirmedTokenBalance: string, assetDecimals: number): void {

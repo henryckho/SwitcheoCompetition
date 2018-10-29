@@ -163,12 +163,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _sc_contract_sc_contract_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./sc-contract/sc-contract.component */ "./src/app/sc-contract/sc-contract.component.ts");
 /* harmony import */ var _sc_trades_sc_trades_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./sc-trades/sc-trades.component */ "./src/app/sc-trades/sc-trades.component.ts");
+/* harmony import */ var _sc_logo_sc_logo_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./sc-logo/sc-logo.component */ "./src/app/sc-logo/sc-logo.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -188,7 +190,8 @@ var AppModule = /** @class */ (function () {
                 _sc_login_sc_login_component__WEBPACK_IMPORTED_MODULE_4__["SCLoginComponent"],
                 _sc_wallet_sc_wallet_component__WEBPACK_IMPORTED_MODULE_5__["SCWalletComponent"],
                 _sc_contract_sc_contract_component__WEBPACK_IMPORTED_MODULE_7__["SCContractComponent"],
-                _sc_trades_sc_trades_component__WEBPACK_IMPORTED_MODULE_8__["SCTradesComponent"]
+                _sc_trades_sc_trades_component__WEBPACK_IMPORTED_MODULE_8__["SCTradesComponent"],
+                _sc_logo_sc_logo_component__WEBPACK_IMPORTED_MODULE_9__["SCLogoComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -272,17 +275,6 @@ var ResponseToken = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/sc-contract/sc-contract.component.css":
-/*!*******************************************************!*\
-  !*** ./src/app/sc-contract/sc-contract.component.css ***!
-  \*******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ".badge {\r\n    margin-right: 5px; \r\n}"
-
-/***/ }),
-
 /***/ "./src/app/sc-contract/sc-contract.component.html":
 /*!********************************************************!*\
   !*** ./src/app/sc-contract/sc-contract.component.html ***!
@@ -290,7 +282,7 @@ module.exports = ".badge {\r\n    margin-right: 5px; \r\n}"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\r\n    <div class=\"col-12\">\r\n        <b class=\"text-info\">Step 1: Select Switcheo contract</b>\r\n    </div>\r\n    <div class=\"col-12\">\r\n        <span class=\"badge badge-pill badge-light\">!</span><span class=\"text-white\">This is defaulted to Mainnet v2 upon start up</span>\r\n    </div>\r\n</div>\r\n<div class=\"row\">\r\n    <div class=\"col\">\r\n        <div class=\"form-row justify-content-center\">\r\n            <div class=\"col-auto\">\r\n                <select class=\"custom-select custom-select-sm\" [(ngModel)]=\"deploymentType\" [disabled]=\"selectedContract\">\r\n                    <option value=\"0\">Testnet</option>\r\n                    <option value=\"1\">Mainnet</option>\r\n                </select>\r\n            </div>\r\n            <div class=\"col-auto\">\r\n                <select class=\"custom-select custom-select-sm\" [(ngModel)]=\"contractVersion\" [disabled]=\"selectedContract\">\r\n                    <option value=\"0\">v1</option>\r\n                    <option value=\"1\">v1.5</option>\r\n                    <option value=\"2\">v2</option>\r\n                </select>\r\n            </div>\r\n            <div class=\"col-auto\" *ngIf=\"selectedContract\">\r\n                <button class=\"btn btn-danger btn-sm\" (click)=\"editContract()\">\r\n                    Edit\r\n                </button>\r\n            </div>\r\n            <div class=\"col-auto\" *ngIf=\"!selectedContract\">\r\n                <button class=\"btn btn-success btn-sm\" (click)=\"selectContract()\">\r\n                    Submit\r\n                </button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
+module.exports = "<div class=\"row\">\r\n    <div class=\"col-12\">\r\n        <b class=\"text-info\">Step 1: Select Switcheo contract</b>\r\n    </div>\r\n    <div class=\"col-12\">\r\n        <span class=\"badge badge-pill badge-light mr-2\">!</span><span class=\"text-white\">This is defaulted to Mainnet v2 upon start up</span>\r\n    </div>\r\n</div>\r\n<div class=\"row\">\r\n    <div class=\"col\">\r\n        <div class=\"form-row justify-content-center\">\r\n            <div class=\"col-auto\">\r\n                <select class=\"custom-select custom-select-sm\" [(ngModel)]=\"deploymentType\" [disabled]=\"selectedContract\">\r\n                    <option value=\"0\">Testnet</option>\r\n                    <option value=\"1\">Mainnet</option>\r\n                </select>\r\n            </div>\r\n            <div class=\"col-auto\">\r\n                <select class=\"custom-select custom-select-sm\" [(ngModel)]=\"contractVersion\" [disabled]=\"selectedContract\">\r\n                    <option value=\"0\">v1</option>\r\n                    <option value=\"1\">v1.5</option>\r\n                    <option value=\"2\">v2</option>\r\n                </select>\r\n            </div>\r\n            <div class=\"col-auto\" *ngIf=\"selectedContract\">\r\n                <button class=\"btn btn-danger btn-sm\" (click)=\"editContract()\">\r\n                    Edit\r\n                </button>\r\n            </div>\r\n            <div class=\"col-auto\" *ngIf=\"!selectedContract\">\r\n                <button class=\"btn btn-success btn-sm\" (click)=\"selectContract()\">\r\n                    Submit\r\n                </button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -352,8 +344,7 @@ var SCContractComponent = /** @class */ (function () {
     SCContractComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'sc-contract',
-            template: __webpack_require__(/*! ./sc-contract.component.html */ "./src/app/sc-contract/sc-contract.component.html"),
-            styles: [__webpack_require__(/*! ./sc-contract.component.css */ "./src/app/sc-contract/sc-contract.component.css")]
+            template: __webpack_require__(/*! ./sc-contract.component.html */ "./src/app/sc-contract/sc-contract.component.html")
         }),
         __metadata("design:paramtypes", [_switcheo_service__WEBPACK_IMPORTED_MODULE_1__["SwitcheoService"]])
     ], SCContractComponent);
@@ -364,17 +355,6 @@ var SCContractComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/sc-login/sc-login.component.css":
-/*!*************************************************!*\
-  !*** ./src/app/sc-login/sc-login.component.css ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ".badge {\r\n    margin-right: 5px; \r\n}"
-
-/***/ }),
-
 /***/ "./src/app/sc-login/sc-login.component.html":
 /*!**************************************************!*\
   !*** ./src/app/sc-login/sc-login.component.html ***!
@@ -382,7 +362,7 @@ module.exports = ".badge {\r\n    margin-right: 5px; \r\n}"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\r\n    <div class=\"col-12\">\r\n        <b class=\"text-info\">Step 2: Enter your NEO address or private key</b>\r\n    </div>\r\n    <div class=\"col-12\">\r\n        <span class=\"badge badge-pill badge-light\">!</span><span class=\"text-white\">Your keys never leave the browser</span>\r\n    </div>\r\n</div>\r\n<div class=\"row\">\r\n    <div class=\"col-12\" *ngIf=\"!loggedIntoWallet\">\r\n        <div class=\"form-row justify-content-center\">\r\n            <div class=\"col-12 col-md-6\">\r\n                <input type=\"password\" class=\"form-control form-control-sm text-center\" [(ngModel)]=\"key\" placeholder=\"Address or Private Key\" />\r\n            </div>\r\n            <div class=\"col-auto\">\r\n                <button class=\"btn btn-success btn-sm mt-2 mt-sm-0\" (click)=\"loginToWallet()\" [disabled]=\"!key\">Login</button>\r\n            </div>\r\n        </div>\r\n        <div class=\"row justify-content-center\" *ngIf=\"showErrorMessage\">\r\n            <div class=\"col-12 col-md-auto\">\r\n                <div class=\"alert alert-danger alert-dismissible\" role=\"alert\">\r\n                    <span>{{errorMessage}}</span>\r\n                    <button type=\"button\" class=\"close\" (click)=\"showErrorMessage = false;\">\r\n                        <span aria-hidden=\"true\">&times;</span>\r\n                    </button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"col-12\" *ngIf=\"loggedIntoWallet\">\r\n        <div class=\"form-row justify-content-center\">\r\n            <div class=\"col-12 col-md-6\">\r\n                <input type=\"text\" class=\"form-control form-control-sm text-center\" [(ngModel)]=\"address\" readonly />\r\n            </div>\r\n            <div class=\"col-auto\">\r\n                <button class=\"btn btn-danger btn-sm mt-2 mt-sm-0\" (click)=\"logoutOfWallet()\">Logout</button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
+module.exports = "<div class=\"row\">\r\n    <div class=\"col-12\">\r\n        <b class=\"text-info\">Step 2: Enter your NEO address or private key</b>\r\n    </div>\r\n    <div class=\"col-12\">\r\n        <span class=\"badge badge-pill badge-light mr-2\">!</span><span class=\"text-white\">Your keys never leave the browser</span>\r\n    </div>\r\n</div>\r\n<div class=\"row\">\r\n    <div class=\"col-12\" *ngIf=\"!loggedIntoWallet\">\r\n        <div class=\"form-row justify-content-center\">\r\n            <div class=\"col-12 col-md-6\">\r\n                <input type=\"password\" class=\"form-control form-control-sm text-center\" [(ngModel)]=\"key\" placeholder=\"Address or Private Key\" />\r\n            </div>\r\n            <div class=\"col-auto\">\r\n                <button class=\"btn btn-success btn-sm mt-2 mt-sm-0\" (click)=\"loginToWallet()\" [disabled]=\"!key\">Login</button>\r\n            </div>\r\n        </div>\r\n        <div class=\"row justify-content-center\" *ngIf=\"showErrorMessage\">\r\n            <div class=\"col-12 col-md-auto\">\r\n                <div class=\"alert alert-danger alert-dismissible\" role=\"alert\">\r\n                    <span>{{errorMessage}}</span>\r\n                    <button type=\"button\" class=\"close\" (click)=\"showErrorMessage = false;\">\r\n                        <span aria-hidden=\"true\">&times;</span>\r\n                    </button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"col-12\" *ngIf=\"loggedIntoWallet\">\r\n        <div class=\"form-row justify-content-center\">\r\n            <div class=\"col-12 col-md-6\">\r\n                <input type=\"text\" class=\"form-control form-control-sm text-center\" [(ngModel)]=\"address\" readonly />\r\n            </div>\r\n            <div class=\"col-auto\">\r\n                <button class=\"btn btn-danger btn-sm mt-2 mt-sm-0\" (click)=\"logoutOfWallet()\">Logout</button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -451,12 +431,69 @@ var SCLoginComponent = /** @class */ (function () {
     SCLoginComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'sc-login',
-            template: __webpack_require__(/*! ./sc-login.component.html */ "./src/app/sc-login/sc-login.component.html"),
-            styles: [__webpack_require__(/*! ./sc-login.component.css */ "./src/app/sc-login/sc-login.component.css")]
+            template: __webpack_require__(/*! ./sc-login.component.html */ "./src/app/sc-login/sc-login.component.html")
         }),
         __metadata("design:paramtypes", [_wallet_service__WEBPACK_IMPORTED_MODULE_1__["WalletService"]])
     ], SCLoginComponent);
     return SCLoginComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/sc-logo/sc-logo.component.html":
+/*!************************************************!*\
+  !*** ./src/app/sc-logo/sc-logo.component.html ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<img class=\"token-img\" src=\"{{imgDir}}/{{tokenName}}.png\" (error)=\"handleImgError($event);\" />\r\n<br/>\r\n<b>{{tokenName}}</b>"
+
+/***/ }),
+
+/***/ "./src/app/sc-logo/sc-logo.component.ts":
+/*!**********************************************!*\
+  !*** ./src/app/sc-logo/sc-logo.component.ts ***!
+  \**********************************************/
+/*! exports provided: SCLogoComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SCLogoComponent", function() { return SCLogoComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../app.config */ "./src/app/app.config.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var SCLogoComponent = /** @class */ (function () {
+    function SCLogoComponent() {
+        this.imgDir = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"].IMG_DIR;
+    }
+    SCLogoComponent.prototype.handleImgError = function (element) {
+        element.target.src = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"].EMPTY_IMG;
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], SCLogoComponent.prototype, "tokenName", void 0);
+    SCLogoComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'sc-logo',
+            template: __webpack_require__(/*! ./sc-logo.component.html */ "./src/app/sc-logo/sc-logo.component.html")
+        })
+    ], SCLogoComponent);
+    return SCLogoComponent;
 }());
 
 
@@ -470,7 +507,7 @@ var SCLoginComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"openOrdersBalances.length > 0\">\r\n    <div class=\"row justify-content-center\" *ngIf=\"showUnknownErrorMessage\">\r\n        <div class=\"col-12 col-md-auto\">\r\n            <div class=\"alert alert-danger alert-dismissible\" role=\"alert\">\r\n                <span>{{unknownErrorMessage}}</span>\r\n                <button type=\"button\" class=\"close\" (click)=\"showUnknownErrorMessage = false;\">\r\n                    <span aria-hidden=\"true\">&times;</span>\r\n                </button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div *ngIf=\"!isLoading\">\r\n        <div class=\"row justify-content-center\">\r\n            <div class=\"col-12\">\r\n                <div class=\"asset-list\">\r\n                    <div>\r\n                        <b class=\"switcheo-text\">Open trades</b>\r\n                    </div>\r\n                    <div class=\"row justify-content-center\" *ngFor=\"let order of openOrdersBalances\">\r\n                        <div class=\"col-6 col-md-auto\">\r\n                            <img class=\"token-img\" src=\"{{imgDir}}/{{order.offerTokenName}}.png\" (error)=\"handleImgError($event);\" />\r\n                            <br/>\r\n                            <b>{{order.offerTokenName}}</b>\r\n                        </div>\r\n                        <div class=\"col-6 col-md-auto\">\r\n                            <img class=\"token-img\" src=\"{{imgDir}}/{{order.wantTokenName}}.png\" (error)=\"handleImgError($event);\" />\r\n                            <br/>\r\n                            <b>{{order.wantTokenName}}</b>\r\n                        </div>\r\n                        <div class=\"col-auto\">\r\n                            <b>{{order.offerAmount}}</b>\r\n                            <br/>\r\n                            <span> @ {{order.price}} {{order.offerTokenName}}/{{order.wantTokenName}}</span>\r\n                            <div class=\"row justify-content-center\" *ngIf=\"canAccessPrivateKey\">\r\n                                <div class=\"col-auto\">\r\n                                    <button class=\"btn btn-danger btn-sm\" (click)=\"cancelTrade(order.id)\">Cancel</button>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
+module.exports = "<div *ngIf=\"openOrdersBalances.length > 0\">\r\n    <div class=\"row justify-content-center\" *ngIf=\"showUnknownErrorMessage\">\r\n        <div class=\"col-12 col-md-auto\">\r\n            <div class=\"alert alert-danger alert-dismissible\" role=\"alert\">\r\n                <span>{{unknownErrorMessage}}</span>\r\n                <button type=\"button\" class=\"close\" (click)=\"showUnknownErrorMessage = false;\">\r\n                    <span aria-hidden=\"true\">&times;</span>\r\n                </button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div *ngIf=\"!isLoading\">\r\n        <div class=\"row justify-content-center\">\r\n            <div class=\"col-12\">\r\n                <div class=\"asset-list\">\r\n                    <div>\r\n                        <b class=\"switcheo-text\">Open trades</b>\r\n                    </div>\r\n                    <div class=\"row justify-content-center\" *ngFor=\"let order of openOrdersBalances\">\r\n                        <div class=\"col-6 col-md-auto\">\r\n                            <sc-logo [tokenName]=\"order.offerTokenName\"></sc-logo>\r\n                        </div>\r\n                        <div class=\"col-6 col-md-auto\">\r\n                            <sc-logo [tokenName]=\"order.wantTokenName\"></sc-logo>\r\n                        </div>\r\n                        <div class=\"col-auto\">\r\n                            <b>{{order.offerAmount}}</b>\r\n                            <br/>\r\n                            <span> @ {{order.price}} {{order.offerTokenName}}/{{order.wantTokenName}}</span>\r\n                            <div class=\"row justify-content-center\" *ngIf=\"canAccessPrivateKey\">\r\n                                <div class=\"col-auto\">\r\n                                    <button class=\"btn btn-danger btn-sm\" (click)=\"cancelTrade(order.id)\">Cancel</button>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -510,7 +547,6 @@ var SCTradesComponent = /** @class */ (function () {
         this.utilityService = utilityService;
         this.walletService = walletService;
         this.switcheoService = switcheoService;
-        this.imgDir = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"].IMG_DIR;
         this.isLoading = true;
         this.canAccessPrivateKey = false;
         this.unknownErrorMessage = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"].UNKNOWN_ERROR_MESSAGE;
@@ -521,9 +557,6 @@ var SCTradesComponent = /** @class */ (function () {
         this.isLoading = true;
         this.canAccessPrivateKey = this.walletService.canAccessPrivateKey;
         this.updateTrades();
-    };
-    SCTradesComponent.prototype.handleImgError = function (element) {
-        element.target.src = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"].EMPTY_IMG;
     };
     SCTradesComponent.prototype.cancelTrade = function (orderIdToCancel) {
         var _this = this;
@@ -591,17 +624,6 @@ var SCTradesComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/sc-wallet/sc-wallet.component.css":
-/*!***************************************************!*\
-  !*** ./src/app/sc-wallet/sc-wallet.component.css ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ""
-
-/***/ }),
-
 /***/ "./src/app/sc-wallet/sc-wallet.component.html":
 /*!****************************************************!*\
   !*** ./src/app/sc-wallet/sc-wallet.component.html ***!
@@ -609,7 +631,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\r\n    <div class=\"col-12\">\r\n        <button class=\"btn btn-info btn-sm\" (click)=\"refreshBalance()\">Refresh</button>\r\n    </div>\r\n</div>\r\n<div class=\"row justify-content-center\" *ngIf=\"showRefreshMessage || showUnknownErrorMessage || showWithdrawMessage\">\r\n    <div class=\"col-12 col-md-auto\">\r\n        <div class=\"alert alert-danger alert-dismissible\" role=\"alert\" *ngIf=\"showRefreshMessage\">\r\n            <span>{{refreshMessage}}</span>\r\n            <button type=\"button\" class=\"close\" (click)=\"showRefreshMessage = false;\">\r\n                <span aria-hidden=\"true\">&times;</span>\r\n            </button>\r\n        </div>\r\n        <div class=\"alert alert-danger alert-dismissible\" role=\"alert\" *ngIf=\"showUnknownErrorMessage\">\r\n            <span>{{unknownErrorMessage}}</span>\r\n            <button type=\"button\" class=\"close\" (click)=\"showUnknownErrorMessage = false;\">\r\n                <span aria-hidden=\"true\">&times;</span>\r\n            </button>\r\n        </div>\r\n        <div class=\"alert alert-success alert-dismissible\" role=\"alert\" *ngIf=\"showWithdrawMessage\">\r\n            <span>{{withdrawMessage}}</span>\r\n            <button type=\"button\" class=\"close\" (click)=\"showWithdrawMessage = false;\">\r\n                <span aria-hidden=\"true\">&times;</span>\r\n            </button>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div *ngIf=\"!isLoading\">\r\n    <div class=\"row justify-content-center\">\r\n        <div class=\"col-12\" *ngIf=\"assetListLockedWallet.length == 0 && assetListContractWallet.length == 0\">\r\n            <div class=\"asset-list\">\r\n                <div>\r\n                    <p><b class=\"switcheo-text\">{{emptyWalletMessage}}</b></p>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"col-12 col-md-6\" *ngIf=\"assetListLockedWallet.length > 0\">\r\n            <div class=\"asset-list\">\r\n                <div>\r\n                    <b class=\"switcheo-text\">Locked in trades</b>\r\n                </div>\r\n                <div class=\"row justify-content-center\" *ngFor=\"let key of assetListLockedWallet\">\r\n                    <div class=\"col-12 col-md-auto\">\r\n                        <img class=\"token-img\" src=\"{{imgDir}}/{{key}}.png\" (error)=\"handleImgError($event);\" />\r\n                        <br/>\r\n                        <b>{{key}}</b>\r\n                    </div>\r\n                    <div class=\"col-auto\">\r\n                        <b>{{lockedWalletBalance[key].displayBalance}}</b>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"col-12 col-md-6\" *ngIf=\"assetListContractWallet.length > 0\">\r\n            <div class=\"asset-list\">\r\n                <div>\r\n                    <b class=\"switcheo-text\">Contract Balance</b>\r\n                </div>\r\n                <div class=\"row justify-content-center\" *ngFor=\"let key of assetListContractWallet\">\r\n                    <div class=\"col-12 col-md-auto\">\r\n                        <img class=\"token-img\" src=\"{{imgDir}}/{{key}}.png\" (error)=\"handleImgError($event);\" />\r\n                        <br/>\r\n                        <b>{{key}}</b>\r\n                    </div>\r\n                    <div class=\"col-auto\">\r\n                        <div class=\"row\">\r\n                            <div class=\"col-12 text-lg-left\">\r\n                                <a *ngIf=\"canAccessPrivateKey\" href=\"javascript:void(0);\" (click)=\"contractWalletBalance[key].withdrawAmount = contractWalletBalance[key].displayBalance\">{{contractWalletBalance[key].displayBalance}}</a>\r\n                                <span *ngIf=\"!canAccessPrivateKey\" >{{contractWalletBalance[key].displayBalance}}</span>\r\n                            </div>\r\n                        </div>\r\n                        <div class=\"row justify-content-center\" *ngIf=\"canAccessPrivateKey\">\r\n                            <div class=\"col\">\r\n                                <input class=\"form-control form-control-sm text-center input-withdraw\"\r\n                                        type=\"number\"\r\n                                        (input)=\"handleInputWithdraw($event, key)\"\r\n                                        [(ngModel)]=\"contractWalletBalance[key].withdrawAmount\"\r\n                                        min=\"0\"\r\n                                        max=\"{{contractWalletBalance[key].displayBalance}}\"\r\n                                        step=\"{{contractWalletBalance[key].withdrawInputSteps}}\" />\r\n                            </div>\r\n                            <div class=\"col-auto\">\r\n                                <button class=\"btn btn-success btn-sm\" (click)=\"withdraw('neo', key)\" [disabled]=\"contractWalletBalance[key].isWithdrawDisabled\">Withdraw</button>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"col-11\" *ngIf=\"contractWalletBalance[key].errorMessage\">\r\n                        <div class=\"row\">\r\n                            <div class=\"col\">\r\n                                <div class=\"alert alert-danger alert-dismissible\" role=\"alert\">\r\n                                    <span>{{contractWalletBalance[key].errorMessage}}</span>\r\n                                    <button type=\"button\" class=\"close\" (click)=\"contractWalletBalance[key].errorMessage = '';\">\r\n                                        <span aria-hidden=\"true\">&times;</span>\r\n                                    </button>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
+module.exports = "<div class=\"row\">\r\n    <div class=\"col-12\">\r\n        <button class=\"btn btn-info btn-sm\" (click)=\"refreshBalance()\">Refresh</button>\r\n    </div>\r\n</div>\r\n<div class=\"row justify-content-center\" *ngIf=\"showRefreshMessage || showUnknownErrorMessage || showWithdrawMessage\">\r\n    <div class=\"col-12 col-md-auto\">\r\n        <div class=\"alert alert-danger alert-dismissible\" role=\"alert\" *ngIf=\"showRefreshMessage\">\r\n            <span>{{refreshMessage}}</span>\r\n            <button type=\"button\" class=\"close\" (click)=\"showRefreshMessage = false;\">\r\n                <span aria-hidden=\"true\">&times;</span>\r\n            </button>\r\n        </div>\r\n        <div class=\"alert alert-danger alert-dismissible\" role=\"alert\" *ngIf=\"showUnknownErrorMessage\">\r\n            <span>{{unknownErrorMessage}}</span>\r\n            <button type=\"button\" class=\"close\" (click)=\"showUnknownErrorMessage = false;\">\r\n                <span aria-hidden=\"true\">&times;</span>\r\n            </button>\r\n        </div>\r\n        <div class=\"alert alert-success alert-dismissible\" role=\"alert\" *ngIf=\"showWithdrawMessage\">\r\n            <span>{{withdrawMessage}}</span>\r\n            <button type=\"button\" class=\"close\" (click)=\"showWithdrawMessage = false;\">\r\n                <span aria-hidden=\"true\">&times;</span>\r\n            </button>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div *ngIf=\"!isLoading\">\r\n    <div class=\"row justify-content-center\">\r\n        <div class=\"col-12\" *ngIf=\"assetListLockedWallet.length == 0 && assetListContractWallet.length == 0\">\r\n            <div class=\"asset-list\">\r\n                <div>\r\n                    <p><b class=\"switcheo-text\">{{emptyWalletMessage}}</b></p>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"col-12 col-md-6\" *ngIf=\"assetListLockedWallet.length > 0\">\r\n            <div class=\"asset-list\">\r\n                <div>\r\n                    <b class=\"switcheo-text\">Locked in trades</b>\r\n                </div>\r\n                <div class=\"row justify-content-center\" *ngFor=\"let key of assetListLockedWallet\">\r\n                    <div class=\"col-12 col-md-auto\">\r\n                        <sc-logo [tokenName]=\"key\"></sc-logo>\r\n                    </div>\r\n                    <div class=\"col-auto\">\r\n                        <b>{{lockedWalletBalance[key].displayBalance}}</b>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"col-12 col-md-6\" *ngIf=\"assetListContractWallet.length > 0\">\r\n            <div class=\"asset-list\">\r\n                <div>\r\n                    <b class=\"switcheo-text\">Contract Balance</b>\r\n                </div>\r\n                <div class=\"row justify-content-center\" *ngFor=\"let key of assetListContractWallet\">\r\n                    <div class=\"col-12 col-md-auto\">\r\n                        <sc-logo [tokenName]=\"key\"></sc-logo>\r\n                    </div>\r\n                    <div class=\"col-auto\">\r\n                        <div class=\"row\">\r\n                            <div class=\"col-12 text-lg-left\">\r\n                                <a *ngIf=\"canAccessPrivateKey\" href=\"javascript:void(0);\" (click)=\"contractWalletBalance[key].withdrawAmount = contractWalletBalance[key].displayBalance\">{{contractWalletBalance[key].displayBalance}}</a>\r\n                                <span *ngIf=\"!canAccessPrivateKey\" >{{contractWalletBalance[key].displayBalance}}</span>\r\n                            </div>\r\n                        </div>\r\n                        <div class=\"row justify-content-center\" *ngIf=\"canAccessPrivateKey\">\r\n                            <div class=\"col\">\r\n                                <input class=\"form-control form-control-sm text-center input-withdraw\"\r\n                                        type=\"number\"\r\n                                        (input)=\"handleInputWithdraw($event, key)\"\r\n                                        [(ngModel)]=\"contractWalletBalance[key].withdrawAmount\"\r\n                                        min=\"0\"\r\n                                        max=\"{{contractWalletBalance[key].displayBalance}}\"\r\n                                        step=\"{{contractWalletBalance[key].withdrawInputSteps}}\" />\r\n                            </div>\r\n                            <div class=\"col-auto\">\r\n                                <button class=\"btn btn-success btn-sm\" (click)=\"withdraw('neo', key)\" [disabled]=\"contractWalletBalance[key].isWithdrawDisabled\">Withdraw</button>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"col-11\" *ngIf=\"contractWalletBalance[key].errorMessage\">\r\n                        <div class=\"row\">\r\n                            <div class=\"col\">\r\n                                <div class=\"alert alert-danger alert-dismissible\" role=\"alert\">\r\n                                    <span>{{contractWalletBalance[key].errorMessage}}</span>\r\n                                    <button type=\"button\" class=\"close\" (click)=\"contractWalletBalance[key].errorMessage = '';\">\r\n                                        <span aria-hidden=\"true\">&times;</span>\r\n                                    </button>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -650,7 +672,6 @@ var SCWalletComponent = /** @class */ (function () {
         this.utilityService = utilityService;
         this.walletService = walletService;
         this.isLoading = true;
-        this.imgDir = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"].IMG_DIR;
         this.assetListContractWallet = [];
         this.assetListLockedWallet = [];
         this.contractWalletBalance = {};
@@ -668,36 +689,7 @@ var SCWalletComponent = /** @class */ (function () {
     SCWalletComponent.prototype.ngOnInit = function () {
         this.isLoading = true;
         this.canAccessPrivateKey = this.walletService.canAccessPrivateKey;
-        this.resetWallet();
         this.updateWalletBalances();
-    };
-    SCWalletComponent.prototype.withdraw = function (blockchain, token) {
-        var _this = this;
-        var contractWallet = this.contractWalletBalance[token];
-        if (contractWallet.withdrawAmount && !isNaN(contractWallet.withdrawAmount)) {
-            var tokenAsset = this.tokenList[token];
-            var withdrawAmount = this.utilityService.convertDisplayToBalance(contractWallet.withdrawAmount, tokenAsset.decimals);
-            contractWallet.isWithdrawDisabled = true;
-            this.switcheoService.withdrawTokens(blockchain, token, withdrawAmount)
-                .subscribe(function (_) {
-                _this.isLoading = true;
-                _this.showWithdrawMessage = true;
-                _this.updateWalletBalances();
-            }, function (err) {
-                _this.isLoading = false;
-                _this.showWithdrawMessage = false;
-                contractWallet.isWithdrawDisabled = false;
-                if (err.error != null && err.error.error != undefined) {
-                    contractWallet.errorMessage = err.error.error;
-                }
-                else {
-                    _this.showUnknownErrorMessage = true;
-                }
-            });
-        }
-        else {
-            contractWallet.errorMessage = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"].WITHDRAW_INVALID_AMOUNT_MESSAGE;
-        }
     };
     SCWalletComponent.prototype.handleInputWithdraw = function (element, token) {
         var tokenAsset = this.tokenList[token];
@@ -717,20 +709,43 @@ var SCWalletComponent = /** @class */ (function () {
             element.target.value = walletBalance.displayBalance;
         }
     };
-    SCWalletComponent.prototype.handleImgError = function (element) {
-        element.target.src = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"].EMPTY_IMG;
-    };
     SCWalletComponent.prototype.refreshBalance = function () {
         var millisecondsNow = new Date().getTime();
         var refreshDisabledPeriod = 10000;
         var refreshTimeElapsed = millisecondsNow - this.lastUpdatedBalance;
         if (refreshTimeElapsed > refreshDisabledPeriod) {
             this.showRefreshMessage = false;
-            this.isLoading = true;
             this.updateWalletBalances();
         }
         else {
             this.showRefreshMessage = true;
+        }
+    };
+    SCWalletComponent.prototype.withdraw = function (blockchain, token) {
+        var _this = this;
+        var contractWallet = this.contractWalletBalance[token];
+        if (contractWallet.withdrawAmount && !isNaN(contractWallet.withdrawAmount)) {
+            var tokenAsset = this.tokenList[token];
+            var withdrawAmount = this.utilityService.convertDisplayToBalance(contractWallet.withdrawAmount, tokenAsset.decimals);
+            contractWallet.isWithdrawDisabled = true;
+            this.switcheoService.withdrawTokens(blockchain, token, withdrawAmount)
+                .subscribe(function (_) {
+                _this.showWithdrawMessage = true;
+                _this.updateWalletBalances();
+            }, function (err) {
+                _this.isLoading = false;
+                _this.showWithdrawMessage = false;
+                contractWallet.isWithdrawDisabled = false;
+                if (err.error != null && err.error.error != undefined) {
+                    contractWallet.errorMessage = err.error.error;
+                }
+                else {
+                    _this.showUnknownErrorMessage = true;
+                }
+            });
+        }
+        else {
+            contractWallet.errorMessage = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"].WITHDRAW_INVALID_AMOUNT_MESSAGE;
         }
     };
     SCWalletComponent.prototype.resetWallet = function () {
@@ -741,6 +756,8 @@ var SCWalletComponent = /** @class */ (function () {
     };
     SCWalletComponent.prototype.updateWalletBalances = function () {
         var _this = this;
+        this.isLoading = true;
+        this.resetWallet();
         this.switcheoService.getContractWalletBalance()
             .subscribe(function (walletBalance) {
             _this.lastUpdatedBalance = new Date().getTime();
@@ -751,7 +768,6 @@ var SCWalletComponent = /** @class */ (function () {
         for (var _i = 0, _a = Object.keys(this.tokenList); _i < _a.length; _i++) {
             var key = _a[_i];
             var assetDecimals = this.tokenList[key].decimals;
-            this.removeAsset(key);
             var confirmedTokenBalance = walletBalance.confirmed[key];
             if (confirmedTokenBalance && Number(confirmedTokenBalance) > 0) {
                 this.buildConfirmedWalletBalances(key, confirmedTokenBalance, assetDecimals);
@@ -761,18 +777,6 @@ var SCWalletComponent = /** @class */ (function () {
                 this.buildLockedWalletBalances(key, lockedTokenBalance, assetDecimals);
             }
         }
-    };
-    SCWalletComponent.prototype.removeAsset = function (token) {
-        var existingAssetContractWallet = this.assetListContractWallet.indexOf(token);
-        var existingAssetLockedWallet = this.assetListLockedWallet.indexOf(token);
-        if (existingAssetContractWallet > -1) {
-            this.assetListContractWallet.splice(existingAssetContractWallet, 1);
-        }
-        if (existingAssetLockedWallet > -1) {
-            this.assetListLockedWallet.splice(existingAssetLockedWallet, 1);
-        }
-        delete this.contractWalletBalance[token];
-        delete this.lockedWalletBalance[token];
     };
     SCWalletComponent.prototype.buildConfirmedWalletBalances = function (key, confirmedTokenBalance, assetDecimals) {
         var confirmedTokenWalletBalance = this.utilityService.removeLastDecimalFromBalance(confirmedTokenBalance);
@@ -801,8 +805,7 @@ var SCWalletComponent = /** @class */ (function () {
     SCWalletComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'sc-wallet',
-            template: __webpack_require__(/*! ./sc-wallet.component.html */ "./src/app/sc-wallet/sc-wallet.component.html"),
-            styles: [__webpack_require__(/*! ./sc-wallet.component.css */ "./src/app/sc-wallet/sc-wallet.component.css")]
+            template: __webpack_require__(/*! ./sc-wallet.component.html */ "./src/app/sc-wallet/sc-wallet.component.html")
         }),
         __metadata("design:paramtypes", [_switcheo_service__WEBPACK_IMPORTED_MODULE_2__["SwitcheoService"],
             _utility_service__WEBPACK_IMPORTED_MODULE_3__["UtilityService"],

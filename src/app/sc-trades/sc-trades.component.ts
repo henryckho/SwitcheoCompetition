@@ -16,7 +16,6 @@ import { UtilityService } from '../utility.service';
 
 export class SCTradesComponent implements OnInit {
     @Input() tokenList: ResponseTokenList;
-    private imgDir: string = config.IMG_DIR;
     private isLoading: boolean = true;
     private canAccessPrivateKey: boolean = false;
     private unknownErrorMessage: string = config.UNKNOWN_ERROR_MESSAGE;
@@ -33,10 +32,6 @@ export class SCTradesComponent implements OnInit {
         this.isLoading = true;
         this.canAccessPrivateKey = this.walletService.canAccessPrivateKey;
         this.updateTrades();
-    }
-
-    public handleImgError(element) {
-        element.target.src = config.EMPTY_IMG;
     }
 
     public cancelTrade(orderIdToCancel: string): void {
