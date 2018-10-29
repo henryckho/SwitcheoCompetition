@@ -1,4 +1,31 @@
 <div *ngIf="tokenList">
+    <div class="row">
+        <div class="col-12">
+            <button class="btn btn-info btn-sm" (click)="refresh()">Refresh</button>
+        </div>
+    </div>
+    <div class="row justify-content-center" *ngIf="showRefreshMessage || showUnknownErrorMessage || showWithdrawMessage">
+        <div class="col-12 col-md-auto">
+            <div class="alert alert-danger alert-dismissible" role="alert" *ngIf="showRefreshMessage">
+                <span>{{refreshMessage}}</span>
+                <button type="button" class="close" (click)="showRefreshMessage = false;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="alert alert-danger alert-dismissible" role="alert" *ngIf="showUnknownErrorMessage">
+                <span>{{unknownErrorMessage}}</span>
+                <button type="button" class="close" (click)="showUnknownErrorMessage = false;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="alert alert-success alert-dismissible" role="alert" *ngIf="showWithdrawMessage">
+                <span>{{withdrawMessage}}</span>
+                <button type="button" class="close" (click)="showWithdrawMessage = false;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
     <sc-wallet [tokenList]="tokenList"></sc-wallet>
     <sc-trades [tokenList]="tokenList"></sc-trades>
 </div>

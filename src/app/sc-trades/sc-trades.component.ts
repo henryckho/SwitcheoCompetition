@@ -31,7 +31,7 @@ export class SCTradesComponent implements OnInit {
     ngOnInit() {
         this.isLoading = true;
         this.canAccessPrivateKey = this.walletService.canAccessPrivateKey;
-        this.updateTrades();
+        this.refreshTrades();
     }
 
     public cancelTrade(orderIdToCancel: string): void {
@@ -40,12 +40,12 @@ export class SCTradesComponent implements OnInit {
                 _ => {
                     this.isLoading = true;
                     this.showUnknownErrorMessage = false;
-                    this.updateTrades();
+                    this.refreshTrades();
                 }
             );
     }
 
-    private updateTrades(): void {
+    public refreshTrades(): void {
         this.openOrdersBalances.length = 0;
         this.switcheoService.getOpenOrders()
             .subscribe(

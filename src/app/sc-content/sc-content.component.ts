@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SwitcheoService } from '../switcheo.service';
 import { ResponseTokenList } from '../models/response/responseToken';
+import { SCWalletComponent } from '../sc-wallet/sc-wallet.component';
+import { SCTradesComponent } from '../sc-trades/sc-trades.component';
+import { config } from '../app.config';
 
 @Component({
     selector: 'sc-content',
@@ -8,7 +11,12 @@ import { ResponseTokenList } from '../models/response/responseToken';
 })
 
 export class SCContentComponent implements OnInit {
+    @ViewChild(SCWalletComponent) walletChild: SCWalletComponent;
+    @ViewChild(SCTradesComponent) tradesChild: SCTradesComponent;
     private tokenList: ResponseTokenList = {};
+    private lastUpdatedBalance: number = new Date().getTime();;
+    private refreshMessage: string = config.REFRESH_ERROR_WALLET_MESSAGE;
+    private showRefreshMessage: boolean = false;
 
     constructor(
         private switcheoService: SwitcheoService
@@ -18,7 +26,21 @@ export class SCContentComponent implements OnInit {
         this.loadWalletAndTrades();
     }
 
-    private loadWalletAndTrades() {
+    public refresh(): void {
+        let millisecondsNow = new Date().getTime();
+        let refreshDisabledPeriod: number = 10000;
+        let refreshTimeElapsed: number = millisecondsNow - this.lastUpdatedBalance;
+        if(refreshTimeElapsed > refreshDisabledPeriod) {
+            this.lastUpdatedBalance = new Date().getTime();
+            this.showRefreshMessage = false;
+            this.walletChild.refreshBalances();
+            this.tradesChild.refreshTrades();
+        } else {
+            this.showRefreshMessage = true;
+        }
+    }
+
+    private loadWalletAndTrades(): void {
         this.switcheoService.getTokenList()
             .subscribe(
                 (tokenList: ResponseTokenList) => {
