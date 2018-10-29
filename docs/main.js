@@ -480,6 +480,9 @@ var SCLogoComponent = /** @class */ (function () {
     function SCLogoComponent() {
         this.imgDir = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"].IMG_DIR;
     }
+    SCLogoComponent.prototype.handleImgError = function (element) {
+        element.target.src = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"].EMPTY_IMG;
+    };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", String)
@@ -554,9 +557,6 @@ var SCTradesComponent = /** @class */ (function () {
         this.isLoading = true;
         this.canAccessPrivateKey = this.walletService.canAccessPrivateKey;
         this.updateTrades();
-    };
-    SCTradesComponent.prototype.handleImgError = function (element) {
-        element.target.src = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"].EMPTY_IMG;
     };
     SCTradesComponent.prototype.cancelTrade = function (orderIdToCancel) {
         var _this = this;
@@ -708,9 +708,6 @@ var SCWalletComponent = /** @class */ (function () {
         if (numberValue > Number(walletBalance.displayBalance)) {
             element.target.value = walletBalance.displayBalance;
         }
-    };
-    SCWalletComponent.prototype.handleImgError = function (element) {
-        element.target.src = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"].EMPTY_IMG;
     };
     SCWalletComponent.prototype.refreshBalance = function () {
         var millisecondsNow = new Date().getTime();
