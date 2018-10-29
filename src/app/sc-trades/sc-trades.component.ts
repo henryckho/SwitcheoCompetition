@@ -35,6 +35,10 @@ export class SCTradesComponent implements OnInit {
         this.updateTrades();
     }
 
+    public handleImgError(element) {
+        element.target.src = config.EMPTY_IMG;
+    }
+
     public cancelTrade(orderIdToCancel: string): void {
         this.switcheoService.cancelOrder(orderIdToCancel)
             .subscribe(
