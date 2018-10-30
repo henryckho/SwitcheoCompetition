@@ -720,7 +720,7 @@ var SCMessagesComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row justify-content-center\" *ngIf=\"showUnknownErrorMessage\">\r\n    <div class=\"col-12 col-md-auto\">\r\n        <sc-messages [(showMessage)]=\"showUnknownErrorMessage\" [messageType]=\"unknownErrorMessageType\"></sc-messages>\r\n    </div>\r\n</div>\r\n<div *ngIf=\"!isLoading\">\r\n    <div class=\"row justify-content-center\" *ngIf=\"openOrdersBalances.length > 0\">\r\n        <div class=\"col-12\">\r\n            <div class=\"asset-list\">\r\n                <div>\r\n                    <b class=\"switcheo-text\">Open trades</b>\r\n                </div>\r\n                <div class=\"row justify-content-center\" *ngFor=\"let order of openOrdersBalances\">\r\n                    <div class=\"col-6 col-md-auto\">\r\n                        <sc-logo [tokenName]=\"order.offerTokenName\"></sc-logo>\r\n                    </div>\r\n                    <div class=\"col-6 col-md-auto\">\r\n                        <sc-logo [tokenName]=\"order.wantTokenName\"></sc-logo>\r\n                    </div>\r\n                    <div class=\"col-auto\">\r\n                        <b>{{order.offerAmount}}</b>\r\n                        <br/>\r\n                        <span> @ {{order.price}} {{order.offerTokenName}}/{{order.wantTokenName}}</span>\r\n                        <div class=\"row justify-content-center\" *ngIf=\"canAccessPrivateKey\">\r\n                            <div class=\"col-auto\">\r\n                                <button class=\"btn btn-danger btn-sm\" (click)=\"cancelTrade(order.id)\">Cancel</button>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
+module.exports = "<div class=\"row justify-content-center\" *ngIf=\"showUnknownErrorMessage\">\r\n    <div class=\"col-12 col-md-auto\">\r\n        <sc-messages [(showMessage)]=\"showUnknownErrorMessage\" [messageType]=\"unknownErrorMessageType\"></sc-messages>\r\n    </div>\r\n</div>\r\n<div *ngIf=\"!isLoading\">\r\n    <div class=\"row justify-content-center\" *ngIf=\"openOrdersBalances.length > 0\">\r\n        <div class=\"col-12\">\r\n            <div class=\"asset-list\">\r\n                <div>\r\n                    <b class=\"switcheo-text\">Open trades</b>\r\n                </div>\r\n                <div class=\"row justify-content-center\" *ngFor=\"let order of openOrdersBalances\">\r\n                    <div class=\"col-6 col-md-auto\">\r\n                        <sc-logo [tokenName]=\"order.offerTokenName\"></sc-logo>\r\n                    </div>\r\n                    <div class=\"col-6 col-md-auto\">\r\n                        <sc-logo [tokenName]=\"order.wantTokenName\"></sc-logo>\r\n                    </div>\r\n                    <div class=\"col-auto\">\r\n                        <b>{{order.offerAmount}}</b>\r\n                        <br/>\r\n                        <span> @ {{order.price}} {{order.offerTokenName}}/{{order.wantTokenName}}</span>\r\n                        <div class=\"row justify-content-center\" *ngIf=\"canAccessPrivateKey\">\r\n                            <div class=\"col-auto\">\r\n                                <button class=\"btn btn-danger btn-sm\" (click)=\"cancelTrade(order)\" [disabled]=\"order.isCancelDisabled\">Cancel</button>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -772,14 +772,19 @@ var SCTradesComponent = /** @class */ (function () {
         this.canAccessPrivateKey = this.walletService.canAccessPrivateKey;
         this.refreshTrades();
     };
-    SCTradesComponent.prototype.cancelTrade = function (orderIdToCancel) {
+    SCTradesComponent.prototype.cancelTrade = function (order) {
         var _this = this;
+        var orderIdToCancel = order.id;
+        order.isCancelDisabled = true;
         this.switcheoService.cancelOrder(orderIdToCancel)
             .subscribe(function (_) {
             _this.isLoading = true;
             _this.showUnknownErrorMessage = false;
             _this.refreshTrades();
             _this.refreshBalances.emit();
+        }, function (err) {
+            order.isCancelDisabled = false;
+            _this.showUnknownErrorMessage = true;
         });
     };
     SCTradesComponent.prototype.refreshTrades = function () {
@@ -788,8 +793,7 @@ var SCTradesComponent = /** @class */ (function () {
         this.switcheoService.getOpenOrders()
             .subscribe(function (openOrders) {
             _this.buildOpenOrdersBalances(openOrders);
-            _this.isLoading = false;
-        }, function (_) { return _this.showUnknownErrorMessage = true; });
+        }, function (_) { return _this.showUnknownErrorMessage = true; }, function () { return _this.isLoading = false; });
     };
     SCTradesComponent.prototype.buildOpenOrdersBalances = function (openOrders) {
         for (var i = 0; i < openOrders.length; i++) {
@@ -991,7 +995,6 @@ var SCWalletComponent = /** @class */ (function () {
         this.contractWalletBalance[key] = {
             walletBalance: confirmedTokenWalletBalance,
             displayBalance: confirmedTokenDisplayBalance,
-            isWithdrawDisabled: false,
             withdrawInputSteps: this.utilityService.convertDecimalsForStepInput(assetDecimals)
         };
         this.assetListContractWallet.push(key);
