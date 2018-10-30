@@ -151,12 +151,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _sc_trades_sc_trades_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./sc-trades/sc-trades.component */ "./src/app/sc-trades/sc-trades.component.ts");
 /* harmony import */ var _sc_logo_sc_logo_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./sc-logo/sc-logo.component */ "./src/app/sc-logo/sc-logo.component.ts");
 /* harmony import */ var _sc_content_sc_content_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./sc-content/sc-content.component */ "./src/app/sc-content/sc-content.component.ts");
+/* harmony import */ var _sc_messages_sc_messages_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./sc-messages/sc-messages.component */ "./src/app/sc-messages/sc-messages.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -180,7 +182,8 @@ var AppModule = /** @class */ (function () {
                 _sc_contract_sc_contract_component__WEBPACK_IMPORTED_MODULE_7__["SCContractComponent"],
                 _sc_trades_sc_trades_component__WEBPACK_IMPORTED_MODULE_8__["SCTradesComponent"],
                 _sc_logo_sc_logo_component__WEBPACK_IMPORTED_MODULE_9__["SCLogoComponent"],
-                _sc_content_sc_content_component__WEBPACK_IMPORTED_MODULE_10__["SCContentComponent"]
+                _sc_content_sc_content_component__WEBPACK_IMPORTED_MODULE_10__["SCContentComponent"],
+                _sc_messages_sc_messages_component__WEBPACK_IMPORTED_MODULE_11__["SCMessagesComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -237,6 +240,28 @@ var DeploymentType;
 
 /***/ }),
 
+/***/ "./src/app/enum/MessageType.ts":
+/*!*************************************!*\
+  !*** ./src/app/enum/MessageType.ts ***!
+  \*************************************/
+/*! exports provided: MessageType */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MessageType", function() { return MessageType; });
+var MessageType;
+(function (MessageType) {
+    MessageType[MessageType["UnknownError"] = 0] = "UnknownError";
+    MessageType[MessageType["LoginError"] = 1] = "LoginError";
+    MessageType[MessageType["RefreshError"] = 2] = "RefreshError";
+    MessageType[MessageType["WithdrawInvalid"] = 3] = "WithdrawInvalid";
+    MessageType[MessageType["WithdrawSuccess"] = 4] = "WithdrawSuccess";
+})(MessageType || (MessageType = {}));
+
+
+/***/ }),
+
 /***/ "./src/app/models/response/responseToken.ts":
 /*!**************************************************!*\
   !*** ./src/app/models/response/responseToken.ts ***!
@@ -271,7 +296,7 @@ var ResponseToken = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"tokenList\">\r\n    <div class=\"row\">\r\n        <div class=\"col-12\">\r\n            <button class=\"btn btn-info btn-sm\" (click)=\"refresh()\">Refresh</button>\r\n        </div>\r\n    </div>\r\n    <div class=\"row justify-content-center\" *ngIf=\"showRefreshMessage\">\r\n        <div class=\"col-12 col-md-auto\">\r\n            <div class=\"alert alert-danger alert-dismissible\" role=\"alert\" *ngIf=\"showRefreshMessage\">\r\n                <span>{{refreshMessage}}</span>\r\n                <button type=\"button\" class=\"close\" (click)=\"showRefreshMessage = false;\">\r\n                    <span aria-hidden=\"true\">&times;</span>\r\n                </button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <sc-wallet [tokenList]=\"tokenList\"></sc-wallet>\r\n    <sc-trades [tokenList]=\"tokenList\" (refreshBalances)=\"refreshBalances()\"></sc-trades>\r\n</div>"
+module.exports = "<div *ngIf=\"tokenList\">\r\n    <div class=\"row\">\r\n        <div class=\"col-12\">\r\n            <button class=\"btn btn-info btn-sm\" (click)=\"refresh()\">Refresh</button>\r\n        </div>\r\n    </div>\r\n    <div class=\"row justify-content-center\" *ngIf=\"showRefreshMessage\">\r\n        <div class=\"col-12 col-md-auto\">\r\n            <sc-messages [(showMessage)]=\"showRefreshMessage\" [messageType]=\"refreshErrorMessageType\"></sc-messages>\r\n        </div>\r\n    </div>\r\n    <sc-wallet [tokenList]=\"tokenList\"></sc-wallet>\r\n    <sc-trades [tokenList]=\"tokenList\" (refreshBalances)=\"refreshBalances()\"></sc-trades>\r\n</div>"
 
 /***/ }),
 
@@ -289,7 +314,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _switcheo_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../switcheo.service */ "./src/app/switcheo.service.ts");
 /* harmony import */ var _sc_wallet_sc_wallet_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../sc-wallet/sc-wallet.component */ "./src/app/sc-wallet/sc-wallet.component.ts");
 /* harmony import */ var _sc_trades_sc_trades_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../sc-trades/sc-trades.component */ "./src/app/sc-trades/sc-trades.component.ts");
-/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../app.config */ "./src/app/app.config.ts");
+/* harmony import */ var _enum_MessageType__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../enum/MessageType */ "./src/app/enum/MessageType.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -309,10 +334,9 @@ var SCContentComponent = /** @class */ (function () {
         this.switcheoService = switcheoService;
         this.tokenList = {};
         this.lastUpdatedBalance = new Date().getTime();
-        this.refreshMessage = _app_config__WEBPACK_IMPORTED_MODULE_4__["config"].REFRESH_ERROR_WALLET_MESSAGE;
+        this.refreshErrorMessageType = _enum_MessageType__WEBPACK_IMPORTED_MODULE_4__["MessageType"].RefreshError;
         this.showRefreshMessage = false;
     }
-    ;
     SCContentComponent.prototype.ngOnInit = function () {
         this.loadWalletAndTrades();
     };
@@ -449,7 +473,7 @@ var SCContractComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\r\n    <div class=\"col-12\">\r\n        <b class=\"text-info\">Step 2: Enter your NEO address or private key</b>\r\n    </div>\r\n    <div class=\"col-12\">\r\n        <span class=\"badge badge-pill badge-light mr-2\">!</span><span class=\"text-white\">Your keys never leave the browser</span>\r\n    </div>\r\n</div>\r\n<div class=\"row\">\r\n    <div class=\"col-12\" *ngIf=\"!loggedIntoWallet\">\r\n        <div class=\"form-row justify-content-center\">\r\n            <div class=\"col-12 col-md-6\">\r\n                <input type=\"password\" class=\"form-control form-control-sm text-center\" [(ngModel)]=\"key\" placeholder=\"Address or Private Key\" />\r\n            </div>\r\n            <div class=\"col-auto\">\r\n                <button class=\"btn btn-success btn-sm mt-2 mt-sm-0\" (click)=\"loginToWallet()\" [disabled]=\"!key\">Login</button>\r\n            </div>\r\n        </div>\r\n        <div class=\"row justify-content-center\" *ngIf=\"showErrorMessage\">\r\n            <div class=\"col-12 col-md-auto\">\r\n                <div class=\"alert alert-danger alert-dismissible\" role=\"alert\">\r\n                    <span>{{errorMessage}}</span>\r\n                    <button type=\"button\" class=\"close\" (click)=\"showErrorMessage = false;\">\r\n                        <span aria-hidden=\"true\">&times;</span>\r\n                    </button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"col-12\" *ngIf=\"loggedIntoWallet\">\r\n        <div class=\"form-row justify-content-center\">\r\n            <div class=\"col-12 col-md-6\">\r\n                <input type=\"text\" class=\"form-control form-control-sm text-center\" [(ngModel)]=\"address\" readonly />\r\n            </div>\r\n            <div class=\"col-auto\">\r\n                <button class=\"btn btn-danger btn-sm mt-2 mt-sm-0\" (click)=\"logoutOfWallet()\">Logout</button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
+module.exports = "<div class=\"row\">\r\n    <div class=\"col-12\">\r\n        <b class=\"text-info\">Step 2: Enter your NEO address or private key</b>\r\n    </div>\r\n    <div class=\"col-12\">\r\n        <span class=\"badge badge-pill badge-light mr-2\">!</span><span class=\"text-white\">Your keys never leave the browser</span>\r\n    </div>\r\n</div>\r\n<div class=\"row\">\r\n    <div class=\"col-12\" *ngIf=\"!loggedIntoWallet\">\r\n        <div class=\"form-row justify-content-center\">\r\n            <div class=\"col-12 col-md-6\">\r\n                <input type=\"password\" class=\"form-control form-control-sm text-center\" [(ngModel)]=\"key\" placeholder=\"Address or Private Key\" />\r\n            </div>\r\n            <div class=\"col-auto\">\r\n                <button class=\"btn btn-success btn-sm mt-2 mt-sm-0\" (click)=\"loginToWallet()\" [disabled]=\"!key\">Login</button>\r\n            </div>\r\n        </div>\r\n        <div class=\"row justify-content-center\" *ngIf=\"showErrorMessage\">\r\n            <div class=\"col-12 col-md-auto\">\r\n                <sc-messages [(showMessage)]=\"showErrorMessage\" [messageType]=\"loginErrorMessageType\"></sc-messages>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"col-12\" *ngIf=\"loggedIntoWallet\">\r\n        <div class=\"form-row justify-content-center\">\r\n            <div class=\"col-12 col-md-6\">\r\n                <input type=\"text\" class=\"form-control form-control-sm text-center\" [(ngModel)]=\"address\" readonly />\r\n            </div>\r\n            <div class=\"col-auto\">\r\n                <button class=\"btn btn-danger btn-sm mt-2 mt-sm-0\" (click)=\"logoutOfWallet()\">Logout</button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -465,7 +489,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SCLoginComponent", function() { return SCLoginComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _wallet_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../wallet.service */ "./src/app/wallet.service.ts");
-/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../app.config */ "./src/app/app.config.ts");
+/* harmony import */ var _enum_MessageType__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../enum/MessageType */ "./src/app/enum/MessageType.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -486,7 +510,7 @@ var SCLoginComponent = /** @class */ (function () {
         this.loggedIntoWallet = false;
         this.address = "";
         this.key = "";
-        this.errorMessage = _app_config__WEBPACK_IMPORTED_MODULE_2__["config"].LOGIN_ERROR_MESSAGE;
+        this.loginErrorMessageType = _enum_MessageType__WEBPACK_IMPORTED_MODULE_2__["MessageType"].LoginError;
         this.showErrorMessage = false;
     }
     SCLoginComponent.prototype.loginToWallet = function () {
@@ -587,6 +611,108 @@ var SCLogoComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/sc-messages/sc-messages.component.html":
+/*!********************************************************!*\
+  !*** ./src/app/sc-messages/sc-messages.component.html ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div [ngClass]=\"'alert alert-' + classType + ' alert-dismissible'\" role=\"alert\">\r\n    <span>{{message}}</span>\r\n    <button type=\"button\" class=\"close\" (click)=\"hideMessage()\">\r\n        <span aria-hidden=\"true\">&times;</span>\r\n    </button>\r\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/sc-messages/sc-messages.component.ts":
+/*!******************************************************!*\
+  !*** ./src/app/sc-messages/sc-messages.component.ts ***!
+  \******************************************************/
+/*! exports provided: SCMessagesComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SCMessagesComponent", function() { return SCMessagesComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _enum_MessageType__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../enum/MessageType */ "./src/app/enum/MessageType.ts");
+/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../app.config */ "./src/app/app.config.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var SCMessagesComponent = /** @class */ (function () {
+    function SCMessagesComponent() {
+        this.showMessageChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        this.message = "";
+        this.classType = "";
+    }
+    SCMessagesComponent.prototype.ngOnInit = function () {
+        switch (this.messageType) {
+            case _enum_MessageType__WEBPACK_IMPORTED_MODULE_1__["MessageType"].UnknownError:
+                this.message = _app_config__WEBPACK_IMPORTED_MODULE_2__["config"].UNKNOWN_ERROR_MESSAGE;
+                this.classType = "danger";
+                break;
+            case _enum_MessageType__WEBPACK_IMPORTED_MODULE_1__["MessageType"].LoginError:
+                this.message = _app_config__WEBPACK_IMPORTED_MODULE_2__["config"].LOGIN_ERROR_MESSAGE;
+                this.classType = "danger";
+                break;
+            case _enum_MessageType__WEBPACK_IMPORTED_MODULE_1__["MessageType"].RefreshError:
+                this.message = _app_config__WEBPACK_IMPORTED_MODULE_2__["config"].REFRESH_ERROR_WALLET_MESSAGE;
+                this.classType = "danger";
+                break;
+            case _enum_MessageType__WEBPACK_IMPORTED_MODULE_1__["MessageType"].WithdrawInvalid:
+                this.message = _app_config__WEBPACK_IMPORTED_MODULE_2__["config"].WITHDRAW_INVALID_AMOUNT_MESSAGE;
+                this.classType = "danger";
+                break;
+            case _enum_MessageType__WEBPACK_IMPORTED_MODULE_1__["MessageType"].WithdrawSuccess:
+                this.message = _app_config__WEBPACK_IMPORTED_MODULE_2__["config"].WITHDRAW_SUCCESS_WALLET_MESSAGE;
+                this.classType = "success";
+                break;
+        }
+        if (this.customMessage) {
+            this.message = this.customMessage;
+        }
+    };
+    SCMessagesComponent.prototype.hideMessage = function () {
+        this.showMessageChange.emit(false);
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Boolean)
+    ], SCMessagesComponent.prototype, "showMessage", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Number)
+    ], SCMessagesComponent.prototype, "messageType", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], SCMessagesComponent.prototype, "customMessage", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
+        __metadata("design:type", Object)
+    ], SCMessagesComponent.prototype, "showMessageChange", void 0);
+    SCMessagesComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'sc-messages',
+            template: __webpack_require__(/*! ./sc-messages.component.html */ "./src/app/sc-messages/sc-messages.component.html")
+        }),
+        __metadata("design:paramtypes", [])
+    ], SCMessagesComponent);
+    return SCMessagesComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/sc-trades/sc-trades.component.html":
 /*!****************************************************!*\
   !*** ./src/app/sc-trades/sc-trades.component.html ***!
@@ -594,7 +720,7 @@ var SCLogoComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row justify-content-center\" *ngIf=\"showUnknownErrorMessage\">\r\n    <div class=\"col-12 col-md-auto\">\r\n        <div class=\"alert alert-danger alert-dismissible\" role=\"alert\">\r\n            <span>{{unknownErrorMessage}}</span>\r\n            <button type=\"button\" class=\"close\" (click)=\"showUnknownErrorMessage = false;\">\r\n                <span aria-hidden=\"true\">&times;</span>\r\n            </button>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div *ngIf=\"!isLoading\">\r\n    <div class=\"row justify-content-center\" *ngIf=\"openOrdersBalances.length > 0\">\r\n        <div class=\"col-12\">\r\n            <div class=\"asset-list\">\r\n                <div>\r\n                    <b class=\"switcheo-text\">Open trades</b>\r\n                </div>\r\n                <div class=\"row justify-content-center\" *ngFor=\"let order of openOrdersBalances\">\r\n                    <div class=\"col-6 col-md-auto\">\r\n                        <sc-logo [tokenName]=\"order.offerTokenName\"></sc-logo>\r\n                    </div>\r\n                    <div class=\"col-6 col-md-auto\">\r\n                        <sc-logo [tokenName]=\"order.wantTokenName\"></sc-logo>\r\n                    </div>\r\n                    <div class=\"col-auto\">\r\n                        <b>{{order.offerAmount}}</b>\r\n                        <br/>\r\n                        <span> @ {{order.price}} {{order.offerTokenName}}/{{order.wantTokenName}}</span>\r\n                        <div class=\"row justify-content-center\" *ngIf=\"canAccessPrivateKey\">\r\n                            <div class=\"col-auto\">\r\n                                <button class=\"btn btn-danger btn-sm\" (click)=\"cancelTrade(order.id)\">Cancel</button>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
+module.exports = "<div class=\"row justify-content-center\" *ngIf=\"showUnknownErrorMessage\">\r\n    <div class=\"col-12 col-md-auto\">\r\n        <sc-messages [(showMessage)]=\"showUnknownErrorMessage\" [messageType]=\"unknownErrorMessageType\"></sc-messages>\r\n    </div>\r\n</div>\r\n<div *ngIf=\"!isLoading\">\r\n    <div class=\"row justify-content-center\" *ngIf=\"openOrdersBalances.length > 0\">\r\n        <div class=\"col-12\">\r\n            <div class=\"asset-list\">\r\n                <div>\r\n                    <b class=\"switcheo-text\">Open trades</b>\r\n                </div>\r\n                <div class=\"row justify-content-center\" *ngFor=\"let order of openOrdersBalances\">\r\n                    <div class=\"col-6 col-md-auto\">\r\n                        <sc-logo [tokenName]=\"order.offerTokenName\"></sc-logo>\r\n                    </div>\r\n                    <div class=\"col-6 col-md-auto\">\r\n                        <sc-logo [tokenName]=\"order.wantTokenName\"></sc-logo>\r\n                    </div>\r\n                    <div class=\"col-auto\">\r\n                        <b>{{order.offerAmount}}</b>\r\n                        <br/>\r\n                        <span> @ {{order.price}} {{order.offerTokenName}}/{{order.wantTokenName}}</span>\r\n                        <div class=\"row justify-content-center\" *ngIf=\"canAccessPrivateKey\">\r\n                            <div class=\"col-auto\">\r\n                                <button class=\"btn btn-danger btn-sm\" (click)=\"cancelTrade(order.id)\">Cancel</button>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -609,11 +735,11 @@ module.exports = "<div class=\"row justify-content-center\" *ngIf=\"showUnknownE
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SCTradesComponent", function() { return SCTradesComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../app.config */ "./src/app/app.config.ts");
-/* harmony import */ var _switcheo_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../switcheo.service */ "./src/app/switcheo.service.ts");
-/* harmony import */ var _wallet_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../wallet.service */ "./src/app/wallet.service.ts");
-/* harmony import */ var _models_response_responseToken__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../models/response/responseToken */ "./src/app/models/response/responseToken.ts");
-/* harmony import */ var _utility_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utility.service */ "./src/app/utility.service.ts");
+/* harmony import */ var _switcheo_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../switcheo.service */ "./src/app/switcheo.service.ts");
+/* harmony import */ var _wallet_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../wallet.service */ "./src/app/wallet.service.ts");
+/* harmony import */ var _models_response_responseToken__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../models/response/responseToken */ "./src/app/models/response/responseToken.ts");
+/* harmony import */ var _utility_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utility.service */ "./src/app/utility.service.ts");
+/* harmony import */ var _enum_MessageType__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../enum/MessageType */ "./src/app/enum/MessageType.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -637,9 +763,9 @@ var SCTradesComponent = /** @class */ (function () {
         this.refreshBalances = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.isLoading = true;
         this.canAccessPrivateKey = false;
-        this.unknownErrorMessage = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"].UNKNOWN_ERROR_MESSAGE;
-        this.showUnknownErrorMessage = false;
         this.openOrdersBalances = [];
+        this.unknownErrorMessageType = _enum_MessageType__WEBPACK_IMPORTED_MODULE_5__["MessageType"].UnknownError;
+        this.showUnknownErrorMessage = false;
     }
     SCTradesComponent.prototype.ngOnInit = function () {
         this.isLoading = true;
@@ -695,7 +821,7 @@ var SCTradesComponent = /** @class */ (function () {
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", _models_response_responseToken__WEBPACK_IMPORTED_MODULE_4__["ResponseTokenList"])
+        __metadata("design:type", _models_response_responseToken__WEBPACK_IMPORTED_MODULE_3__["ResponseTokenList"])
     ], SCTradesComponent.prototype, "tokenList", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
@@ -706,9 +832,9 @@ var SCTradesComponent = /** @class */ (function () {
             selector: 'sc-trades',
             template: __webpack_require__(/*! ./sc-trades.component.html */ "./src/app/sc-trades/sc-trades.component.html")
         }),
-        __metadata("design:paramtypes", [_utility_service__WEBPACK_IMPORTED_MODULE_5__["UtilityService"],
-            _wallet_service__WEBPACK_IMPORTED_MODULE_3__["WalletService"],
-            _switcheo_service__WEBPACK_IMPORTED_MODULE_2__["SwitcheoService"]])
+        __metadata("design:paramtypes", [_utility_service__WEBPACK_IMPORTED_MODULE_4__["UtilityService"],
+            _wallet_service__WEBPACK_IMPORTED_MODULE_2__["WalletService"],
+            _switcheo_service__WEBPACK_IMPORTED_MODULE_1__["SwitcheoService"]])
     ], SCTradesComponent);
     return SCTradesComponent;
 }());
@@ -724,7 +850,7 @@ var SCTradesComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row justify-content-center\" *ngIf=\"showUnknownErrorMessage || showWithdrawMessage\">\r\n    <div class=\"col-12 col-md-auto\">\r\n        <div class=\"alert alert-danger alert-dismissible\" role=\"alert\" *ngIf=\"showUnknownErrorMessage\">\r\n            <span>{{unknownErrorMessage}}</span>\r\n            <button type=\"button\" class=\"close\" (click)=\"showUnknownErrorMessage = false;\">\r\n                <span aria-hidden=\"true\">&times;</span>\r\n            </button>\r\n        </div>\r\n        <div class=\"alert alert-success alert-dismissible\" role=\"alert\" *ngIf=\"showWithdrawMessage\">\r\n            <span>{{withdrawMessage}}</span>\r\n            <button type=\"button\" class=\"close\" (click)=\"showWithdrawMessage = false;\">\r\n                <span aria-hidden=\"true\">&times;</span>\r\n            </button>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div *ngIf=\"!isLoading\">\r\n    <div class=\"row justify-content-center\">\r\n        <div class=\"col-12\" *ngIf=\"assetListLockedWallet.length == 0 && assetListContractWallet.length == 0\">\r\n            <div class=\"asset-list\">\r\n                <div>\r\n                    <p><b class=\"switcheo-text\">{{emptyWalletMessage}}</b></p>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"col-12 col-md-6\" *ngIf=\"assetListLockedWallet.length > 0\">\r\n            <div class=\"asset-list\">\r\n                <div>\r\n                    <b class=\"switcheo-text\">Locked in trades</b>\r\n                </div>\r\n                <div class=\"row justify-content-center\" *ngFor=\"let key of assetListLockedWallet\">\r\n                    <div class=\"col-12 col-md-auto\">\r\n                        <sc-logo [tokenName]=\"key\"></sc-logo>\r\n                    </div>\r\n                    <div class=\"col-auto\">\r\n                        <b>{{lockedWalletBalance[key].displayBalance}}</b>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"col-12 col-md-6\" *ngIf=\"assetListContractWallet.length > 0\">\r\n            <div class=\"asset-list\">\r\n                <div>\r\n                    <b class=\"switcheo-text\">Contract Balance</b>\r\n                </div>\r\n                <div class=\"row justify-content-center\" *ngFor=\"let key of assetListContractWallet\">\r\n                    <div class=\"col-12 col-md-auto\">\r\n                        <sc-logo [tokenName]=\"key\"></sc-logo>\r\n                    </div>\r\n                    <div class=\"col-auto\">\r\n                        <div class=\"row\">\r\n                            <div class=\"col-12 text-lg-left\">\r\n                                <a *ngIf=\"canAccessPrivateKey\" href=\"javascript:void(0);\" (click)=\"contractWalletBalance[key].withdrawAmount = contractWalletBalance[key].displayBalance\">{{contractWalletBalance[key].displayBalance}}</a>\r\n                                <span *ngIf=\"!canAccessPrivateKey\" >{{contractWalletBalance[key].displayBalance}}</span>\r\n                            </div>\r\n                        </div>\r\n                        <div class=\"row justify-content-center\" *ngIf=\"canAccessPrivateKey\">\r\n                            <div class=\"col\">\r\n                                <input class=\"form-control form-control-sm text-center input-withdraw\"\r\n                                        type=\"number\"\r\n                                        (input)=\"handleInputWithdraw($event, key)\"\r\n                                        [(ngModel)]=\"contractWalletBalance[key].withdrawAmount\"\r\n                                        min=\"0\"\r\n                                        max=\"{{contractWalletBalance[key].displayBalance}}\"\r\n                                        step=\"{{contractWalletBalance[key].withdrawInputSteps}}\" />\r\n                            </div>\r\n                            <div class=\"col-auto\">\r\n                                <button class=\"btn btn-success btn-sm\" (click)=\"withdraw('neo', key)\" [disabled]=\"contractWalletBalance[key].isWithdrawDisabled\">Withdraw</button>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"col-11\" *ngIf=\"contractWalletBalance[key].errorMessage\">\r\n                        <div class=\"row\">\r\n                            <div class=\"col\">\r\n                                <div class=\"alert alert-danger alert-dismissible\" role=\"alert\">\r\n                                    <span>{{contractWalletBalance[key].errorMessage}}</span>\r\n                                    <button type=\"button\" class=\"close\" (click)=\"contractWalletBalance[key].errorMessage = '';\">\r\n                                        <span aria-hidden=\"true\">&times;</span>\r\n                                    </button>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
+module.exports = "<div class=\"row justify-content-center\" *ngIf=\"showUnknownErrorMessage || showWithdrawMessage\">\r\n    <div class=\"col-12 col-md-auto\">\r\n        <sc-messages *ngIf=\"showUnknownErrorMessage\" [(showMessage)]=\"showUnknownErrorMessage\" [messageType]=\"unknownErrorMessageType\"></sc-messages>\r\n        <sc-messages *ngIf=\"showWithdrawSuccessMessage\" [(showMessage)]=\"showWithdrawSuccessMessage\" [messageType]=\"withdrawSuccessMessageType\"></sc-messages>\r\n    </div>\r\n</div>\r\n<div *ngIf=\"!isLoading\">\r\n    <div class=\"row justify-content-center\">\r\n        <div class=\"col-12\" *ngIf=\"assetListLockedWallet.length == 0 && assetListContractWallet.length == 0\">\r\n            <div class=\"asset-list\">\r\n                <div>\r\n                    <p><b class=\"switcheo-text\">{{emptyWalletMessage}}</b></p>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"col-12 col-md-6\" *ngIf=\"assetListLockedWallet.length > 0\">\r\n            <div class=\"asset-list\">\r\n                <div>\r\n                    <b class=\"switcheo-text\">Locked in trades</b>\r\n                </div>\r\n                <div class=\"row justify-content-center\" *ngFor=\"let key of assetListLockedWallet\">\r\n                    <div class=\"col-12 col-md-auto\">\r\n                        <sc-logo [tokenName]=\"key\"></sc-logo>\r\n                    </div>\r\n                    <div class=\"col-auto\">\r\n                        <b>{{lockedWalletBalance[key].displayBalance}}</b>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"col-12 col-md-6\" *ngIf=\"assetListContractWallet.length > 0\">\r\n            <div class=\"asset-list\">\r\n                <div>\r\n                    <b class=\"switcheo-text\">Contract Balance</b>\r\n                </div>\r\n                <div class=\"row justify-content-center\" *ngFor=\"let key of assetListContractWallet\">\r\n                    <div class=\"col-12 col-md-auto\">\r\n                        <sc-logo [tokenName]=\"key\"></sc-logo>\r\n                    </div>\r\n                    <div class=\"col-auto\">\r\n                        <div class=\"row\">\r\n                            <div class=\"col-12 text-lg-left\">\r\n                                <a *ngIf=\"canAccessPrivateKey\" href=\"javascript:void(0);\" (click)=\"contractWalletBalance[key].withdrawAmount = contractWalletBalance[key].displayBalance\">{{contractWalletBalance[key].displayBalance}}</a>\r\n                                <span *ngIf=\"!canAccessPrivateKey\" >{{contractWalletBalance[key].displayBalance}}</span>\r\n                            </div>\r\n                        </div>\r\n                        <div class=\"row justify-content-center\" *ngIf=\"canAccessPrivateKey\">\r\n                            <div class=\"col\">\r\n                                <input class=\"form-control form-control-sm text-center input-withdraw\"\r\n                                        type=\"number\"\r\n                                        (input)=\"handleInputWithdraw($event, key)\"\r\n                                        [(ngModel)]=\"contractWalletBalance[key].withdrawAmount\"\r\n                                        min=\"0\"\r\n                                        max=\"{{contractWalletBalance[key].displayBalance}}\"\r\n                                        step=\"{{contractWalletBalance[key].withdrawInputSteps}}\" />\r\n                            </div>\r\n                            <div class=\"col-auto\">\r\n                                <button class=\"btn btn-success btn-sm\" (click)=\"withdraw('neo', key)\" [disabled]=\"contractWalletBalance[key].isWithdrawDisabled\">Withdraw</button>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"col-11\" *ngIf=\"contractWalletBalance[key].errorMessage\">\r\n                        <div class=\"row\">\r\n                            <div class=\"col\">\r\n                                <sc-messages [(showMessage)]=\"contractWalletBalance[key].errorMessage\" [messageType]=\"withdrawInvalidMessageType\" [customMessage]=\"contractWalletBalance[key].errorMessage\"></sc-messages>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -744,6 +870,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utility_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utility.service */ "./src/app/utility.service.ts");
 /* harmony import */ var _wallet_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../wallet.service */ "./src/app/wallet.service.ts");
 /* harmony import */ var _models_response_responseToken__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../models/response/responseToken */ "./src/app/models/response/responseToken.ts");
+/* harmony import */ var _enum_MessageType__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../enum/MessageType */ "./src/app/enum/MessageType.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -753,6 +880,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -769,12 +897,13 @@ var SCWalletComponent = /** @class */ (function () {
         this.assetListLockedWallet = [];
         this.contractWalletBalance = {};
         this.lockedWalletBalance = {};
-        this.withdrawMessage = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"].WITHDRAW_SUCCESS_WALLET_MESSAGE;
-        this.unknownErrorMessage = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"].UNKNOWN_ERROR_MESSAGE;
         this.emptyWalletMessage = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"].EMPTY_WALLET_MESSAGE;
-        this.showWithdrawMessage = false;
-        this.showUnknownErrorMessage = false;
         this.canAccessPrivateKey = false;
+        this.withdrawInvalidMessageType = _enum_MessageType__WEBPACK_IMPORTED_MODULE_6__["MessageType"].WithdrawInvalid;
+        this.withdrawSuccessMessageType = _enum_MessageType__WEBPACK_IMPORTED_MODULE_6__["MessageType"].WithdrawSuccess;
+        this.unknownErrorMessageType = _enum_MessageType__WEBPACK_IMPORTED_MODULE_6__["MessageType"].UnknownError;
+        this.showWithdrawSuccessMessage = false;
+        this.showUnknownErrorMessage = false;
     }
     SCWalletComponent.prototype.ngOnInit = function () {
         this.isLoading = true;
@@ -811,17 +940,18 @@ var SCWalletComponent = /** @class */ (function () {
     SCWalletComponent.prototype.withdraw = function (blockchain, token) {
         var _this = this;
         var contractWallet = this.contractWalletBalance[token];
+        contractWallet.errorMessage = "";
         if (contractWallet.withdrawAmount && !isNaN(contractWallet.withdrawAmount)) {
             var tokenAsset = this.tokenList[token];
             var withdrawAmount = this.utilityService.convertDisplayToBalance(contractWallet.withdrawAmount, tokenAsset.decimals);
             contractWallet.isWithdrawDisabled = true;
             this.switcheoService.withdrawTokens(blockchain, token, withdrawAmount)
                 .subscribe(function (_) {
-                _this.showWithdrawMessage = true;
+                _this.showWithdrawSuccessMessage = true;
                 _this.refreshBalances();
             }, function (err) {
                 _this.isLoading = false;
-                _this.showWithdrawMessage = false;
+                _this.showWithdrawSuccessMessage = false;
                 contractWallet.isWithdrawDisabled = false;
                 if (err.error != null && err.error.error != undefined) {
                     contractWallet.errorMessage = err.error.error;
