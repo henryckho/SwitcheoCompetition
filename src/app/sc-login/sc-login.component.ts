@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { WalletService } from '../wallet.service';
-import { config } from '../app.config';
+import { MessageType } from '../enum/MessageType';
 
 @Component({
     selector: 'sc-login',
@@ -13,7 +13,8 @@ export class SCLoginComponent {
     private loggedIntoWallet: boolean = false;
     private address: string = "";
     private key: string = "";
-    private errorMessage: string = config.LOGIN_ERROR_MESSAGE;
+    
+    private loginErrorMessageType: MessageType = MessageType.LoginError;
     private showErrorMessage: boolean = false;
 
     constructor(

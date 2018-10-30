@@ -3,7 +3,7 @@ import { SwitcheoService } from '../switcheo.service';
 import { ResponseTokenList } from '../models/response/responseToken';
 import { SCWalletComponent } from '../sc-wallet/sc-wallet.component';
 import { SCTradesComponent } from '../sc-trades/sc-trades.component';
-import { config } from '../app.config';
+import { MessageType } from '../enum/MessageType';
 
 @Component({
     selector: 'sc-content',
@@ -15,9 +15,10 @@ export class SCContentComponent implements OnInit {
     @ViewChild(SCTradesComponent) tradesChild: SCTradesComponent;
 
     private tokenList: ResponseTokenList = {};
-    private lastUpdatedBalance: number = new Date().getTime();;
-    private refreshMessage: string = config.REFRESH_ERROR_WALLET_MESSAGE;
-    private showRefreshMessage: boolean = false;
+    private lastUpdatedBalance: number = new Date().getTime();
+
+    private refreshErrorMessageType: MessageType = MessageType.RefreshError;
+    public showRefreshMessage: boolean = false;
 
     constructor(
         private switcheoService: SwitcheoService

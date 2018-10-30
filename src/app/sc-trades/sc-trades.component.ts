@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
-import { config } from '../app.config';
 import { SwitcheoService } from '../switcheo.service';
 import { WalletService } from '../wallet.service';
 
@@ -8,6 +7,7 @@ import { ResponseOpenOrder } from '../models/response/responseOpenOrder';
 import { ResponseTokenList } from '../models/response/responseToken';
 import { OpenOrdersBalance } from '../models/openOrdersBalance';
 import { UtilityService } from '../utility.service';
+import { MessageType } from '../enum/MessageType';
 
 @Component({
     selector: 'sc-trades',
@@ -20,9 +20,10 @@ export class SCTradesComponent implements OnInit {
     
     private isLoading: boolean = true;
     private canAccessPrivateKey: boolean = false;
-    private unknownErrorMessage: string = config.UNKNOWN_ERROR_MESSAGE;
-    private showUnknownErrorMessage: boolean = false;
     private openOrdersBalances: OpenOrdersBalance[] = [];
+
+    private unknownErrorMessageType: MessageType = MessageType.UnknownError;
+    private showUnknownErrorMessage: boolean = false;
 
     constructor(
         private utilityService: UtilityService,

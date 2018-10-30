@@ -1,17 +1,7 @@
 <div class="row justify-content-center" *ngIf="showUnknownErrorMessage || showWithdrawMessage">
     <div class="col-12 col-md-auto">
-        <div class="alert alert-danger alert-dismissible" role="alert" *ngIf="showUnknownErrorMessage">
-            <span>{{unknownErrorMessage}}</span>
-            <button type="button" class="close" (click)="showUnknownErrorMessage = false;">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="alert alert-success alert-dismissible" role="alert" *ngIf="showWithdrawMessage">
-            <span>{{withdrawMessage}}</span>
-            <button type="button" class="close" (click)="showWithdrawMessage = false;">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
+        <sc-messages *ngIf="showUnknownErrorMessage" [(showMessage)]="showUnknownErrorMessage" [messageType]="unknownErrorMessageType"></sc-messages>
+        <sc-messages *ngIf="showWithdrawSuccessMessage" [(showMessage)]="showWithdrawSuccessMessage" [messageType]="withdrawSuccessMessageType"></sc-messages>
     </div>
 </div>
 <div *ngIf="!isLoading">
@@ -72,12 +62,7 @@
                     <div class="col-11" *ngIf="contractWalletBalance[key].errorMessage">
                         <div class="row">
                             <div class="col">
-                                <div class="alert alert-danger alert-dismissible" role="alert">
-                                    <span>{{contractWalletBalance[key].errorMessage}}</span>
-                                    <button type="button" class="close" (click)="contractWalletBalance[key].errorMessage = '';">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
+                                <sc-messages [(showMessage)]="contractWalletBalance[key].errorMessage" [messageType]="withdrawInvalidMessageType" [customMessage]="contractWalletBalance[key].errorMessage"></sc-messages>
                             </div>
                         </div>
                     </div>
