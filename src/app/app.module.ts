@@ -10,6 +10,7 @@ import { SCContractComponent } from './sc-contract/sc-contract.component';
 import { SCTradesComponent } from './sc-trades/sc-trades.component';
 import { SCLogoComponent } from './sc-logo/sc-logo.component';
 import { SCContentComponent } from './sc-content/sc-content.component';
+import { SCMessagesComponent } from './sc-messages/sc-messages.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { SCContentComponent } from './sc-content/sc-content.component';
     SCContractComponent,
     SCTradesComponent,
     SCLogoComponent,
-    SCContentComponent
+    SCContentComponent,
+    SCMessagesComponent
   ],
   imports: [
     BrowserModule,
