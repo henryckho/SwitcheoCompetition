@@ -37,7 +37,9 @@ export class SCTradesComponent implements OnInit {
         this.refreshTrades();
     }
 
-    public cancelTrade(orderIdToCancel: string): void {
+    public cancelTrade(order: OpenOrdersBalance): void {
+        let orderIdToCancel: string = order.id;
+        order.isCancelDisabled = true;
         this.switcheoService.cancelOrder(orderIdToCancel)
             .subscribe(
                 _ => {
@@ -45,6 +47,10 @@ export class SCTradesComponent implements OnInit {
                     this.showUnknownErrorMessage = false;
                     this.refreshTrades();
                     this.refreshBalances.emit();
+                },
+                (err) => {
+                    order.isCancelDisabled = false;
+                    this.showUnknownErrorMessage = true;
                 }
             );
     }
@@ -55,9 +61,9 @@ export class SCTradesComponent implements OnInit {
             .subscribe(
                 (openOrders: ResponseOpenOrder[]) => {
                     this.buildOpenOrdersBalances(openOrders);
-                    this.isLoading = false;
                 },
-                _ => this.showUnknownErrorMessage = true
+                _ => this.showUnknownErrorMessage = true,
+                () => this.isLoading = false
             );
     }
 

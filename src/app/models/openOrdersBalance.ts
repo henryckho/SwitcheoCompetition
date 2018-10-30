@@ -8,4 +8,6 @@ export class OpenOrdersBalance {
     wantTokenName: string;
     wantToken: ResponseToken;
     price: string;
+    isCancelDisabled?: boolean = false;
+    errorMessage?: string = "";
 }

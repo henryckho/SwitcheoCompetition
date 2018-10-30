@@ -138,7 +138,6 @@ export class SCWalletComponent implements OnInit {
         this.contractWalletBalance[key] = {
             walletBalance: confirmedTokenWalletBalance,
             displayBalance: confirmedTokenDisplayBalance,
-            isWithdrawDisabled: false,
             withdrawInputSteps: this.utilityService.convertDecimalsForStepInput(assetDecimals)
         };
         this.assetListContractWallet.push(key);
