@@ -9,6 +9,7 @@ import { ResponseToken, ResponseTokenList } from '../models/response/responseTok
 import { ResponseContractWallet } from '../models/response/responseContractWallet';
 import { ContractWalletBalance } from '../models/contractWalletBalance';
 import { LockedWalletBalance } from '../models/lockedWalletBalance';
+import { MessageType } from '../enum/MessageType';
 
 @Component({
     selector: 'sc-wallet',
@@ -23,12 +24,14 @@ export class SCWalletComponent implements OnInit {
     private assetListLockedWallet: string[] = [];
     private contractWalletBalance: {[key:string]: ContractWalletBalance} = {};
     private lockedWalletBalance: {[key:string]: LockedWalletBalance} = {};
-    private withdrawMessage: string = config.WITHDRAW_SUCCESS_WALLET_MESSAGE;
-    private unknownErrorMessage: string = config.UNKNOWN_ERROR_MESSAGE;
     private emptyWalletMessage: string = config.EMPTY_WALLET_MESSAGE;
-    private showWithdrawMessage: boolean = false;
-    private showUnknownErrorMessage: boolean = false;
     private canAccessPrivateKey: boolean = false;
+    
+    private withdrawInvalidMessageType: MessageType = MessageType.WithdrawInvalid;
+    private withdrawSuccessMessageType: MessageType = MessageType.WithdrawSuccess;
+    private unknownErrorMessageType: MessageType = MessageType.UnknownError;
+    private showWithdrawSuccessMessage: boolean = false;
+    private showUnknownErrorMessage: boolean = false;
 
     constructor(
         private switcheoService: SwitcheoService,
@@ -79,6 +82,7 @@ export class SCWalletComponent implements OnInit {
 
     public withdraw(blockchain: string, token: string): void {
         let contractWallet: ContractWalletBalance = this.contractWalletBalance[token];
+        contractWallet.errorMessage = "";
         if(contractWallet.withdrawAmount && !isNaN(contractWallet.withdrawAmount)) {
             let tokenAsset: ResponseToken = this.tokenList[token];
             let withdrawAmount: number = this.utilityService.convertDisplayToBalance(contractWallet.withdrawAmount, tokenAsset.decimals);
@@ -86,12 +90,12 @@ export class SCWalletComponent implements OnInit {
             this.switcheoService.withdrawTokens(blockchain, token, withdrawAmount)
                 .subscribe(
                     _ => {
-                        this.showWithdrawMessage = true;
+                        this.showWithdrawSuccessMessage = true;
                         this.refreshBalances()
                     },
                     (err) => {
                         this.isLoading = false;
-                        this.showWithdrawMessage = false;
+                        this.showWithdrawSuccessMessage = false;
                         contractWallet.isWithdrawDisabled = false;
                         if(err.error != null && err.error.error != undefined) {
                             contractWallet.errorMessage = err.error.error;

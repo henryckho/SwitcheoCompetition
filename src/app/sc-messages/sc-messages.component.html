@@ -1,0 +1,6 @@
+<div [ngClass]="'alert alert-' + classType + ' alert-dismissible'" role="alert">
+    <span>{{message}}</span>
+    <button type="button" class="close" (click)="hideMessage()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
