@@ -1,8 +1,5 @@
 # SwitcheoCompetition
-
-## Deployment
-This app is deployed onto https://henryckho.github.io/SwitcheoCompetition and is deployed using github pages
-
+This app can be viewed at https://henryckho.github.io/SwitcheoCompetition
 ## Background
 Switcheo has scheduled maintenance once in a while and when they have scheduled maintenance, people can't access their contract wallet.
 
@@ -21,6 +18,9 @@ I created a Trello Board for what the tasks I have in mind: https://trello.com/b
 2. Install [npm](https://www.npmjs.com/)
 3. Run `npm install`
 4. Run `npm start` this will run `ng serve --port 8080 --open`
+
+## Deployment
+The docs folder is a built version using `ng build`. It is in a docs folder because it is chosen as the source for github pages.
 
 ## Demo
 
